@@ -24,6 +24,8 @@
 
 #btnSignIn{
 	margin-right:20px;
+	border: 0;
+	outline: 0;
 }
 #btnSignOut{
 	margin-left:20px;
