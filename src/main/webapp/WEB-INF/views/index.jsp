@@ -4,8 +4,6 @@
 <html>
 <head>
 <title>Insert title here</title>
-<link rel="stylesheet"
-	href="/resources/bootstrap/css/bootstrap.min.css" />
 </head>
 <style>
 body{
@@ -19,7 +17,7 @@ body{
 </style>
 <body>
 
-	<jsp:include page="/WEB-INF/views/header.jsp"></jsp:include>
+	<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 	
 	<div class="container" id="content">
 		<div class="row">
@@ -32,8 +30,7 @@ body{
 	</div>
 	
 	
-	<jsp:include page="/WEB-INF/views/footer.jsp"></jsp:include>
-	
-<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
+	<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
+
 </body>
 </html>

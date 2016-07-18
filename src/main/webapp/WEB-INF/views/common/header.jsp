@@ -5,6 +5,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>Insert title here</title>
+<link rel="stylesheet"
+	href="/resources/bootstrap/css/bootstrap.min.css" />
 </head>
 <style>
 @import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
@@ -116,7 +118,7 @@
 			<div class="row">
 				<div class="span12">
 					<a href="#">카드추천</a>
-					<a href="#">지출관리</a>
+					<a href="/accountbook/index">지출관리</a>
 					<a href="#">매장찾기</a>
 					<a href="#">이벤트</a>
 					<a href="#">공지사항</a>
