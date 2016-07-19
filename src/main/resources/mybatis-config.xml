@@ -6,6 +6,6 @@
  
  <configuration>
  	  <typeAliases>
- 	  		<package name="com.minsoo0318.app.domain"/>
+ 	  		<package name="com.smartchoice.app.domain"/>
  	  </typeAliases>
  </configuration>
