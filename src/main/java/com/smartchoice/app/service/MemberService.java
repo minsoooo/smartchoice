@@ -1,10 +1,10 @@
-package com.smartchoice.app.persistance;
+package com.smartchoice.app.service;
 
 import java.util.List;
 
 import com.smartchoice.app.domain.MemberDto;
 
-public interface MemberDAO {
+public interface MemberService {
 	
 	public void regiMember(MemberDto dto);
 	public List getMemberList();

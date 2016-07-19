@@ -1,16 +1,16 @@
 package com.smartchoice.app.domain;
 
 public class MemberDto {
-	
-	private Integer mem_num;
+
+	private int mem_num;
+	private String mem_id;
 	private String mem_level;
 	private String mem_email;
 	private String mem_pw;
-	private String mem_nick;
 	private String mem_fav1;
 	private String mem_fav2;
 	private String mem_fav3;
-	private String mem_card;
+	private String mem_cardnum;
 	
 	
 	public String getMem_fav1() {
@@ -37,19 +37,19 @@ public class MemberDto {
 		this.mem_fav3 = mem_fav3;
 	}
 
-	public String getMem_card() {
-		return mem_card;
+	public String getMem_cardnum() {
+		return mem_cardnum;
 	}
 
-	public void setMem_card(String mem_card) {
-		this.mem_card = mem_card;
+	public void setMem_cardnum(String mem_cardnum) {
+		this.mem_cardnum = mem_cardnum;
 	}
 
-	public Integer getMem_num() {
+	public int getMem_num() {
 		return mem_num;
 	}
 
-	public void setMem_num(Integer mem_num) {
+	public void setMem_num(int mem_num) {
 		this.mem_num = mem_num;
 	}
 
@@ -77,12 +77,24 @@ public class MemberDto {
 		this.mem_pw = mem_pw;
 	}
 
-	public String getMem_nick() {
-		return mem_nick;
+	public String getMem_id() {
+		return mem_id;
 	}
 
-	public void setMem_nick(String mem_nick) {
-		this.mem_nick = mem_nick;
+	public void setMem_id(String mem_id) {
+		this.mem_id = mem_id;
+	}
+
+	
+	
+	@Override
+	public String toString() {
+		return "MemberDto getMem_num():" +getMem_num()+" getMem_level() : "
+				+getMem_level() +" getMem_email : "+getMem_email()+
+				" getMem_pw : " +getMem_pw() + " getMem_id : "+getMem_id() +
+				 " getMem_fav1 : "+getMem_fav1()+" getMem_fav2 : "+
+				getMem_fav2()+" getMem_fav3 : " +getMem_fav3() +" getMem_cardnum"
+				+getMem_cardnum();
 	}
 
 }

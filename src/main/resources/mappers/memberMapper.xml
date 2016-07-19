@@ -5,5 +5,29 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.smartchoice.mappers.memberMapper">
-	<insert id=""></insert>
+
+	<insert id="regiMember" parameterType="MemberDto">
+		insert into member(mem_level, mem_email, mem_pw, mem_fav1, mem_fav2, mem_fav3, mem_id,
+		mem_cardnum)
+		values(#{mem_level}, #{mem_email}, #{mem_pw}, #{mem_fav1}, #{mem_fav2}, #{mem_fav3}, #{mem_id},
+		#{mem_cardnum})
+	</insert>
+	
+	<select id="getMemberList" resultType="MemberDto">
+		select * from member;
+	</select>
+	
+	<select id="getMember" resultType="MemberDto">
+		select * from member where mem_id = #{mem_id} and mem_pw =#{mem_pw}
+	</select>
+	
+	<update id="updateMember">
+		update member set mem_level =#{mem_level}, mem_pw =#{mem_pw},mem_email = #{mem_email}
+		 mem_fav1 =#{mem_fav1}, mem_fav2 = #{mem_fav2}, mem_fav3 = #{mem_fav3}
+		 , mem_cardnum = #{mem_cardnum} where mem_num = #{mem_num}
+	</update>
+	
+	<delete id ="deleteMember">
+		delete from member where mem_num = #{mem_num}
+	</delete>
 </mapper>
