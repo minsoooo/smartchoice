@@ -21,6 +21,11 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
+	public MemberDto getMemberWithId(String mem_id) {
+		return dao.getMemberWithId(mem_id);
+	}
+
+	@Override
 	public List getMemberList() {
 		
 		return dao.getMemberList();

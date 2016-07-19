@@ -31,6 +31,11 @@ public class MemberDAOImpl implements MemberDAO {
 
 	
 	@Override
+	public MemberDto getMemberWithId(String mem_id) {
+		return sqlSession.selectOne("getMemberWithId", mem_id);
+	}
+
+	@Override
 	public MemberDto getMember(String mem_id, String mem_pw) {
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("mem_id", mem_id);

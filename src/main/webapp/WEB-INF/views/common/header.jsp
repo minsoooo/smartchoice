@@ -7,6 +7,13 @@
 <title>Insert title here</title>
 <link rel="stylesheet"
 	href="/resources/bootstrap/css/bootstrap.min.css" />
+<script src="/resources/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script>
+	function fnLogin(){
+		window.open("/member/login","","width=350,height=200,top=+400,left=+600");
+	}
+
+</script>
 </head>
 <style>
 @import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
@@ -100,7 +107,8 @@
 			<div class="row">				
 				<!-- 로그인 및 회원가입 -->
 				<div class="span2" style="margin-top:8px;">
-					<input type="button" id="btnSignIn" class="btn" value="Sign In" />
+					<input type="button" id="btnSignIn" class="btn" value="Sign In"
+					onclick="javascript:fnLogin()" />
 					<a href="#">Join Now</a>
 				</div>
 				

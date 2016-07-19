@@ -21,6 +21,10 @@
 		select * from member where mem_id = #{mem_id} and mem_pw =#{mem_pw}
 	</select>
 	
+	<select id ="getMemberWithId" resultType="MemberDto">
+		select * from member where mem_id = #{mem_id}
+	</select>
+	
 	<update id="updateMember">
 		update member set mem_level =#{mem_level}, mem_pw =#{mem_pw},mem_email = #{mem_email}
 		 mem_fav1 =#{mem_fav1}, mem_fav2 = #{mem_fav2}, mem_fav3 = #{mem_fav3}

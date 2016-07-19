@@ -9,6 +9,7 @@ public interface MemberService {
 	public void regiMember(MemberDto dto);
 	public List getMemberList();
 	public MemberDto getMember(String mem_id, String mem_pw);
+	public MemberDto getMemberWithId(String mem_id);
 	public void updateMember(MemberDto dto);
 	public void deleteMember(int mem_num);
 }
