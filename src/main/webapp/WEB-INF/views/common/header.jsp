@@ -21,7 +21,6 @@
 #header1{
 	background-color:#4e4a41;
 	height:50px;
-	text-align:right;
 }
 
 #header2{
@@ -38,6 +37,10 @@
 	margin-left:20px;
 }
 
+#header1Div{
+	margin-top:8px;
+}
+
 #header1 a{
 	color:#d9d5cc;
 }
@@ -50,15 +53,14 @@
 
 #header2 a{
 	color:#d9d5cc;
-	font-size:22px;
+	font-size:20px;
 	font-weight:bold;
-	margin-right:85px;
+	margin-right:40px;
 	font-family: 'Noto Sans KR', sans-serif;
 }
 
-#header2 .span12{
+#header2 .span8{
 	margin-top:23px;
-	text-align:right;
 }
 
 .btn {
@@ -95,12 +97,11 @@
 	<!-- 로고 -->
 	<div class="container">
 		<div class="row">
-			<div class="span3" style="position:absolute;">
+			<div class="span4" style="position:absolute;">
 				<img src="/resources/images/logo.jpg"/>
 			</div>
 		</div>
 	</div>
-
 	
 	<div  id="header1">
 		<div class="container">
@@ -109,11 +110,15 @@
 				<div class="span2" style="margin-top:8px;">
 					<input type="button" id="btnSignIn" class="btn" value="Sign In"
 					onclick="javascript:fnLogin()" />
+
+				<div class="span3 offset9" id="header1Div">
+					<input type="button" id="btnSignIn" class="btn" value="Sign In" 
+					onclick="javascript:fnLogin()"/>
 					<a href="#">Join Now</a>
 				</div>
 				
 				<!-- 아이디 및 로그아웃 
-				<div class="span2" style="margin-top:8px;">
+				<div class="span2 offset9" style="margin-top:8px;">
 					<font style="color:#d9d5cc">아이디</font>
 					<input type="button" id="btnSignOut" class="btn" value="Sign Out" />
 				</div>
@@ -126,7 +131,7 @@
 	<div  id="header2">
 		<div class="container">
 			<div class="row">
-				<div class="span12">
+				<div class="span8 offset4">
 					<a href="#">카드추천</a>
 					<a href="/accountbook/index">지출관리</a>
 					<a href="#">매장찾기</a>
