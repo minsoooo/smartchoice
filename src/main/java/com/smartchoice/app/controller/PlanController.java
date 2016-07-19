@@ -1,21 +1,40 @@
 /*
- * 	Ä«µåÃßÃµ controller
-	ÀÛ¼ºÀÏ : 2016-07-18
-	¼öÁ¤ÀÏ : 2016-07-18
-	ÀÛ¼ºÀÚ : ±è»ó´ö
+ * 	ì¹´ë“œì¶”ì²œ PlanController
+		
+	ì‘ì„±ì¼ : 2016-07-18
+	ìˆ˜ì •ì¼ : 2016-07-19
+	ì‘ì„±ì : ê¹€ìƒë•
  */
 package com.smartchoice.app.controller;
+
+import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+import com.smartchoice.app.service.BigCategoryService;
+
+
 
 @Controller
 public class PlanController {
 	private static final Logger logger = LoggerFactory.getLogger(PlanController.class);
-
-	//Ä«µåÃßÃµ intro ÆäÀÌÁö·Î ÀÌµ¿
+	
+	@Inject
+	private BigCategoryService service;
+	
+	//ì¹´ë“œì¶”ì²œ Intro í˜ì´ì§€ë¡œ ì´ë™
 	@RequestMapping("/planCard/planIntro")
-	public void registerGET() {}
+	public void planintroGET() {}
+	
+	//ì¹´ë“œì¶”ì²œ Intro í˜ì´ì§€ë¡œ ì´ë™
+	@RequestMapping(value="/planCard/planPattern", method = RequestMethod.POST)
+	public void planlistPost(HttpServletRequest req, Model model) {
+		model.addAttribute("bigDtoList" ,service.getBigCategory());
+	}
 }
