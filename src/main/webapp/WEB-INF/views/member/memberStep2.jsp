@@ -1,8 +1,9 @@
-<%@ page contentType="text/html; charset=utf-8"%>
+<%@ page contentType="text/html; charset=utf-8" isELIgnored="false"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
-<title>RegiMember</title>
+<title>RegiMemberStep2</title>
 <link rel="stylesheet" href="/resources/bootstrap/css/bootstrap.min.css" />
 <script src="/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 <script>
@@ -22,34 +23,34 @@ body{
 }
 
 #step1, #step2, #step3{
-	height: 150px;
 	width : 250px;
+	margin-left:10px;
 }
 
-#stepDiv{
-	margin-left:200px
-}
-
-#formDiv{
-	margin-top :20px;
-	margin-left:420px;
-}
-input{
-	height:30px;
-
-}
-#id, #pass1, #pass2{
-	width : 300px;
-	margin-bottom:5px;
+#tableDiv{
+	margin-top:20px;
+	border : 2px solid #5c554b;
+	width: 600px;
 	
 }
-#email1,#email2{
-	width : 139px;
-	margin-bottom:5px;
+#stepDiv{
+	margin-left:80px
+}
+#categoryTable{
+	margin-top:20px;
 }
 
-#email_check{
-	width : 168px;
+#label{
+	font-size: 30px;
+	margin-left:10px;
+}
+#categoryTable td{
+	width :60px;
+	height : 80px;
+	font-size: 40px;
+	padding-left: 50px;
+	padding-right: 50px;
+	
 }
 
 .btn {
@@ -88,9 +89,24 @@ input{
 		<div class="row">
 			<div class="span12">
 				<div class = "span12" id = "stepDiv">
-					<img src="/resources/images/step1_2.jpg" id="step1"/>
-					<img src="/resources/images/step2_1.jpg" id="step2"/>
+					<img src="/resources/images/step1_1.jpg" id="step1"/>
+					<img src="/resources/images/step2_2.jpg" id="step2"/>
 					<img src="/resources/images/step3_1.jpg" id="step3"/>
+				</div>
+				<div class ="span10 offset2" id="tableDiv">
+					<table id = "categoryTable">
+						<tr>
+							<c:forEach items="${array }" var="arr" step="1" varStatus="i">
+								<td>
+									<input type ="checkbox" name="" value="" id="${i.index}" style="float:left"/>
+									<label  id ="label"for ="${i.index}" style="float:left">${arr}</label>
+								</td>
+								<c:if test="${(i.index+1)%4 == 0 }">
+									<tr></tr>
+								</c:if>
+							</c:forEach>
+						<tr/>
+					</table>	
 				</div>
 			</div>
 		</div>

@@ -16,23 +16,24 @@ import com.smartchoice.app.domain.MemberDto;
 @Repository
 public class MemberDAOImpl implements MemberDAO {
 	
+	private static final String NAMESPACE ="com.smartchoice.mappers.memberMapper";
 	@Inject
 	private SqlSession sqlSession;
 	
 	@Override
 	public void regiMember(@ModelAttribute MemberDto dto) {
-		sqlSession.insert("regiMember", dto);	
+		sqlSession.insert(NAMESPACE +".regiMember", dto);	
 	}
 
 	@Override
 	public List getMemberList() {
-		return sqlSession.selectList("getMemberList");
+		return sqlSession.selectList(NAMESPACE+".getMemberList");
 	}
 
 	
 	@Override
 	public MemberDto getMemberWithId(String mem_id) {
-		return sqlSession.selectOne("getMemberWithId", mem_id);
+		return sqlSession.selectOne(NAMESPACE+".getMemberWithId", mem_id);
 	}
 
 	@Override
@@ -41,20 +42,20 @@ public class MemberDAOImpl implements MemberDAO {
 		paramMap.put("mem_id", mem_id);
 		paramMap.put("mem_pw", mem_pw);
 		
-		return sqlSession.selectOne("getMember",paramMap);
+		return sqlSession.selectOne(NAMESPACE+".getMember",paramMap);
 	}
 
 	
 	@Override
 	public void updateMember(@ModelAttribute MemberDto dto) {
-		sqlSession.update("updateMember",dto);
+		sqlSession.update(NAMESPACE+".updateMember",dto);
 
 	}
 
 	
 	@Override
 	public void deleteMember(int mem_num) {
-		sqlSession.delete("deleteMember",mem_num);
+		sqlSession.delete(NAMESPACE+".deleteMember",mem_num);
 
 	}
 

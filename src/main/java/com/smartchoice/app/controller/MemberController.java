@@ -41,6 +41,7 @@ import com.smartchoice.app.service.MemberService;
 @RequestMapping("/member/")
 public class MemberController {
 	
+	
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 	
 	@Inject
@@ -105,8 +106,9 @@ public class MemberController {
 	}
 	
 	@RequestMapping("/memberStep2")
-	public void regiStep2(@ModelAttribute(value="MemberDto") MemberDto dto){
-		
+	public void regiStep2(@ModelAttribute(value="MemberDto") MemberDto dto,HttpServletRequest req){
+		String[] array = {"1","2","3","4","5","6","7","8","9"};
+		req.setAttribute("array", array);
 	}
 	@RequestMapping("/delete")
 	public void deleteMember(int mem_num){

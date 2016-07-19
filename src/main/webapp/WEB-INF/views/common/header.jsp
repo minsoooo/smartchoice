@@ -107,14 +107,10 @@
 		<div class="container">
 			<div class="row">				
 				<!-- 로그인 및 회원가입 -->
-				<div class="span2" style="margin-top:8px;">
-					<input type="button" id="btnSignIn" class="btn" value="Sign In"
-					onclick="javascript:fnLogin()" />
-
 				<div class="span3 offset9" id="header1Div">
 					<input type="button" id="btnSignIn" class="btn" value="Sign In" 
 					onclick="javascript:fnLogin()"/>
-					<a href="#">Join Now</a>
+					<a href="/member/member">Join Now</a>
 				</div>
 				
 				<!-- 아이디 및 로그아웃 

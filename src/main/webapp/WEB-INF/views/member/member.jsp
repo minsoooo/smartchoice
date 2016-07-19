@@ -3,7 +3,6 @@
 <html>
 <head>
 <title>RegiMember</title>
-<link rel="stylesheet" href="/resources/bootstrap/css/bootstrap.min.css" />
 <script src="/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 <script>
 	$(document).ready(
@@ -152,17 +151,17 @@ body{
 }
 
 #step1, #step2, #step3{
-	height: 150px;
 	width : 250px;
+	margin-left:10px;
 }
 
 #stepDiv{
-	margin-left:200px
+	margin-left:60px
 }
 
 #formDiv{
 	margin-top :20px;
-	margin-left:420px;
+	margin-left:300px;
 }
 input{
 	height:30px;
@@ -174,20 +173,21 @@ input{
 	
 }
 #email1,#email2{
-	width : 139px;
+	width : 132px;
 	margin-bottom:5px;
 }
 
-#email_check{
+#inputCode{
+	margin-top:11px;
 	width : 168px;
 }
 
-.btn {
-	width : 200px;
+#btnNext{
+	width : 180px;
 	display: inline-block;
 	padding: 6px 12px;
 	margin-top: 5px;
-	margin-left: 50px;
+	margin-left: 100px;
 	margin-bottom: 0;
 	font-size: 14px;
 	font-weight: bold;
@@ -274,7 +274,5 @@ input{
 	
 	
 	<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
-	
-	<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>
