@@ -13,8 +13,10 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.apache.ibatis.session.SqlSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -35,8 +37,10 @@ import com.smartchoice.app.util.Cipher;
 import com.smartchoice.app.util.MailSend;
 import com.smartchoice.app.util.MemberValidation;
 import com.smartchoice.app.controller.MemberController;
+import com.smartchoice.app.domain.CardDto;
 import com.smartchoice.app.domain.MemberDto;
 import com.smartchoice.app.service.BigCategoryService;
+import com.smartchoice.app.service.CardService;
 import com.smartchoice.app.service.MemberService;
 
 @Controller
@@ -47,15 +51,18 @@ public class MemberController {
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
 	
 	@Inject
-	private MemberService service;
+	private MemberService service_mem;
 	
 	@Inject 
 	private BigCategoryService service_cate;
 	
+	@Inject
+	private CardService service_card;
+	
 	@RequestMapping("/check")
 	public void checkId(String mem_id, HttpServletResponse resp){
 		String result = "true";
-		if(service.getMemberWithId(mem_id) != null){
+		if(service_mem.getMemberWithId(mem_id) != null){
 			result ="false";
 		}
 			PrintWriter out = null;
@@ -111,13 +118,76 @@ public class MemberController {
 	
 	@RequestMapping("/memberStep2")
 	public void regiStep2(@ModelAttribute(value="MemberDto") MemberDto dto,HttpServletRequest req){
-		List CateList = new ArrayList();
-		CateList = service_cate.getBigCategory();
-		req.setAttribute("CateList", CateList );			
+		List cateList = new ArrayList();
+		cateList = service_cate.getBigCategory();
+		req.setAttribute("MemberDto", dto);
+		req.setAttribute("cateList", cateList );			
 	}
+	
+	@RequestMapping(value ="/memberStep2", method=RequestMethod.POST)
+	public String regiStep3(@ModelAttribute MemberDto dto, HttpServletRequest req, RedirectAttributes rttr){
+		String[] favs= req.getParameterValues("big_cate");
+		String mem_fav1 = favs[0];
+		String mem_fav2 = favs[1];
+		String mem_fav3 = favs[2];
+		
+		dto.setMem_fav1(mem_fav1);
+		dto.setMem_fav2(mem_fav2);
+		dto.setMem_fav3(mem_fav3);
+		
+		rttr.addFlashAttribute("MemberDto", dto);
+		
+		return "redirect:/member/memberStep3";
+	}
+	
+	@RequestMapping("/memberStep3")
+	public void regiStep3(@ModelAttribute(value="MemberDto") MemberDto dto,HttpServletRequest req){
+		List compList = new ArrayList();
+		compList = service_card.getCardComp();
+		req.setAttribute("compList", compList);
+		req.setAttribute("MemberDto", dto);
+	}
+	
+	@RequestMapping(value ="/memberStep3", method=RequestMethod.POST)
+	public String regiComplete(@ModelAttribute MemberDto dto, HttpServletRequest req){
+		service_mem.regiMember(dto);
+		req.setAttribute("regiCheck", "true");
+		return "index";
+		
+	}
+	
+	@RequestMapping("/cardList")
+	public void getCardList(int card_compnum,HttpServletResponse resp){
+		resp.setCharacterEncoding("utf-8");
+		resp.setContentType("text/xml");
+		List<CardDto> cardList = new ArrayList<CardDto>();
+		cardList = service_card.getCardList(card_compnum);
+		CardDto dto = null;
+		PrintWriter out = null;
+		try {
+			 out = resp.getWriter();
+			 out.println("<response>");
+			 for(int i =0; i<cardList.size();i++){
+				 dto = (CardDto)cardList.get(i);
+				 out.println("<card>");
+				 out.println("<card_code>"+dto.getCard_code()+"</card_code>");
+				 out.println("<card_name>"+dto.getCard_name()+"</card_name>");
+				 out.println("<card_img>"+dto.getCard_img()+"</card_img>");
+				 out.println("</card>");
+			 }
+			 out.println("</response>");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally{
+			out.close();
+		}
+		
+		
+	}
+	
 	@RequestMapping("/delete")
 	public void deleteMember(int mem_num){
-		service.deleteMember(mem_num);
+		service_mem.deleteMember(mem_num);
 	}
 	
 	@RequestMapping("/update")
@@ -127,12 +197,12 @@ public class MemberController {
 	
 	@RequestMapping(value="/update",method=RequestMethod.POST)
 	public void updateMember(@ModelAttribute MemberDto dto){
-		service.updateMember(dto);
+		service_mem.updateMember(dto);
 	}
 	
 	@RequestMapping("/memberList")
 	public List<MemberDto> getMemberList(){
-		return service.getMemberList();
+		return service_mem.getMemberList();
 	}
 	
 	@RequestMapping("/login")
@@ -148,7 +218,7 @@ public class MemberController {
 			return"/member/login";
 		}
 		try {
-			MemberDto dto = service.getMember(member.getMem_id(), member.getMem_pw());
+			MemberDto dto = service_mem.getMember(member.getMem_id(), member.getMem_pw());
 			WebUtils.setSessionAttribute(req, "MEM_KEY", dto);
 			req.setAttribute("check", "success");
 		} catch (Exception e) {
