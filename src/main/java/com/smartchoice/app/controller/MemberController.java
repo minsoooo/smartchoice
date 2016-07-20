@@ -1,10 +1,11 @@
 package com.smartchoice.app.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 /*
- * 	 ÀÛ¼ºÀÚ : ¹Ú¹Î¼ö
- * 	 ÀÛ¼ºÀÏ : 2016-07-18
- * 	 ¼³¸í : È¸¿ø°ü·Ã controller
+ * 	 ï¿½Û¼ï¿½ï¿½ï¿½ : ï¿½Ú¹Î¼ï¿½
+ * 	 ï¿½Û¼ï¿½ï¿½ï¿½ : 2016-07-18
+ * 	 ï¿½ï¿½ï¿½ï¿½ : È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ controller
  * 
  */
 import java.util.List;
@@ -35,6 +36,7 @@ import com.smartchoice.app.util.MailSend;
 import com.smartchoice.app.util.MemberValidation;
 import com.smartchoice.app.controller.MemberController;
 import com.smartchoice.app.domain.MemberDto;
+import com.smartchoice.app.service.BigCategoryService;
 import com.smartchoice.app.service.MemberService;
 
 @Controller
@@ -47,7 +49,9 @@ public class MemberController {
 	@Inject
 	private MemberService service;
 	
-	// Áßº¹¾ÆÀÌµğ Ã¼Å© ÄÚµå/AJAX Ã³¸®
+	@Inject 
+	private BigCategoryService service_cate;
+	
 	@RequestMapping("/check")
 	public void checkId(String mem_id, HttpServletResponse resp){
 		String result = "true";
@@ -65,15 +69,15 @@ public class MemberController {
 		}
 		
 	}
-	// ÀÌ¸ŞÀÏ ÀÎÁõ ÄÚµå Àü¼Û
+
 	@RequestMapping("/code")
 	public void sendCode(HttpServletRequest req, HttpServletResponse resp){
 		MailSend send = new MailSend();
 		Cipher cipher = new Cipher();
 		String recipient = req.getParameter("email1")+"@"+req.getParameter("email2");
-		String title = "ÀÌ¸ŞÀÏ ÀÎÁõ ÄÚµåÀÔ´Ï´Ù.";
+		String title = "ì´ë©”ì¼ ì¸ì¦ ì½”ë“œì…ë‹ˆë‹¤.";
 		String newCode = cipher.getNewCode();
-		String content ="ÀÌ¸ŞÀÏ ÀÎÁõ ÄÚµåÀÔ´Ï´Ù. : " + newCode + "  Á¤È®È÷ ÀÔ·ÂÇØÁÖ¼¼¿ä";
+		String content ="ì´ë©”ì¼ ì¸ì¦ ì½”ë“œì…ë‹ˆë‹¤.. : " + newCode + "  ì •í™•íˆ ì…ë ¥í•´ ì£¼ì„¸ìš”";
 		send.setProperty("smtp.naver.com", 465, "altntaos@naver.com", "als136512403!");
 		send.sendMail(recipient, title, content);
 		
@@ -107,8 +111,9 @@ public class MemberController {
 	
 	@RequestMapping("/memberStep2")
 	public void regiStep2(@ModelAttribute(value="MemberDto") MemberDto dto,HttpServletRequest req){
-		String[] array = {"1","2","3","4","5","6","7","8","9"};
-		req.setAttribute("array", array);
+		List CateList = new ArrayList();
+		CateList = service_cate.getBigCategory();
+		req.setAttribute("CateList", CateList );			
 	}
 	@RequestMapping("/delete")
 	public void deleteMember(int mem_num){
