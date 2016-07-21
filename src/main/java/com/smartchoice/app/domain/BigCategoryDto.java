@@ -1,4 +1,5 @@
 /*
+<<<<<<< HEAD
  * 	카드추천 BigclassDto
 		
 	작성일 : 2016-07-19
@@ -24,4 +25,5 @@ public class BigCategoryDto {
 	public void setBig_name(String big_name) {
 		this.big_name = big_name;
 	}
+
 }

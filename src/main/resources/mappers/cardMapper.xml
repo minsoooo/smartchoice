@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smartchoice.mappers.cardMapper">
+	
+	<select id="getCompanyList" resultType="CardDto">
+		select * from company
+	</select>
+	
+	<select id="getBigCategoryList" resultType="BigCategoryDto">
+		select * from bigcategory
+	</select>
+	
+	<select id="getSmallCategoryList" parameterType="int" resultType="SmallCategoryDto">
+		select * from smallcategory where small_bignum = #{big_num}
+	</select>
+	
+	
+</mapper>
