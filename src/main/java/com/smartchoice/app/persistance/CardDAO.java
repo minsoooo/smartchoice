@@ -16,4 +16,5 @@ public interface CardDAO {
 	public void deleteCard(int card_useflag);
 	public List<CardDto> CardList();
 
+
 }

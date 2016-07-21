@@ -232,7 +232,7 @@ public class MemberController {
 	@RequestMapping("/logout")
 	public String logout(HttpServletRequest req){
 		req.getSession().invalidate();
-		return "index";
+		return "home";
 	}
 	
 	

@@ -5,17 +5,14 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.smartchoice.mappers.cardMapper">
-
 	<select id ="getCardList" resultType="CardDto">
 		select * from v_details_card where card_compnum = #{card_compnum}
 	</select>
-	
-	<select id="getCompanyList" resultType="CardDto">
-		select * from company order by comp_num desc
-	</select>
-	
 	<select id="getBigCategoryList" resultType="BigCategoryDto">
 		select * from bigcategory
+	</select>
+	<select id="getCompanyList" resultType="CardDto">
+		select * from company order by comp_num desc
 	</select>
 	
 	<select id="getSmallCategoryList" resultType="SmallCategoryDto">

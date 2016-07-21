@@ -3,6 +3,7 @@ package com.smartchoice.app.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
 import com.smartchoice.app.domain.CardDto;
@@ -43,6 +44,7 @@ public class CardServiceImpl implements CardService {
 	public List getSmallCategoryList() {
 		// TODO Auto-generated method stub
 		return dao.getSmallCategoryList();
+
 	}
 
 	@Override

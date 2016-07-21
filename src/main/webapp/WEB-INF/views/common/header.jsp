@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -110,6 +111,7 @@
 	
 	<div  id="header1">
 		<div class="container">
+
 			<div class="row">
 				<c:choose>
 					<c:when test="${sessionScope.MEM_KEY eq null }">
@@ -127,7 +129,6 @@
 						</div>
 					</c:otherwise>
 				</c:choose>			
-				
 			</div>
 		</div>
 	</div>
