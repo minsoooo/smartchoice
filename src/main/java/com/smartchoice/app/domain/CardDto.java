@@ -1,4 +1,5 @@
 
+
 /*
  * 	2016.07.29
  * 	CardDto 작성
@@ -84,6 +85,7 @@ public class CardDto {
 		return "CardDto [comp_name=" + comp_name + ", comp_num=" + comp_num + ", card_name=" + card_name + ", card_num="
 				+ card_num + ", card_annualfee=" + card_annualfee + ", card_lastrecord=" + card_lastrecord
 				+ ", card_typeflag=" + card_typeflag + ", card_useflag=" + card_useflag + "]";
+
 	}
 	
 	

@@ -19,4 +19,5 @@
 		select * from smallcategory where small_bignum = (select big_num from bigcategory where big_num = )
 	</select>
 
+
 </mapper>

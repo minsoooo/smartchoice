@@ -9,7 +9,7 @@
 	$(document).ready(
 		function(){
 			if($("#regiCheck").attr("value") == "true"){
-				alert("회원가입을 축하합니다.")
+				alert("회원가입을 축하합니다.");
 			}
 		}		
 	);

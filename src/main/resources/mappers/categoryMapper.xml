@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.smartchoice.mappers.categoryMapper">
+
+	<select id="getAllSmallCategory" resultType="CategoryDto">
+		select * from v_details_category
+	</select>
+	
+	<select id="getSmallCategory" resultType="CategoryDto">
+		select * from v_details_category where big_num=#{big_num}
+	</select>
+</mapper>

@@ -138,7 +138,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="span8 offset4">
-					<a href="#">카드추천</a>
+					<a href="/planCard/planIntro.plan">카드추천</a>
 					<a href="/accountbook/index">지출관리</a>
 					<a href="#">매장찾기</a>
 					<a href="#">이벤트</a>

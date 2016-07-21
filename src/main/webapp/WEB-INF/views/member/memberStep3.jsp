@@ -104,7 +104,6 @@
 	padding-left: 30px;
 	padding-right: 10px;
 	cursor: pointer;
-
 }
 
 #subBtn {

@@ -17,4 +17,5 @@ public interface CardDAO {
 	public List<CardDto> CardList();
 
 
+
 }
