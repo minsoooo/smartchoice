@@ -1,5 +1,5 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"%>
- <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -11,15 +11,18 @@
 	function fnLogin(){
 		window.open("/member/login","","width=350,height=200,top=+400,left=+600");
 	}
-	
-	function fnLogout(){
-		document.location.href ="/member/logout"
-	}
+
 </script>
 </head>
 <style>
 @import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
 
+#mem_id {
+	font-size:15px;
+	color: #669aba;
+	margin-left: 40px;
+	
+}
 #header1{
 	background-color:#4e4a41;
 	height:50px;
@@ -65,7 +68,7 @@
 	margin-top:23px;
 }
 
-.btn {
+#btnSignIn, #btnSignOut{
 	display: inline-block;
 	padding: 6px 12px;
 	margin-bottom: 0;
@@ -89,7 +92,7 @@
 	border-radius: 4px
 }
 
-.btn:hover, .btn:focus{
+#btnSignIn:hover, .#btnSignIn:focus, #btnSignOut:hover, .#btnSignOut:focus{
 	background-color:#675c4c;
 	color:#fff;
 }
@@ -107,8 +110,7 @@
 	
 	<div  id="header1">
 		<div class="container">
-			<div class="row">				
-				<!-- 로그인 및 회원가입 -->
+			<div class="row">
 				<c:choose>
 					<c:when test="${sessionScope.MEM_KEY eq null }">
 						<div class="span3 offset9" id="header1Div">
@@ -119,17 +121,12 @@
 					</c:when>
 					
 					<c:otherwise>
-						<div class="span3 offset9" style="margin-top:8px;">
-							<font style="color:#d9d5cc">아이디</font>
-							<input type="button" id="btnSignOut" class="btn" value="Sign Out"
-							onclick="javascript:fnLogout()" />
+						<div class="span5 offset8" id="header1Div">
+							<font id ="mem_id">${sessionScope.MEM_KEY.mem_id } 님 안녕하세요</font>
+							<a href="/member/logout">Log Out</a>
 						</div>
 					</c:otherwise>
-				</c:choose>
-
-				
-			 
-		
+				</c:choose>			
 				
 			</div>
 		</div>
@@ -140,11 +137,12 @@
 		<div class="container">
 			<div class="row">
 				<div class="span8 offset4">
-					<a href="/planCard/planIntro.plan">카드추천</a>
+					<a href="#">카드추천</a>
 					<a href="/accountbook/index">지출관리</a>
 					<a href="#">매장찾기</a>
 					<a href="#">이벤트</a>
 					<a href="#">공지사항</a>
+
 				</div>
 			</div>
 		</div>

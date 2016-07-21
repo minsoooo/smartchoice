@@ -1,16 +1,14 @@
+
 /*
- * 	카드추천 BigclassDto
-		
-	작성일 : 2016-07-19
-	수정일 : 2016-07-19
-	작성자 : 김상덕
+ * 	2016.07.21
+ * 	대분류 Dto 작성
  */
 package com.smartchoice.app.domain;
 
 public class BigCategoryDto {
-	
 	private int big_num;
 	private String big_name;
+	
 	
 	public int getBig_num() {
 		return big_num;
@@ -24,4 +22,12 @@ public class BigCategoryDto {
 	public void setBig_name(String big_name) {
 		this.big_name = big_name;
 	}
+
+
+	
+	@Override
+	public String toString() {
+		return "BigCategoryDto [big_num=" + big_num + ", big_name=" + big_name + "]";
+	}
+
 }
