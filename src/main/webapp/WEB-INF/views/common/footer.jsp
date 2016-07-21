@@ -1,9 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>Insert title here</title>
 </head>
 <style>
@@ -25,6 +23,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="span12">
+				 	<a href="">관리자 로그인</a>
 					<font id="copyright">Copyright 2016 $mart Choice. All rights reserved.</font>
 					<hr style="border:1px solid #c2bdb7;">
 				</div>

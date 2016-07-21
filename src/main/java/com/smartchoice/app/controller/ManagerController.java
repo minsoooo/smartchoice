@@ -1,5 +1,4 @@
 package com.smartchoice.app.controller;
-
 import java.util.List;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -102,6 +101,7 @@ public class ManagerController {
 		return "redirect:/manager/manager_cardList";
 	}
 	
+
 	//관리자 데이터정보리스트 페이지 
 	@RequestMapping("/manager_dataList")
 	public void managerDataListGET() throws Exception{

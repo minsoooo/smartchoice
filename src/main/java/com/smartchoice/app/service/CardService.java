@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.smartchoice.app.domain.CardDto;
 
+
 public interface CardService {
 
 	public void registerCard(CardDto dto);	//카드등록
@@ -15,5 +16,6 @@ public interface CardService {
 	public List<CardDto> CardList();
 	public List<CardDto> getCardComp();
 	public List<CardDto> getCardList(int card_compnum);
+
 
 }

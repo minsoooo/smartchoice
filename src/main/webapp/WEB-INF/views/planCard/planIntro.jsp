@@ -30,7 +30,7 @@
 </style>
 
 </head>
-<body>
+<body style="background-color:#f5f4f0;">
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <form action="/planCard/planPattern.plan" method="post">
 

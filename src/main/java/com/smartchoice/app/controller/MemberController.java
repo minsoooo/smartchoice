@@ -143,7 +143,9 @@ public class MemberController {
 	@RequestMapping("/memberStep3")
 	public void regiStep3(@ModelAttribute(value="MemberDto") MemberDto dto,HttpServletRequest req){
 		List compList = new ArrayList();
+
 		compList = service_card.getCardComp();
+
 		req.setAttribute("compList", compList);
 		req.setAttribute("MemberDto", dto);
 	}
@@ -232,7 +234,7 @@ public class MemberController {
 	@RequestMapping("/logout")
 	public String logout(HttpServletRequest req){
 		req.getSession().invalidate();
-		return "home";
+		return "index";
 	}
 	
 	

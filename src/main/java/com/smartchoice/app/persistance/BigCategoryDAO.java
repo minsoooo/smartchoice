@@ -12,6 +12,6 @@ import java.util.List;
 
 import com.smartchoice.app.domain.BigCategoryDto;
 
-public interface BigCategoryDao {
+public interface BigCategoryDAO {
 	public List<BigCategoryDto> getBigCategory();
 }

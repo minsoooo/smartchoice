@@ -7,12 +7,12 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.smartchoice.app.domain.BigCategoryDto;
-import com.smartchoice.app.persistance.BigCategoryDao;
+import com.smartchoice.app.persistance.BigCategoryDAO;
 
 @Service
 public class BigCategoryServiceImpl implements BigCategoryService {
 	@Inject
-	private BigCategoryDao dao;
+	private BigCategoryDAO dao;
 	
 	@Override
 	public List<BigCategoryDto> getBigCategory() {

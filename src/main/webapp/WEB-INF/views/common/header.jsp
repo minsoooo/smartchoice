@@ -1,9 +1,9 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>Insert title here</title>
 <link rel="stylesheet"
 	href="/resources/bootstrap/css/bootstrap.min.css" />
@@ -18,6 +18,12 @@
 <style>
 @import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
 
+#mem_id {
+	font-size:15px;
+	color: #669aba;
+	margin-left: 40px;
+	
+}
 #header1{
 	background-color:#4e4a41;
 	height:50px;
@@ -63,7 +69,7 @@
 	margin-top:23px;
 }
 
-.btn {
+#btnSignIn, #btnSignOut{
 	display: inline-block;
 	padding: 6px 12px;
 	margin-bottom: 0;
@@ -87,14 +93,14 @@
 	border-radius: 4px
 }
 
-.btn:hover, .btn:focus{
+#btnSignIn:hover, .#btnSignIn:focus, #btnSignOut:hover, .#btnSignOut:focus{
 	background-color:#675c4c;
 	color:#fff;
 }
 
 </style>
 <body>
-	<!-- ·Î°í -->
+	<!-- ë¡œê³  -->
 	<div class="container">
 		<div class="row">
 			<div class="span4" style="position:absolute;">
@@ -105,25 +111,29 @@
 	
 	<div  id="header1">
 		<div class="container">
-			<div class="row">				
-				<!-- ·Î±×ÀÎ ¹× È¸¿ø°¡ÀÔ -->
-				<div class="span3 offset9" id="header1Div">
-					<input type="button" id="btnSignIn" class="btn" value="Sign In" 
-					onclick="javascript:fnLogin()"/>
-					<a href="/member/member">Join Now</a>
 
-				</div>
-				
-				<!-- ¾ÆÀÌµğ ¹× ·Î±×¾Æ¿ô 
-				<div class="span2 offset9" style="margin-top:8px;">
-					<font style="color:#d9d5cc">¾ÆÀÌµğ</font>
-					<input type="button" id="btnSignOut" class="btn" value="Sign Out" />
-				</div>
-				-->
+			<div class="row">
+				<c:choose>
+					<c:when test="${sessionScope.MEM_KEY eq null }">
+						<div class="span3 offset9" id="header1Div">
+							<input type="button" id="btnSignIn" class="btn" value="Sign In" 
+							onclick="javascript:fnLogin()"/>
+							<a href="/member/member">Join Now</a>
+						</div>
+					</c:when>
+					
+					<c:otherwise>
+						<div class="span5 offset8" id="header1Div">
+							<font id ="mem_id">${sessionScope.MEM_KEY.mem_id } ë‹˜ ì•ˆë…•í•˜ì„¸ìš”</font>
+							<a href="/member/logout">Log Out</a>
+						</div>
+					</c:otherwise>
+				</c:choose>			
 			</div>
 		</div>
 	</div>
 	
+<<<<<<< HEAD
 	<!-- ¸ŞÀÎ¸Ş´º -->
 	<div  id="header2">
 		<div class="container">
@@ -134,6 +144,19 @@
 					<a href="#">¸ÅÀåÃ£±â</a>
 					<a href="#">ÀÌº¥Æ®</a>
 					<a href="#">°øÁö»çÇ×</a>
+=======
+	<!-- ë©”ì¸ë©”ë‰´ -->
+	<div  id="header2">
+		<div class="container">
+			<div class="row">
+				<div class="span8 offset4">
+					<a href="/planCard/planIntro.plan">ì¹´ë“œì¶”ì²œ</a>
+					<a href="/accountbook/index">ì§€ì¶œê´€ë¦¬</a>
+					<a href="#">ë§¤ì¥ì°¾ê¸°</a>
+					<a href="#">ì´ë²¤íŠ¸</a>
+					<a href="#">ê³µì§€ì‚¬í•­</a>
+
+>>>>>>> refs/remotes/origin/master
 				</div>
 			</div>
 		</div>

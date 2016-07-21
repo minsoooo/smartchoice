@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,31 +9,28 @@
 	$(document).ready(
 		function(){
 			if($("#regiCheck").attr("value") == "true"){
-				alert("È¸¿ø °¡ÀÔÀÌ ¿Ï·á µÇ¾ú½À´Ï´Ù.")
+				alert("íšŒì›ê°€ì…ì„ ì¶•í•˜í•©ë‹ˆë‹¤.");
+
 			}
 		}		
 	);
 </script>
 <style>
-body{
-	background-color:#f5f4f0;
-}
-
 #content{
 	margin-top:50px;
 	margin-bottom:50px;
 }
 </style>
-<body>
+<body style="background-color:#f5f4f0">
 
 	<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 	<span id ="regiCheck" value ="${regiCheck }"></span>
 	<div class="container" id="content">
 		<div class="row">
-			<div class="span12">
-			
-				<!-- ³»¿ë µé¾î°¥ ºÎºĞ -->
-			
+			<div class="span12" style="border:1px solid red">
+				
+				 
+				
 			</div>
 		</div>
 	</div>
