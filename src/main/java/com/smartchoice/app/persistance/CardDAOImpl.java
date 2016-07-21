@@ -51,6 +51,7 @@ public class CardDAOImpl implements CardDAO {
 	@Override
 	public List getSmallCategoryList(int big_num) {
 		// TODO Auto-generated method stub
+
 		return sqlSession.selectList(NAMESPACE+".getSmallCategoryList",big_num);
 	}
 
