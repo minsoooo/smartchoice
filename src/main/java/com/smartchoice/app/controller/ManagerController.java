@@ -12,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.smartchoice.app.persistance.CardDAO;
 import com.smartchoice.app.service.CardService;
 
 @Controller

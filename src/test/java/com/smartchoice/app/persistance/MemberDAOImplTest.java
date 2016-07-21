@@ -37,7 +37,7 @@ public class MemberDAOImplTest {
 		dto.setMem_fav3("123");
 		dto.setMem_level("2");
 		dto.setMem_pw("1111");
-		dto.setMem_cardnum("1111");
+		dto.setMem_cardcode("1111");
 		logger.info(dto.toString());
 		
 		service.regiMember(dto);
@@ -62,13 +62,7 @@ public class MemberDAOImplTest {
 	@Test
 	public void testUpdateMember() throws Exception {
 		MemberDto dto = new MemberDto();
-		dto.setMem_fav1("수정테스트");
-		dto.setMem_fav2("수정테스트");
-		dto.setMem_fav3("수정테스트");
-		dto.setMem_level("수정테스트");
-		dto.setMem_pw("수정테스트");
-		dto.setMem_cardnum("수정테스트");
-		dto.setMem_num(1);
+
 		
 		service.updateMember(dto);
 	}

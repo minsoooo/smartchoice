@@ -138,9 +138,6 @@
 </script>
 </head>
 <style>
-body{
-	background-color:#f5f4f0;
-}
 
 #imgTd{
 	width : 20px
@@ -208,9 +205,16 @@ input{
 	border: 1px solid transparent;
 	border-radius: 4px;
 	border: 0;
-	outline: 0
+	outline: 0;
+	}
+	
+	#btnNext:hover{
+	background-color:#97b162;
+	border: 0;
+	outline: 0;
+}	
 </style>
-<body>
+<body style="background-color:#f5f4f0">
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 	<span id ="check" value = "false"></span>
 	<span id ="checkCode" value =""></span>

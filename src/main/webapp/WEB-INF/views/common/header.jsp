@@ -128,15 +128,8 @@
 	<div  id="header2">
 		<div class="container">
 			<div class="row">
-<<<<<<< HEAD
-				<div class="span8 offset4">
-					<a href="#">카드추천</a>
-=======
-
 				<div class="span8 offset4">
 					<a href="/planCard/planIntro.plan">카드추천</a>
-
->>>>>>> refs/remotes/origin/recomendCard_santori_Snapshot1.0
 					<a href="/accountbook/index">지출관리</a>
 					<a href="#">매장찾기</a>
 					<a href="#">이벤트</a>

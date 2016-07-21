@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+<<<<<<< HEAD
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -56,12 +57,23 @@ public class CardServiceImpl implements CardService {
 	public void deleteCard(int card_useflag) {
 		// TODO Auto-generated method stub
 
+	}	
+	@Override
+	public List<CardDto> getCardList(int card_compnum) {
+		
+		return dao.getCardList(card_compnum);
 	}
+
 
 	@Override
 	public List<CardDto> CardList() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	@Override
+	public List<CardDto> getCardComp() {
+
+		return dao.getCardComp();
 	}
 
 }

@@ -10,7 +10,7 @@ public class MemberDto {
 	private String mem_fav1;
 	private String mem_fav2;
 	private String mem_fav3;
-	private String mem_cardnum;
+	private String mem_cardcode;
 	
 	
 	public String getMem_fav1() {
@@ -37,12 +37,12 @@ public class MemberDto {
 		this.mem_fav3 = mem_fav3;
 	}
 
-	public String getMem_cardnum() {
-		return mem_cardnum;
+	public String getMem_cardcode() {
+		return mem_cardcode;
 	}
 
-	public void setMem_cardnum(String mem_cardnum) {
-		this.mem_cardnum = mem_cardnum;
+	public void setMem_cardcode(String mem_cardcode) {
+		this.mem_cardcode = mem_cardcode;
 	}
 
 	public int getMem_num() {
@@ -93,8 +93,8 @@ public class MemberDto {
 				+getMem_level() +" getMem_email : "+getMem_email()+
 				" getMem_pw : " +getMem_pw() + " getMem_id : "+getMem_id() +
 				 " getMem_fav1 : "+getMem_fav1()+" getMem_fav2 : "+
-				getMem_fav2()+" getMem_fav3 : " +getMem_fav3() +" getMem_cardnum"
-				+getMem_cardnum();
+				getMem_fav2()+" getMem_fav3 : " +getMem_fav3() +" getMem_cardcode"
+				+getMem_cardcode();
 	}
 
 }
