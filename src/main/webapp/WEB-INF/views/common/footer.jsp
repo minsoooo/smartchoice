@@ -1,10 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>Insert title here</title>
+<script>
+	function fnAdimLogin(){
+		
+	}
+
+</script>
 </head>
 <style>
 #footer{
@@ -25,6 +29,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="span12">
+					<a href="javascript:fnAdminLogin()" id ="admin_login">관리자 로그인</a>
 					<font id="copyright">Copyright 2016 $mart Choice. All rights reserved.</font>
 					<hr style="border:1px solid #c2bdb7;">
 				</div>

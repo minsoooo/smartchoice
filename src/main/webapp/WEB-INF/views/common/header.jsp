@@ -1,9 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"%>
+ <%@ taglib prefix="c"  uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
 <title>Insert title here</title>
 <link rel="stylesheet"
 	href="/resources/bootstrap/css/bootstrap.min.css" />
@@ -12,7 +11,10 @@
 	function fnLogin(){
 		window.open("/member/login","","width=350,height=200,top=+400,left=+600");
 	}
-
+	
+	function fnLogout(){
+		document.location.href ="/member/logout"
+	}
 </script>
 </head>
 <style>
@@ -94,7 +96,7 @@
 
 </style>
 <body>
-	<!-- ·Î°í -->
+	<!-- ë¡œê³  -->
 	<div class="container">
 		<div class="row">
 			<div class="span4" style="position:absolute;">
@@ -106,34 +108,43 @@
 	<div  id="header1">
 		<div class="container">
 			<div class="row">				
-				<!-- ·Î±×ÀÎ ¹× È¸¿ø°¡ÀÔ -->
-				<div class="span3 offset9" id="header1Div">
-					<input type="button" id="btnSignIn" class="btn" value="Sign In" 
-					onclick="javascript:fnLogin()"/>
-					<a href="/member/member">Join Now</a>
+				<!-- ë¡œê·¸ì¸ ë° íšŒì›ê°€ì… -->
+				<c:choose>
+					<c:when test="${sessionScope.MEM_KEY eq null }">
+						<div class="span3 offset9" id="header1Div">
+							<input type="button" id="btnSignIn" class="btn" value="Sign In" 
+							onclick="javascript:fnLogin()"/>
+							<a href="/member/member">Join Now</a>
+						</div>
+					</c:when>
+					
+					<c:otherwise>
+						<div class="span3 offset9" style="margin-top:8px;">
+							<font style="color:#d9d5cc">ì•„ì´ë””</font>
+							<input type="button" id="btnSignOut" class="btn" value="Sign Out"
+							onclick="javascript:fnLogout()" />
+						</div>
+					</c:otherwise>
+				</c:choose>
 
-				</div>
 				
-				<!-- ¾ÆÀÌµğ ¹× ·Î±×¾Æ¿ô 
-				<div class="span2 offset9" style="margin-top:8px;">
-					<font style="color:#d9d5cc">¾ÆÀÌµğ</font>
-					<input type="button" id="btnSignOut" class="btn" value="Sign Out" />
-				</div>
-				-->
+			 
+		
+				
 			</div>
 		</div>
 	</div>
 	
-	<!-- ¸ŞÀÎ¸Ş´º -->
+	<!-- ë©”ì¸ë©”ë‰´ -->
 	<div  id="header2">
 		<div class="container">
 			<div class="row">
 				<div class="span8 offset4">
-					<a href="/planCard/planIntro.plan">Ä«µåÃßÃµ</a>
-					<a href="/accountbook/index">ÁöÃâ°ü¸®</a>
-					<a href="#">¸ÅÀåÃ£±â</a>
-					<a href="#">ÀÌº¥Æ®</a>
-					<a href="#">°øÁö»çÇ×</a>
+					<a href="/planCard/planIntro.plan">ì¹´ë“œì¶”ì²œ</a>
+					<a href="/accountbook/index">ì§€ì¶œê´€ë¦¬</a>
+					<a href="#">ë§¤ì¥ì°¾ê¸°</a>
+					<a href="#">ì´ë²¤íŠ¸</a>
+					<a href="#">ê³µì§€ì‚¬í•­</a>
 				</div>
 			</div>
 		</div>

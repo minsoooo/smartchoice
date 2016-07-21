@@ -29,9 +29,8 @@
 											var card_name = $(this).find("card_name").text();
 											var card_code = $(this).find("card_code").text();
 											var card_img = "/resources/images/"+ $(this).find("card_img").text();
-											var insertCode ="<td><img src ='"+card_img+"' id ='cardImg'/><br/><input type ='radio' name='mem_cardcode'"
-											+"value ='"+card_code+"'/>"+card_name+"</td>"
-											alert(insertCode)
+											var insertCode ="<td><img src ='"+card_img+"' id ='cardImg'/><br/><label for ='"+card_code+"'><input type ='radio' name='mem_cardcode'"
+											+"value ='"+card_code+"' id ='"+card_code+"'/>"+card_name+"</label></td>"
 											$(insertCode).appendTo("#cardTr")
 										}
 								)
@@ -40,8 +39,7 @@
 							}
 							$("#cardTable td").css("width","250px").css("height","140px").css("border","1px solid #d9d5cc")
 							.css("text-align","center").css("font-size","15px").css("padding-bottom","5px")
-							.css("font-weight","bold");
-							$("#cardTable img").css("width","250px").css("height","100px").css("margin-bottom","10px");
+							$("#cardTable img").css("width","250px").css("height","120px").css("margin-bottom","10px");
 						}		
 					);
 				}		
@@ -61,6 +59,15 @@
 	margin-left : 94px;
 	background-color:#fff;
 	
+}
+#cardTable label{
+	font-weight: bold
+	
+}
+
+#cardTable input[type="radio"]{
+	margin-right: 10px;
+	margin-bottom: 5px;
 }
 
 #imgTd{
@@ -104,6 +111,7 @@
 	padding-top: 10px;
 	padding-left: 30px;
 	padding-right: 10px;
+	cursor: pointer;
 	
 }
 
@@ -139,7 +147,8 @@
 	background-color:#97b162;
 	border: 0;
 	outline: 0;
-}	
+}
+
 </style>
 <body style ="background-color: #f5f4f0">
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>

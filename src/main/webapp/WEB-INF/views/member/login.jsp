@@ -13,6 +13,7 @@
  			var check = $("#check").attr("value")
  			if(check =="success"){
  				window.close();
+ 				opener.document.location.href ="/"
  			}
  		}		
  	);
