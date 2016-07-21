@@ -31,7 +31,6 @@
 											var card_img = "/resources/images/"+ $(this).find("card_img").text();
 											var insertCode ="<td><img src ='"+card_img+"' id ='cardImg'/><br/><label for='"+card_code+"'><input type ='radio' name='mem_cardcode'"
 											+"value ='"+card_code+"' id='"+card_code+"'/>"+card_name+"</label></td>"
-
 											$(insertCode).appendTo("#cardTr")
 										}
 								)
@@ -104,11 +103,8 @@
 	padding-top: 10px;
 	padding-left: 30px;
 	padding-right: 10px;
-<<<<<<< HEAD
 	cursor: pointer;
-=======
-	
->>>>>>> branch 'master' of https://github.com/minsoooo/smartchoice
+
 }
 
 #subBtn {

@@ -23,10 +23,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="span12">
-<<<<<<< HEAD
 				 	<a href="">관리자 로그인</a>
-=======
->>>>>>> branch 'master' of https://github.com/minsoooo/smartchoice
 					<font id="copyright">Copyright 2016 $mart Choice. All rights reserved.</font>
 					<hr style="border:1px solid #c2bdb7;">
 				</div>
