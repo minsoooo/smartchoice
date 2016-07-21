@@ -1,4 +1,3 @@
-
 /*
  * 	2016.07.21
  * 	대분류 Dto 작성
@@ -29,5 +28,4 @@ public class BigCategoryDto {
 	public String toString() {
 		return "BigCategoryDto [big_num=" + big_num + ", big_name=" + big_name + "]";
 	}
-
 }
