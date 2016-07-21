@@ -37,6 +37,8 @@
 	
 	
 	<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
+	
+<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
 
 </body>
 </html>

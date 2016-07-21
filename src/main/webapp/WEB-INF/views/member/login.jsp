@@ -14,7 +14,6 @@
  			if(check =="success"){
  				window.close();
  				opener.document.location.href="/"
-
  			}
  		}		
  	);

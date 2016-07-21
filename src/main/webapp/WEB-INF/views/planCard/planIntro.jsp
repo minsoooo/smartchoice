@@ -30,7 +30,11 @@
 </style>
 
 </head>
+<<<<<<< HEAD
+<body>
+=======
 <body style="background-color:#f5f4f0;">
+>>>>>>> refs/remotes/origin/master
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <form action="/planCard/planPattern.plan" method="post">
 
