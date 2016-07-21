@@ -1,5 +1,6 @@
 
 /*
+ *
  * 	2016.07.21
  * 	대분류 Dto 작성
  */
@@ -22,7 +23,6 @@ public class BigCategoryDto {
 	public void setBig_name(String big_name) {
 		this.big_name = big_name;
 	}
-
 
 	
 	@Override

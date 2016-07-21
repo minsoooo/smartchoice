@@ -143,7 +143,7 @@ public class MemberController {
 	@RequestMapping("/memberStep3")
 	public void regiStep3(@ModelAttribute(value="MemberDto") MemberDto dto,HttpServletRequest req){
 		List compList = new ArrayList();
-		compList = service_card.getCompanyList();
+		compList = service_card.getCardComp();
 		req.setAttribute("compList", compList);
 		req.setAttribute("MemberDto", dto);
 	}
@@ -153,6 +153,7 @@ public class MemberController {
 		Cipher cipher = new Cipher();
 		String MD5Pw = cipher.getMD5(dto.getMem_pw());
 		dto.setMem_pw(MD5Pw);
+
 		service_mem.regiMember(dto);
 		req.setAttribute("regiCheck", "true");
 		return "index";
