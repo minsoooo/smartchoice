@@ -34,4 +34,12 @@
 	<delete id ="deleteMember">
 		delete from member where mem_num = #{mem_num}
 	</delete>
+	
+	<select id ="searchId">
+		select mem_id from member where mem_email = #{mem_email}
+	</select>
+	
+	<update id="updateNewPw">
+		update member set mem_pw =#{mem_pw} where mem_email =#{mem_email} and mem_id =#{mem_id}
+	</update>
 </mapper>

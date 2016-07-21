@@ -150,6 +150,9 @@ public class MemberController {
 	
 	@RequestMapping(value ="/memberStep3", method=RequestMethod.POST)
 	public String regiComplete(@ModelAttribute MemberDto dto, HttpServletRequest req){
+		Cipher cipher = new Cipher();
+		String MD5Pw = cipher.getMD5(dto.getMem_pw());
+		dto.setMem_pw(MD5Pw);
 		service_mem.regiMember(dto);
 		req.setAttribute("regiCheck", "true");
 		return "index";
@@ -218,7 +221,9 @@ public class MemberController {
 			return"/member/login";
 		}
 		try {
-			MemberDto dto = service_mem.getMember(member.getMem_id(), member.getMem_pw());
+			Cipher cipher = new Cipher();
+			String MD5Pw = cipher.getMD5(member.getMem_pw());
+			MemberDto dto = service_mem.getMember(member.getMem_id(), MD5Pw);
 			WebUtils.setSessionAttribute(req, "MEM_KEY", dto);
 			req.setAttribute("check", "success");
 		} catch (Exception e) {
