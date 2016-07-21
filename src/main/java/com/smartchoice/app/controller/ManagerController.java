@@ -1,7 +1,12 @@
 package com.smartchoice.app.controller;
 
+import java.awt.List;
+import java.io.IOException;
+import java.io.PrintWriter;
+
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.junit.runners.Parameterized.Parameter;
 import org.slf4j.Logger;
@@ -11,7 +16,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smartchoice.app.service.CardService;
 
 @Controller
@@ -49,18 +56,24 @@ public class ManagerController {
 	}
 	//관리자 카드정보등록 페이지
 	@RequestMapping(value="/manager_cardRegister", method=RequestMethod.GET)
-	public String managerCardRegisterGET(HttpServletRequest req, Model model, String big_num) throws Exception{
-		int b_n = 1;
+	public String managerCardRegisterGET(@RequestParam("big_num") String big_num, HttpServletResponse resp, Model model) throws Exception{
+		ObjectMapper mapper = new ObjectMapper();
+		int big_no = 1;
 		if(big_num != null){
-			b_n = Integer.parseInt(big_num);
+			big_no = Integer.parseInt(big_num);
+		}
+		model.addAttribute("companies", service.getCardComp());
+		model.addAttribute("bigcategories", service.getBigCategoryList());
+		List smallcategories = (List) service.getSmallCategoryList(big_no);
+		try{
+			resp.getWriter().print(mapper.writeValueAsString(smallcategories));
+		}catch(IOException e){
+			e.printStackTrace();
+		}finally{
 		}
 		
-		
-		
-		System.out.println("처음: " + b_n);
-		model.addAttribute("companies", service.getCompanyList());
-		model.addAttribute("bigcategories", service.getBigCategoryList());
-		model.addAttribute("smallcategories", service.getSmallCategoryList(b_n));
+		System.out.println("처음: " + big_no);
+		//model.addAttribute("smallcategories", service.getSmallCategoryList(b_n));
 		return "/manager/manager_cardRegister";
 	}
 	//관리자 카드정보등록 전송 페이지

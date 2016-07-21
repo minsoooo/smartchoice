@@ -1,12 +1,11 @@
-package com.smartchoice.app.service;
+package com.smartchoice.app.persistance;
 
 import java.util.List;
 
 import com.smartchoice.app.domain.CardDto;
 
-public interface CardService {
-
-	public void registerCard(CardDto dto);	//카드등록
+public interface CardDAO {
+	public void registerCard(CardDto dto);
 	public List getBigCategoryList();
 	public List getSmallCategoryList(int big_num);
 	public List getDiscountList();

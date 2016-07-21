@@ -16,17 +16,35 @@ $(function(){
 });
 function big_cate_Change(){
 	var big_num_value = $("#big_category > option:selected").val();
-	//선택한 big_category의 데이터 저장
+	//$("#small_category").children().remove();
 	
 	console.log(big_num_value);
 	alert(big_num_value);
-	$.get("/manager/manager_cardRegister", {big_num: big_num_value},
+	
+	$.ajax({
+		url : "/manager/manager_cardRegister",
+		type : "get",
+		data : {"big_num" : $("#big_category > option:selected").val()},
+		success : function(responseData){
+			var data = JSON.parse(responseData);
+			var str = "";
+			if(data){
+				str = "<c:forEach items='${smallcategories }' var='smallC' ><option value='${smallC.small_num }'>${smallC.small_name }</option></c:forEach>";
+			}else{
+				str = "<option selected disabled>카테고리를 선택하세요.</option><option disabled>------------------------------------</option>";
+			}
+			$("#small_category").html(str);
+		}
+	});
+	
+	/*
+	$.get("/manager/manager_cardRegister", {"big_num": big_num_value}).done(
 		function(data){
 			console.log(data);
-			var str ="";
+			
 			$("#small_category").children().remove();
-			//console.log(data.length);
-			//alert(data.length);
+			var str ="";
+			
 			if(data.length != null){				
 				str = "<c:forEach items='${smallcategories }' var='smallC' ><option value='${smallC.small_num }'>${smallC.small_name }</option></c:forEach>";
 
@@ -37,6 +55,7 @@ function big_cate_Change(){
 			console.log(str);
 			//alert(str);
 			$("#small_category").html(str);
+	*/
 			/*
 			if(data.length>0){
 				for(var i=0; i<data.length; i++){
@@ -49,6 +68,7 @@ function big_cate_Change(){
 			$("#small_category").html(str);
 			*/
 		}
+
 	);
 }
 </script>

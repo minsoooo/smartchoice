@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-<<<<<<< HEAD
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,11 +22,6 @@ public class CardServiceImpl implements CardService {
 
 	}
 
-	@Override
-	public List getCompanyList() {
-		// TODO Auto-generated method stub
-		return dao.getCompanyList();
-	}
 
 	@Override
 	public List getBigCategoryList() {
