@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.smartchoice.app.domain.CardDto;
 @Repository
-public class CardDaoImpl implements CardDao {
+public class CardDAOImpl implements CardDAO {
 	
 	@Inject
 	private SqlSession sqlSession;

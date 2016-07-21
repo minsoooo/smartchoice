@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import com.smartchoice.app.domain.BigCategoryDto;
 
 @Repository
-public class BigCategoryDaoImpl implements BigCategoryDao {
+public class BigCategoryDAOImpl implements BigCategoryDAO {
 	@Inject
 	private SqlSession sqlSession;
 	

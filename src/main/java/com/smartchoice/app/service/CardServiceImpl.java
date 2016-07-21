@@ -7,12 +7,12 @@ import javax.inject.Inject;
 import org.springframework.stereotype.Service;
 
 import com.smartchoice.app.domain.CardDto;
-import com.smartchoice.app.persistance.CardDao;
+import com.smartchoice.app.persistance.CardDAO;
 @Service
 public class CardServiceImpl implements CardService {
 	
 	@Inject
-	private CardDao dao;
+	private CardDAO dao;
 	
 	@Override
 	public List<CardDto> getCardList(int card_compnum) {
