@@ -11,8 +11,27 @@ public class MemberDto {
 	private String mem_fav2;
 	private String mem_fav3;
 	private String mem_cardcode;
+	private String mem_regdate;
+	private int comp_num;
 	
 	
+	
+	public int getComp_num() {
+		return comp_num;
+	}
+
+	public void setComp_num(int comp_num) {
+		this.comp_num = comp_num;
+	}
+
+	public String getMem_regdate() {
+		return mem_regdate;
+	}
+
+	public void setMem_regdate(String mem_regdate) {
+		this.mem_regdate = mem_regdate;
+	}
+
 	public String getMem_fav1() {
 		return mem_fav1;
 	}
@@ -94,7 +113,7 @@ public class MemberDto {
 				" getMem_pw : " +getMem_pw() + " getMem_id : "+getMem_id() +
 				 " getMem_fav1 : "+getMem_fav1()+" getMem_fav2 : "+
 				getMem_fav2()+" getMem_fav3 : " +getMem_fav3() +" getMem_cardcode"
-				+getMem_cardcode();
+				+getMem_cardcode() +"getComp_num" +getComp_num();
 	}
 
 }

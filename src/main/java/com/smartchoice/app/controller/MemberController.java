@@ -1,3 +1,10 @@
+
+/*
+ * 	 작성자 :박민수	
+ * 	 작성일 : 2016-07-18
+ * 	 설명 : Member 관련 Controller 처리 
+ * 
+ */
 package com.smartchoice.app.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -59,6 +66,7 @@ public class MemberController {
 	@Inject
 	private CardService service_card;
 	
+	//아이디 중복체크 코드 AJAX
 	@RequestMapping("/check")
 	public void checkId(String mem_id, HttpServletResponse resp){
 		String result = "true";
@@ -76,7 +84,7 @@ public class MemberController {
 		}
 		
 	}
-
+	//이메일 인증코드 발송 코드 AJAX 처리
 	@RequestMapping("/code")
 	public void sendCode(HttpServletRequest req, HttpServletResponse resp){
 		MailSend send = new MailSend();
@@ -147,7 +155,7 @@ public class MemberController {
 		req.setAttribute("compList", compList);
 		req.setAttribute("MemberDto", dto);
 	}
-	
+	// 회원가입 완료 단계  비밀번호/MD5화 해서 DB연결하기
 	@RequestMapping(value ="/memberStep3", method=RequestMethod.POST)
 	public String regiComplete(@ModelAttribute MemberDto dto, HttpServletRequest req){
 		Cipher cipher = new Cipher();
@@ -159,7 +167,7 @@ public class MemberController {
 		return "index";
 		
 	}
-	
+	//카드리스트 가져오는 AJAX 처리 코드
 	@RequestMapping("/cardList")
 	public void getCardList(int card_compnum,HttpServletResponse resp){
 		resp.setCharacterEncoding("utf-8");
@@ -175,7 +183,7 @@ public class MemberController {
 				 dto = (CardDto)cardList.get(i);
 				 out.println("<card>");
 				 out.println("<card_code>"+dto.getCard_code()+"</card_code>");
-				 out.println("<card_name>"+dto.getCard_name()+"</card_name>");
+				 out.println("<card_name><![CDATA["+dto.getCard_name()+"]]></card_name>");
 				 out.println("<card_img>"+dto.getCard_img()+"</card_img>");
 				 out.println("</card>");
 			 }
@@ -189,19 +197,51 @@ public class MemberController {
 		
 	}
 	
-	@RequestMapping("/delete")
-	public void deleteMember(int mem_num){
+
+	@RequestMapping( value ="/delete")
+	public String deleteMember(int mem_num,HttpServletRequest req){
 		service_mem.deleteMember(mem_num);
+		req.getSession().invalidate();
+		return "index";
 	}
 	
 	@RequestMapping("/update")
-	public void updateMember(){
-
+	public void update(HttpServletRequest req){
+		MemberDto dto = new MemberDto();
+		HttpSession session = req.getSession();
+		dto = (MemberDto)session.getAttribute("MEM_KEY");
+		int comp_num = dto.getComp_num();
+		List cateList = new ArrayList();
+		List compList = new ArrayList();
+		List cardList = new ArrayList();
+		
+		cateList = service_cate.getBigCategory();
+		compList = service_card.getCardComp();
+		cardList = service_card.getCardList(comp_num);
+		req.setAttribute("cateList", cateList );
+		req.setAttribute("compList", compList );
+		req.setAttribute("cardList", cardList );
 	}
 	
+
 	@RequestMapping(value="/update",method=RequestMethod.POST)
-	public void updateMember(@ModelAttribute MemberDto dto){
+	public String updateMember(@ModelAttribute MemberDto dto,HttpServletRequest req, RedirectAttributes rttr){
+		
+		String[] favs= req.getParameterValues("big_cate");
+		String mem_fav1 = favs[0];
+		String mem_fav2 = favs[1];
+		String mem_fav3 = favs[2];
+		
+		dto.setMem_fav1(mem_fav1);
+		dto.setMem_fav2(mem_fav2);
+		dto.setMem_fav3(mem_fav3);
 		service_mem.updateMember(dto);
+		//세션에 저장된 값을 바꿔줘야함으로 제거후 다시생성한다.
+		req.getSession().invalidate();
+		dto = service_mem.getMember(dto.getMem_id(), dto.getMem_pw());
+		WebUtils.setSessionAttribute(req, "MEM_KEY", dto);
+		rttr.addFlashAttribute("check", "success");
+		return "redirect:/member/update";
 	}
 	
 	@RequestMapping("/memberList")
@@ -216,7 +256,6 @@ public class MemberController {
 	
 	@RequestMapping(value ="/login", method=RequestMethod.POST)
 	public String loginComplete(@Valid MemberDto member, BindingResult result, HttpServletRequest req){
-		logger.info(member.toString());
 		
 		if(result.hasErrors()){
 			return"/member/login";

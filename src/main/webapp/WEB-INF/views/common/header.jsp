@@ -12,6 +12,10 @@
 	function fnLogin(){
 		window.open("/member/login","","width=350,height=200,top=+400,left=+600");
 	}
+	
+	function fnLogout(){
+		location.href ="/member/logout";
+	}
 
 </script>
 </head>
@@ -21,7 +25,9 @@
 #mem_id {
 	font-size:15px;
 	color: #669aba;
+	font-weight:bold;
 	margin-left: 40px;
+	margin-right:20px;
 	
 }
 #header1{
@@ -93,7 +99,7 @@
 	border-radius: 4px
 }
 
-#btnSignIn:hover, .#btnSignIn:focus, #btnSignOut:hover, .#btnSignOut:focus{
+#btnSignIn:hover, #btnSignIn:focus, #btnSignOut:hover, #btnSignOut:focus{
 	background-color:#675c4c;
 	color:#fff;
 }
@@ -123,9 +129,10 @@
 					</c:when>
 					
 					<c:otherwise>
-						<div class="span5 offset8" id="header1Div">
+						<div class="span6 offset6" id="header1Div">
 							<font id ="mem_id">${sessionScope.MEM_KEY.mem_id } 님 안녕하세요</font>
-							<a href="/member/logout">Log Out</a>
+							<a href="/member/update">개인정보수정</a><input type="button" id="btnSignOut" class="btn" value="Sign Out" 
+							onclick="javascript:fnLogout()"/>
 						</div>
 					</c:otherwise>
 				</c:choose>			

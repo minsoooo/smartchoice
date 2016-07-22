@@ -14,20 +14,19 @@
 	</insert>
 	
 	<select id="getMemberList" resultType="MemberDto">
-		select * from member;
+		select * from v_details_member;
 	</select>
 	
 	<select id="getMember" resultType="MemberDto">
-		select * from member where mem_id = #{mem_id} and mem_pw =#{mem_pw}
+		select * from v_details_member where mem_id = #{mem_id} and mem_pw =#{mem_pw}
 	</select>
 	
 	<select id ="getMemberWithId" resultType="MemberDto">
-		select * from member where mem_id = #{mem_id}
+		select * from v_details_member where mem_id = #{mem_id}
 	</select>
 	
 	<update id="updateMember">
-		update member set mem_level =#{mem_level}, mem_pw =#{mem_pw},mem_email = #{mem_email}
-		 mem_fav1 =#{mem_fav1}, mem_fav2 = #{mem_fav2}, mem_fav3 = #{mem_fav3}
+		update member set mem_fav1 =#{mem_fav1}, mem_fav2 = #{mem_fav2}, mem_fav3 = #{mem_fav3}
 		 , mem_cardcode = #{mem_cardcode} where mem_num = #{mem_num}
 	</update>
 	
@@ -39,7 +38,4 @@
 		select mem_id from member where mem_email = #{mem_email}
 	</select>
 	
-	<update id="updateNewPw">
-		update member set mem_pw =#{mem_pw} where mem_email =#{mem_email} and mem_id =#{mem_id}
-	</update>
 </mapper>
