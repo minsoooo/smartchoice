@@ -15,6 +15,9 @@
 			// 달력을 클릭했을 때 해당 날짜의 정보 및 대분류 가져오기
 			$("img").click(
 				function(){
+					$("#bigCategory").empty();
+					$("#smallCategory").empty();	// 대분류, 소분류 초기화
+					
 					var selectDate = $("#now_year").attr("value") + "년 " + $("#now_month").attr("value") + "월 " 
 									+ $(this).attr("id") + "일";
 					$("#expenseTr1 td").text(selectDate);		// 선택한 날짜를 출력
@@ -45,7 +48,7 @@
 			$("#bigCategory").change(
 				function(){
 					var big_num = $("#bigCategory option:selected").val();
-					$("#smallCategory").empty();
+					$("#smallCategory").empty();	// 소분류 초기화
 					
 					$.get("/accountbook/smallCategory",{"big_num":big_num}).done(	
 						function(xml){	
