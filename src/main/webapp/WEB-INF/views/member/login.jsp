@@ -24,11 +24,13 @@
  	}
  	
  	function fnSearchId(){
- 		
+ 		window.close();
+ 		window.open("/member/searchId","","width=350,height=200,top=+400,left=+600")
  	}
  	
  	function fnSearchPw(){
- 		
+ 		window.close();
+ 		window.open("/member/searchPw","","width=350,height=200,top=+400,left=+600")
  		
  	}
 </script>
@@ -98,8 +100,8 @@
 				</tr>
 				<tr><td align="center">	
 					<a href="javascript:fnRegiOpen()">회원가입 /</a>
-					<a href="javascript:fnLogIn_id()">아이디 찾기 /</a>
-					<a href="javascript:fnLogIn_password()">비밀번호 찾기</a>
+					<a href="javascript:fnSearchId()">아이디 찾기 /</a>
+					<a href="javascript:fnSearchPw()">비밀번호 찾기</a>
 				</td></tr>	
 			</table>		
 		</form>

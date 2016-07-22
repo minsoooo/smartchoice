@@ -10,12 +10,12 @@
 		function(){
 			if($("#regiCheck").attr("value") == "true"){
 				alert("회원가입을 축하합니다.");
+
 			}
 		}		
 	);
 </script>
 <style>
-
 #content{
 	margin-top:50px;
 	margin-bottom:50px;
