@@ -10,11 +10,15 @@
 <script src="/resources/plugins/jQuery/jquery-2.2.3.min.js"></script>
 <script>
 	function fnLogin(){
-		window.open("/member/login","","width=350,height=200,top=+400,left=+600");
+		window.open("/member/login","","width=350,height=200,top=+300,left=+500");
 	}
 	
 	function fnLogout(){
 		location.href ="/member/logout";
+	}
+	
+	function fnUpdate(){
+		window.open("/member/update","","width=350,height=200,top=+300,left=+500");
 	}
 
 </script>
@@ -131,7 +135,7 @@
 					<c:otherwise>
 						<div class="span6 offset6" id="header1Div">
 							<font id ="mem_id">${sessionScope.MEM_KEY.mem_id } 님 안녕하세요</font>
-							<a href="/member/update">개인정보수정</a><input type="button" id="btnSignOut" class="btn" value="Sign Out" 
+							<a href="javascript:fnUpdate()">개인정보수정</a><input type="button" id="btnSignOut" class="btn" value="Sign Out" 
 							onclick="javascript:fnLogout()"/>
 						</div>
 					</c:otherwise>

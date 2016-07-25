@@ -9,12 +9,7 @@ package com.smartchoice.app.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-/*
- * 	 �ۼ��� : �ڹμ�
- * 	 �ۼ��� : 2016-07-18
- * 	 ���� : ȸ������ controller
- * 
- */
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -42,7 +37,6 @@ import org.springframework.web.util.WebUtils;
 
 import com.smartchoice.app.util.Cipher;
 import com.smartchoice.app.util.MailSend;
-import com.smartchoice.app.util.MemberValidation;
 import com.smartchoice.app.controller.MemberController;
 import com.smartchoice.app.domain.CardDto;
 import com.smartchoice.app.domain.MemberDto;
@@ -56,13 +50,13 @@ public class MemberController {
 	
 	
 	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
-	
+	///Member처리 서비스
 	@Inject
 	private MemberService service_mem;
-	
+	///Category처리 서비스
 	@Inject 
 	private BigCategoryService service_cate;
-	
+	///Card처리 서비스
 	@Inject
 	private CardService service_card;
 	
@@ -107,13 +101,12 @@ public class MemberController {
 		}
 	}
 	
-	
-	
+	//회원가입창 이동
 	@RequestMapping("/member")
 	public void member(){
 		
 	}
-	
+	//회원기본정보 입력
 	@RequestMapping(value ="/member",method=RequestMethod.POST)
 	public String regiMember(HttpServletRequest req, @ModelAttribute MemberDto dto, RedirectAttributes rttr){
 		String mem_email = req.getParameter("email1")+"@"+req.getParameter("email2");
@@ -123,7 +116,7 @@ public class MemberController {
 		rttr.addFlashAttribute("MemberDto", dto);
 		return "redirect:/member/memberStep2";
 	}
-	
+	//회원선호분야 입력 페이지로 이동
 	@RequestMapping("/memberStep2")
 	public void regiStep2(@ModelAttribute(value="MemberDto") MemberDto dto,HttpServletRequest req){
 		List cateList = new ArrayList();
@@ -131,7 +124,7 @@ public class MemberController {
 		req.setAttribute("MemberDto", dto);
 		req.setAttribute("cateList", cateList );			
 	}
-	
+	//회원선호분야 저장후 카드선택페이지로 이동
 	@RequestMapping(value ="/memberStep2", method=RequestMethod.POST)
 	public String regiStep3(@ModelAttribute MemberDto dto, HttpServletRequest req, RedirectAttributes rttr){
 		String[] favs= req.getParameterValues("big_cate");
@@ -147,7 +140,7 @@ public class MemberController {
 		
 		return "redirect:/member/memberStep3";
 	}
-	
+	//회원카드선택페이지로이동
 	@RequestMapping("/memberStep3")
 	public void regiStep3(@ModelAttribute(value="MemberDto") MemberDto dto,HttpServletRequest req){
 		List compList = new ArrayList();
@@ -197,7 +190,7 @@ public class MemberController {
 		
 	}
 	
-
+	//회원 탈퇴하면 세션을 초기화후 index페이지로 이동
 	@RequestMapping( value ="/delete")
 	public String deleteMember(int mem_num,HttpServletRequest req){
 		service_mem.deleteMember(mem_num);
@@ -205,8 +198,40 @@ public class MemberController {
 		return "index";
 	}
 	
+	//회원정보수정 선택페이지로 이동
 	@RequestMapping("/update")
-	public void update(HttpServletRequest req){
+	public void update(){
+		
+	}
+	
+	//회원기본정보 수정페이지 이동
+	@RequestMapping("/update_basic")
+	public void update_basic(){
+		
+	}
+	
+	//회원기본정보 DB연동
+	@RequestMapping(value ="/update_basic", method=RequestMethod.POST)
+	public String update_basic(@ModelAttribute MemberDto dto, HttpServletRequest req, RedirectAttributes rttr){
+		Cipher cipher = new Cipher();
+		String mem_email = req.getParameter("email1")+"@"+req.getParameter("email2");
+		dto.setMem_email(mem_email);
+		String mem_pw = req.getParameter("mem_pw");
+		String MD5 = cipher.getMD5(mem_pw);
+		dto.setMem_pw(MD5);
+		service_mem.updateMember(dto);
+		
+		//세션에 저장된 값을 바꿔줘야함으로 제거후 다시생성한다.
+		req.getSession().invalidate();
+		dto = service_mem.getMember(dto.getMem_id(), dto.getMem_pw());
+		WebUtils.setSessionAttribute(req, "mem_pw", mem_pw);
+		WebUtils.setSessionAttribute(req, "MEM_KEY", dto);
+		rttr.addFlashAttribute("check", "success");
+		return "redirect:/member/update_basic";
+	}
+	//회원추가정보 수정페이지 이동/선호분류/카드정보 같이 보내기
+	@RequestMapping("/update_add")
+	public void update_add(HttpServletRequest req){
 		MemberDto dto = new MemberDto();
 		HttpSession session = req.getSession();
 		dto = (MemberDto)session.getAttribute("MEM_KEY");
@@ -223,15 +248,14 @@ public class MemberController {
 		req.setAttribute("cardList", cardList );
 	}
 	
-
-	@RequestMapping(value="/update",method=RequestMethod.POST)
-	public String updateMember(@ModelAttribute MemberDto dto,HttpServletRequest req, RedirectAttributes rttr){
+	//수정한 추가정보를 DB연동
+	@RequestMapping(value="/update_add",method=RequestMethod.POST)
+	public String update_add(@ModelAttribute MemberDto dto,HttpServletRequest req, RedirectAttributes rttr){
 		
 		String[] favs= req.getParameterValues("big_cate");
 		String mem_fav1 = favs[0];
 		String mem_fav2 = favs[1];
 		String mem_fav3 = favs[2];
-		
 		dto.setMem_fav1(mem_fav1);
 		dto.setMem_fav2(mem_fav2);
 		dto.setMem_fav3(mem_fav3);
@@ -241,48 +265,89 @@ public class MemberController {
 		dto = service_mem.getMember(dto.getMem_id(), dto.getMem_pw());
 		WebUtils.setSessionAttribute(req, "MEM_KEY", dto);
 		rttr.addFlashAttribute("check", "success");
-		return "redirect:/member/update";
+		return "redirect:/member/update_add";
 	}
-	
+	//전체 멤버 리스트 가져오기
 	@RequestMapping("/memberList")
 	public List<MemberDto> getMemberList(){
 		return service_mem.getMemberList();
 	}
-	
+	//로그인 페이지로 이동
 	@RequestMapping("/login")
 	public void login(){
 		
 	}
-	
+	//로그인 확인 페이지 /로그인되면 MEM_KEY로 세션 생성
 	@RequestMapping(value ="/login", method=RequestMethod.POST)
-	public String loginComplete(@Valid MemberDto member, BindingResult result, HttpServletRequest req){
+	public String loginComplete(MemberDto member , HttpServletRequest req){
 		
-		if(result.hasErrors()){
-			return"/member/login";
-		}
 		try {
 			Cipher cipher = new Cipher();
 			String MD5Pw = cipher.getMD5(member.getMem_pw());
 			MemberDto dto = service_mem.getMember(member.getMem_id(), MD5Pw);
+			logger.info(dto.toString());
+			WebUtils.setSessionAttribute(req, "mem_pw", member.getMem_pw());
 			WebUtils.setSessionAttribute(req, "MEM_KEY", dto);
 			req.setAttribute("check", "success");
 		} catch (Exception e) {
-			result.reject("login");
+			req.setAttribute("check", "fail");
 			return"/member/login";
 		}
 
 		return "/member/login";	
 	}
-	
+	//로그아웃하면 세션 지우기
 	@RequestMapping("/logout")
 	public String logout(HttpServletRequest req){
 		req.getSession().invalidate();
 		return "index";
 	}
-	
-	
-	@InitBinder
-	private void initBinder(WebDataBinder binder){
-		binder.setValidator(new MemberValidation());
+	//아이디 검색페이지 이동
+	@RequestMapping("/searchId")
+	public void searchId(){
+		
+	}
+	//아이디 검색 / 이메일로
+	@RequestMapping(value="/searchId", method=RequestMethod.POST)
+	public void searchId(HttpServletRequest req){
+		String mem_email = req.getParameter("email1")+"@"+req.getParameter("email2");
+		logger.info(mem_email);
+			try{
+				String mem_id = service_mem.searchId(mem_email);
+				if(!mem_id.equals(null)){
+					req.setAttribute("mem_id", mem_id);
+					req.setAttribute("result", "success");
+				}
+			}catch(NullPointerException err){
+				req.setAttribute("result", "fail");
+			}
+
+	}
+	//비밀번호 찾기 페이지 이동
+	@RequestMapping("/searchPw")
+	public void searchPw(){
+		
+	}
+	//비밀번호 찾기/아이디/이메일
+	@RequestMapping(value="/searchPw", method=RequestMethod.POST)
+	public void searchPw(HttpServletRequest req){
+		
+		Cipher cipher = new Cipher();
+		String mem_email = req.getParameter("email1")+"@"+req.getParameter("email2");
+		String mem_id = req.getParameter("mem_id");
+		String mem_pw ="";
+		try{
+			mem_pw =service_mem.searchPw(mem_id, mem_email);
+			if(!mem_pw.equals("")){
+				mem_pw = cipher.getNewPass();
+				req.setAttribute("result", "success");
+				req.setAttribute("mem_pw", mem_pw);
+				String MD5 = cipher.getMD5(mem_pw);
+				service_mem.updatePw(mem_id, MD5);
+			}
+		}catch(Exception err){
+			req.setAttribute("result", "fail");
+		}
+		
 	}
 }

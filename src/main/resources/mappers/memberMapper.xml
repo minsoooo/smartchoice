@@ -26,16 +26,31 @@
 	</select>
 	
 	<update id="updateMember">
-		update member set mem_fav1 =#{mem_fav1}, mem_fav2 = #{mem_fav2}, mem_fav3 = #{mem_fav3}
-		 , mem_cardcode = #{mem_cardcode} where mem_num = #{mem_num}
+		update member 
+		    <set>
+		      <if test="mem_fav1 != null">mem_fav1=#{mem_fav1},</if>
+		      <if test="mem_fav2 != null">mem_fav2=#{mem_fav2},</if>
+		      <if test="mem_fav3 != null">mem_fav3=#{mem_fav3},</if>
+		      <if test="mem_cardcode != null">mem_cardcode=#{mem_cardcode},</if>
+		      <if test="mem_pw != null">mem_pw=#{mem_pw},</if>
+		      <if test="mem_email != null">mem_email=#{mem_email}</if>
+   			</set>
+		 where mem_num = #{mem_num}
 	</update>
 	
 	<delete id ="deleteMember">
 		delete from member where mem_num = #{mem_num}
 	</delete>
 	
-	<select id ="searchId">
+	<select id ="searchId" resultType="String">
 		select mem_id from member where mem_email = #{mem_email}
 	</select>
 	
+	<select id ="searchPw" resultType="String">
+		select mem_pw from member where mem_id =#{mem_id} and mem_email =#{mem_email}
+	</select>
+	
+	<update id="updatePw">
+		update member set mem_pw =#{mem_pw} where mem_id =#{mem_id}
+	</update>
 </mapper>

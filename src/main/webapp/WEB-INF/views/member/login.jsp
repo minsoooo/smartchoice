@@ -14,6 +14,8 @@
  			if(check =="success"){
  				window.close();
  				opener.document.location.href="/"
+ 			}else if(check =="fail"){
+ 				alert("아이디 또는 비밀번호가 틀렸습니다.")
  			}
  		}		
  	);
@@ -24,13 +26,12 @@
  	}
  	
  	function fnSearchId(){
- 		window.close();
- 		window.open("/member/searchId","","width=350,height=200,top=+400,left=+600")
+ 		window.open("/member/searchId","","width=350,height=180,top=+400,left=+600")
  	}
  	
  	function fnSearchPw(){
  		window.close();
- 		window.open("/member/searchPw","","width=350,height=200,top=+400,left=+600")
+ 		window.open("/member/searchPw","","width=350,height=260,top=+400,left=+600")
  		
  	}
 </script>
@@ -44,10 +45,11 @@
  	margin-left: 35px
  }
  
-.btn {
+#btnLogin {
 	display: inline-block;
 	padding: 6px 12px;
 	margin-bottom: 0;
+	width : 280px;
 	font-size: 14px;
 	font-weight: bold;
 	line-height: 1.42857143;
@@ -66,6 +68,12 @@
 	color:#ffffff; 
 	border: 1px solid transparent;
 	border-radius: 4px;
+	border: 0;
+	outline: 0;
+}
+
+#btnLogin:hover{
+	background-color:#97b162;
 	border: 0;
 	outline: 0;
 }
@@ -92,7 +100,7 @@
 				</tr>
 				<tr>
 					<td><br/>
-					<input type="submit" value="로그인" class="btn" style="width:280px;"/><br/><br/>
+					<input type="submit" value="로그인" class="btn" id ="btnLogin"/><br/><br/>
 					</td>
 				</tr>
 				<tr>

@@ -1,5 +1,10 @@
 package com.smartchoice.app.util;
-
+/*
+ * 	 ì‘ì„±ì : ë°•ë¯¼ìˆ˜
+ * 	 ì‘ì„±ì¼ : 2016-07-16
+ * 	 ì„¤ëª… : MD5ì•Œê³ ë¦¬ì¦˜ íŒ¨ìŠ¤ì›Œë“œìƒì„±/ ì½”ë“œìƒì„±/ ìƒˆë¡œìš´ë¹„ë°€ë²ˆí˜¸ ìƒì„±
+ * 
+ */
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Random;
@@ -10,6 +15,7 @@ public class Cipher {
 	private String newPass;
 	private String newCode;
 	
+	// MD5 ì•”í˜¸ ì–»ê¸°
 	public String getMD5(String pass){
 		try {
 			MessageDigest md = MessageDigest.getInstance("MD5");
@@ -26,7 +32,7 @@ public class Cipher {
 		return passMD5;
 	}
 	
-	/// »õ·Î¿î ÆĞ½º¿öµå ÀÓÀÇ »ı¼º ÄÚµå.
+	/// ìƒˆë¡œìš´íŒ¨ìŠ¤ì›Œë“œ ì–»ê¸°
 	
 	public String getNewPass(){
 		ran = new Random();
@@ -39,7 +45,7 @@ public class Cipher {
 		return newPass;
 	}
 	
-	// ÀÎÁõ¹øÈ£ »ı¼º ÄÚµå
+	// ì¸ì¦ì½”ë“œ ì–»ê¸°
 	
 	public String getNewCode(){
 		ran = new Random();
