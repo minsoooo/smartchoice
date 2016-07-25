@@ -40,7 +40,6 @@
 							  $.get("/member/code", {"email1":$("#email1").val(),"email2":$("#email2").val()},
 									function(data){
 										$("#checkCode").attr("value",data);
-										alert(data)
 								 	}						  
 								);
 						  }	  				  
