@@ -1,4 +1,6 @@
-<%@ page contentType="text/html; charset=utf-8"%>
+<%@page import="java.util.Calendar"%>
+<%@ page contentType="text/html; charset=utf-8" isELIgnored="false"%>
+<%@ taglib prefix="c" uri ="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -101,6 +103,23 @@
 						}
 					}			
 				);
+				//달을 선택하면 그달의 날짜를 만든다
+				$("#month").change(
+					function(){
+						$("#day").empty();
+						var selectMonth =$("#month option:selected").attr("value");
+						$.get("/member/maxday",{"selectMonth":selectMonth}).done(
+								function(data){
+									for(var i =1; i<=data; i++){
+										var insertTag = "<option>"+i+"</option>";
+										$(insertTag).appendTo("#day")
+									}
+									
+									
+								}		
+							);
+					}		
+				);1
 		}	
 	);
 	
@@ -108,6 +127,9 @@
 </script>
 </head>
 <style>
+#year, #month, #day{
+	width:99px;
+}
 #imgTd{
 	width : 20px
 }
@@ -284,6 +306,11 @@
 	
 </style>
 <body style="background-color:#f5f4f0">
+<%
+	Calendar cal = Calendar.getInstance();
+	int now_year = cal.get(Calendar.YEAR);
+	request.setAttribute("now_year",now_year);
+%>
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 	<span id ="check" value = "false"></span>
 	<span id ="checkCode" value =""></span>
@@ -324,6 +351,26 @@
 									<input type="text" id="email2" name ="email2" class="input-medium" required="required" />		
 								</td>
 								<td></td>
+							</tr>
+							<tr>
+								<td>
+									<select name="year" id ="year">
+										<option>생년월일</option>
+										<c:forEach begin="0" end="99" step="1" varStatus="i">
+											 <option  value ="${now_year -i.index }">${now_year -i.index }</option>
+										</c:forEach>
+									</select>
+									<select name ="month" id ="month">
+										<option></option>
+										<c:forEach begin="0" end ="11" step="1" varStatus="i">
+											<option  value ="${12 - i.index }">${12 - i.index }</option>
+										</c:forEach>
+									</select>
+									<select name ="day" id = "day">
+										
+									</select>
+								
+								</td>
 							</tr>
 							<tr>
 								<td>

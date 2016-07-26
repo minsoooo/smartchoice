@@ -9,7 +9,7 @@ package com.smartchoice.app.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-
+import java.util.Calendar;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -86,6 +86,7 @@ public class MemberController {
 		String recipient = req.getParameter("email1")+"@"+req.getParameter("email2");
 		String title = "이메일 인증 코드입니다.";
 		String newCode = cipher.getNewCode();
+		logger.info("인증코드 :" + newCode);
 		String content ="이메일 인증 코드입니다.. : " + newCode + "  정확히 입력해 주세요";
 		send.setProperty("smtp.naver.com", 465, "altntaos@naver.com", "als136512403!");
 		send.sendMail(recipient, title, content);
@@ -101,6 +102,24 @@ public class MemberController {
 		}
 	}
 	
+	//선택한 달의 끝날을 구해오는 코드/AJAX 처리
+	@RequestMapping("/maxday")
+	public void getMaxday(int selectMonth, HttpServletResponse resp){
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.MONTH, selectMonth-1);
+		cal.set(Calendar.DATE, 1);
+		int maxDay = cal.getActualMaximum(Calendar.DATE);
+		logger.info("끝날가져오기"+Integer.toString(maxDay));
+		PrintWriter out = null;
+		try{
+			out = resp.getWriter();
+			out.println(maxDay);
+		}catch(Exception err){
+			err.printStackTrace();
+		}finally{
+			out.close();
+		}
+	}
 	//회원가입창 이동
 	@RequestMapping("/member")
 	public void member(){
@@ -111,8 +130,11 @@ public class MemberController {
 	public String regiMember(HttpServletRequest req, @ModelAttribute MemberDto dto, RedirectAttributes rttr){
 		String mem_email = req.getParameter("email1")+"@"+req.getParameter("email2");
 		String mem_level = "1";
+		String mem_birthdate = req.getParameter("year")+"/"+req.getParameter("month")+"/"+req.getParameter("day");
+		dto.setMem_birthdate(mem_birthdate);
 		dto.setMem_email(mem_email);
 		dto.setMem_level(mem_level);
+		logger.info("member 1단계 :" +dto.toString());
 		rttr.addFlashAttribute("MemberDto", dto);
 		return "redirect:/member/memberStep2";
 	}

@@ -13,9 +13,18 @@ public class MemberDto {
 	private String mem_cardcode;
 	private String mem_regdate;
 	private int comp_num;
+	private String mem_birthdate;
 	
 	
 	
+	public String getMem_birthdate() {
+		return mem_birthdate;
+	}
+
+	public void setMem_birthdate(String mem_birthdate) {
+		this.mem_birthdate = mem_birthdate;
+	}
+
 	public int getComp_num() {
 		return comp_num;
 	}
@@ -112,8 +121,9 @@ public class MemberDto {
 				+getMem_level() +" getMem_email : "+getMem_email()+
 				" getMem_pw : " +getMem_pw() + " getMem_id : "+getMem_id() +
 				 " getMem_fav1 : "+getMem_fav1()+" getMem_fav2 : "+
-				getMem_fav2()+" getMem_fav3 : " +getMem_fav3() +" getMem_cardcode"
-				+getMem_cardcode() +"getComp_num" +getComp_num();
+				getMem_fav2()+" getMem_fav3 : " +getMem_fav3() +" getMem_cardcode : "
+				+getMem_cardcode() +" getComp_num : " +getComp_num() + " getMem_birthdate : "
+				+getMem_birthdate();
 	}
 
 }
