@@ -141,7 +141,7 @@
 					<a href="/accountbook/index">지출관리</a>
 					<a href="#">매장찾기</a>
 					<a href="#">이벤트</a>
-					<a href="#">공지사항</a>
+					<a href="/board/notice_board/notice_listPage">공지사항</a>
 				</div>
 			</div>
 		</div>
