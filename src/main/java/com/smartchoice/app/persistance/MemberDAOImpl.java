@@ -59,4 +59,26 @@ public class MemberDAOImpl implements MemberDAO {
 
 	}
 
+	@Override
+	public String searchId(String mem_email) {
+		return sqlSession.selectOne(NAMESPACE+".searchId",mem_email);
+	}
+
+	@Override
+	public String searchPw(String mem_id, String mem_email) {
+		Map<String, Object> params = new HashMap<String ,Object>();
+		params.put("mem_id", mem_id);
+		params.put("mem_email", mem_email);
+		return sqlSession.selectOne(NAMESPACE+".searchPw",params);
+	}
+
+	@Override
+	public void updatePw(String mem_id, String mem_pw) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("mem_id", mem_id);
+		params.put("mem_pw", mem_pw);
+		sqlSession.update(NAMESPACE+".updatePw",params);
+		
+	}
+
 }

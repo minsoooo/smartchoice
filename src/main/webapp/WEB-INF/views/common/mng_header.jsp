@@ -4,38 +4,14 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Insert title here</title>
+<title>mgr_header</title>
 <link rel="stylesheet"
 	href="/resources/bootstrap/css/bootstrap.min.css" />
 <script src="/resources/plugins/jQuery/jquery-2.2.3.min.js"></script>
 <script>
-	function fnLogin(){
-		window.open("/member/login","","width=350,height=200,top=+300,left=+500");
-	}
-	
 	function fnLogout(){
-		location.href ="/member/logout";
+		location.href ="/manager/manager_logout"
 	}
-	function fnMngLogout(){
-		location.href ="/manager/logout";
-	}
-	function fnUpdate(){
-		window.open("/member/update","","width=350,height=200,top=+300,left=+500");
-	}
-	
-	function fnAccount(){
-		var mem_num = $("#mem_num").attr("value")
-		var mng_num = $("#mng_num").attr("value")
-		if(mem_num != ""){
-			location.href ="/accountbook/index"
-		}else if(mng_num != ""){
-			alert("접근 권한이 없습니다.")
-		}else{
-			alert("로그인이 필요합니다.");
-			fnLogin();
-		}
-	}
-
 
 </script>
 </head>
@@ -85,9 +61,9 @@
 
 #header2 a{
 	color:#d9d5cc;
-	font-size:20px;
+	font-size:15px;
 	font-weight:bold;
-	margin-right:40px;
+	margin-right:20px;
 	font-family: 'Noto Sans KR', sans-serif;
 }
 
@@ -127,7 +103,6 @@
 </style>
 <body>
 	<span id ="mem_num" value ="${sessionScope.MEM_KEY.mem_num }"></span>
-	<span id ="mng_num" value ="${sessionScope.MNG_KEY.mng_num }"></span>
 	<!-- 로고 -->
 	<div class="container">
 		<div class="row">
@@ -141,30 +116,11 @@
 		<div class="container">
 
 			<div class="row">
-				<c:choose>
-					<c:when test="${sessionScope.MEM_KEY ne null }">
-						<div class="span6 offset6" id="header1Div">
-							<font id ="mem_id">${sessionScope.MEM_KEY.mem_id } 님 안녕하세요</font>
-							<a href="javascript:fnUpdate()">개인정보수정</a><input type="button" id="btnSignOut" class="btn" value="Sign Out" 
-							onclick="javascript:fnLogout()"/>
-						</div>
-					</c:when>
-					<c:when test="${sessionScope.MNG_KEY ne null }">
-						<div class="span6 offset6" id="header1Div">
+						<div class="span5 offset7" id="header1Div">
 							<font id ="mem_id">${sessionScope.MNG_KEY.mng_name } 관리자 님 안녕하세요</font>
 							<input type="button" id="btnSignOut" class="btn" value="Sign Out" 
-							onclick="javascript:fnMngLogout()"/>
+							onclick="javascript:fnLogout()"/>
 						</div>
-					</c:when>
-					<c:otherwise>
-						<div class="span3 offset9" id="header1Div">
-							<input type="button" id="btnSignIn" class="btn" value="Sign In" 
-							onclick="javascript:fnLogin()"/>
-							<a href="/member/member">Join Now</a>
-						</div>
-						
-					</c:otherwise>
-				</c:choose>			
 			</div>
 		</div>
 	</div>
@@ -173,11 +129,13 @@
 		<div class="container">
 			<div class="row">
 				<div class="span8 offset4">
-					<a href="/planCard/planIntro.plan">카드추천</a>
-					<a href="javascript:fnAccount()">지출관리</a>
-					<a href="#">매장찾기</a>
-					<a href="#">이벤트</a>
-					<a href="#">공지사항</a>
+					<a href="#">카드등록</a>
+					<a href="#">혜택수정</a>
+					<a href="#">분류관리</a>
+					<a href="#">회원관리</a>
+					<a href="#">직원관리</a>
+					<a href="#">이벤트등록</a>
+					<a href="#">통계보기</a>
 				</div>
 			</div>
 		</div>

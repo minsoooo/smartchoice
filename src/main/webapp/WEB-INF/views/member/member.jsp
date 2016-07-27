@@ -1,4 +1,6 @@
-<%@ page contentType="text/html; charset=utf-8"%>
+<%@page import="java.util.Calendar"%>
+<%@ page contentType="text/html; charset=utf-8" isELIgnored="false"%>
+<%@ taglib prefix="c" uri ="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -40,7 +42,6 @@
 							  $.get("/member/code", {"email1":$("#email1").val(),"email2":$("#email2").val()},
 									function(data){
 										$("#checkCode").attr("value",data);
-										alert(data)
 								 	}						  
 								);
 						  }	  				  
@@ -102,35 +103,23 @@
 						}
 					}			
 				);
-			
-			
-			
-			$("#btnIdCheck").hover(
+				//달을 선택하면 그달의 날짜를 만든다
+				$("#month").change(
 					function(){
-						$("#btnIdCheck").attr("src", "/resources/images/btn_id_check2.jpg");				
-					},
-					function(){
-						$("#btnIdCheck").attr("src", "/resources/images/btn_id_check.jpg");				
-					}
-				);
-				
-				$("#btnSendCode").hover(
-					function(){
-						$("#btnSendCode").attr("src", "/resources/images/btn_send_code2.jpg");				
-					},
-					function(){
-						$("#btnSendCode").attr("src", "/resources/images/btn_send_code.jpg");				
-					}
-				);
-				
-				$("#btnCheckCode").hover(
-					function(){
-						$("#btnCheckCode").attr("src", "/resources/images/btn_check_code2.jpg");				
-					},
-					function(){
-						$("#btnCheckCode").attr("src", "/resources/images/btn_check_code.jpg");				
-					}
-				);
+						$("#day").empty();
+						var selectMonth =$("#month option:selected").attr("value");
+						$.get("/member/maxday",{"selectMonth":selectMonth}).done(
+								function(data){
+									for(var i =1; i<=data; i++){
+										var insertTag = "<option>"+i+"</option>";
+										$(insertTag).appendTo("#day")
+									}
+									
+									
+								}		
+							);
+					}		
+				);1
 		}	
 	);
 	
@@ -138,7 +127,9 @@
 </script>
 </head>
 <style>
-
+#year, #month, #day{
+	width:99px;
+}
 #imgTd{
 	width : 20px
 }
@@ -157,35 +148,33 @@
 }
 
 #formDiv{
-	margin-top :20px;
-	margin-left:300px;
+	margin-top :50px;
+	margin-left:310px;
 }
-input{
-	height:30px;
-
-}
-#id, #pass1, #pass2{
-	width : 300px;
+ #pass1, #pass2{
+	width : 290px;
 	margin-bottom:5px;
 	
 }
+#id{
+	width :212px;
+}
 #email1,#email2{
-	width : 132px;
+	width : 127px;
 	margin-bottom:5px;
 }
 
 #inputCode{
-	margin-top:11px;
-	width : 168px;
+	margin-top:15px;
+	width : 120px;
 }
 
-#btnNext{
-	width : 180px;
+#btnIdCheck{
+	width : 75px;
 	display: inline-block;
 	padding: 6px 12px;
 	margin-top: 5px;
-	margin-left: 100px;
-	margin-bottom: 0;
+	margin-bottom: 15px;
 	font-size: 14px;
 	font-weight: bold;
 	line-height: 1.42857143;
@@ -208,13 +197,120 @@ input{
 	outline: 0;
 	}
 	
-	#btnNext:hover{
+#btnIdCheck:hover{
 	background-color:#97b162;
 	border: 0;
 	outline: 0;
-}	
+}
+#btnCheckCode{
+	width : 80px;
+	display: inline-block;
+	padding: 6px 12px;
+	margin-top: 5px;	
+	margin-bottom: 0;
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 1.42857143;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	-ms-touch-action: manipulation;
+	touch-action: manipulation;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-image: none;
+	background-color:#8ba752;
+	color:#ffffff; 
+	border: 1px solid transparent;
+	border-radius: 4px;
+	border: 0;
+	outline: 0;
+	}
+
+	
+#btnCheckCode:hover{
+	background-color:#97b162;
+	border: 0;
+	outline: 0;
+}
+#btnSendCode{
+	width : 80px;
+	display: inline-block;
+	padding: 6px 12px;
+	margin-top: 5px;
+	margin-bottom: 0;
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 1.42857143;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	-ms-touch-action: manipulation;
+	touch-action: manipulation;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-image: none;
+	background-color:#d9d8d6;
+	color:#ffffff; 
+	border: 1px solid transparent;
+	border-radius: 4px;
+	border: 0;
+	outline: 0;
+	}
+	
+#btnSendCode:hover{
+	background-color:#e5e5e3;
+	border: 0;
+	outline: 0;
+}
+#btnNext{
+	width : 180px;
+	display: inline-block;
+	padding: 6px 12px;
+	margin-top: 5px;
+	margin-left: 60px;
+	margin-bottom: 0;
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 1.42857143;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	-ms-touch-action: manipulation;
+	touch-action: manipulation;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-image: none;
+	background-color:#548eb3;
+	color:#ffffff; 
+	border: 1px solid transparent;
+	border-radius: 4px;
+	border: 0;
+	outline: 0;
+	}
+	
+#btnNext:hover{
+	background-color:#669aba;
+	border: 0;
+	outline: 0;
+}
+	
 </style>
 <body style="background-color:#f5f4f0">
+<%
+	Calendar cal = Calendar.getInstance();
+	int now_year = cal.get(Calendar.YEAR);
+	request.setAttribute("now_year",now_year);
+%>
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 	<span id ="check" value = "false"></span>
 	<span id ="checkCode" value =""></span>
@@ -232,7 +328,7 @@ input{
 							<tr>		
 								<td>
 									<input type="text" id="id" name="mem_id" placeholder="아이디  (6~12자로 입력해주세요)" required="required" />			
-									<img src="/resources/images/btn_id_check.jpg" id="btnIdCheck"/><br/>		
+									<input type ="button"  id="btnIdCheck" value ="중복확인"/><br/>		
 								</td>
 								<td><img src="" id="check_result"/></td>
 							</tr>
@@ -258,9 +354,29 @@ input{
 							</tr>
 							<tr>
 								<td>
-									<img src="/resources/images/btn_send_code.jpg" id="btnSendCode"/>
+									<select name="year" id ="year">
+										<option>생년월일</option>
+										<c:forEach begin="0" end="99" step="1" varStatus="i">
+											 <option  value ="${now_year -i.index }">${now_year -i.index }</option>
+										</c:forEach>
+									</select>
+									<select name ="month" id ="month">
+										<option></option>
+										<c:forEach begin="0" end ="11" step="1" varStatus="i">
+											<option  value ="${12 - i.index }">${12 - i.index }</option>
+										</c:forEach>
+									</select>
+									<select name ="day" id = "day">
+										
+									</select>
+								
+								</td>
+							</tr>
+							<tr>
+								<td>
+									<input type ="button"  id="btnSendCode" value ="코드발송"/>
 									<input type="text" id="inputCode" class="input-medium" required="required" /> 
-									<img src="/resources/images/btn_check_code.jpg" id="btnCheckCode"/>
+									<input type ="button"  id="btnCheckCode" value ="코드인증"/>
 								</td>
 								<td><img src="" id="check_email"/></td>
 							</tr>
