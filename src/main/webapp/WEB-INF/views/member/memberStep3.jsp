@@ -13,25 +13,34 @@
 			$("span").click(
 				function(){
 					var tr =0;
-					$("#cardTr").empty();
+					$("#cardTable").empty();
 					var comp_num = $(this).attr("value");
 					$.get("/member/cardList",{"card_compnum":comp_num}).done(
 						function(xmlData){
 							var card = $(xmlData).find("card");
+							var setCode ="<tr>"
 							if(card.length){
 								$(card).each(
 										function(){
 											tr +=1;
-											var setTr ="<tr></tr>";
-											if(tr%3 == 0){
-												$(setTr).appendTo("#cardTr")
-											}
 											var card_name = $(this).find("card_name").text();
 											var card_code = $(this).find("card_code").text();
-											var card_img = "/resources/images/"+ $(this).find("card_img").text();
+											var card_img = "/resources/images/card/"+ $(this).find("card_img").text();
+											
 											var insertCode ="<td><img src ='"+card_img+"' id ='cardImg'/><br/><label for='"+card_code+"'><input type ='radio' name='mem_cardcode'"
-											+"value ='"+card_code+"' id='"+card_code+"'/>"+card_name+"</label></td>"
-											$(insertCode).appendTo("#cardTr")
+												+"value ='"+card_code+"' id='"+card_code+"'/>"+card_name+"</label></td>"
+												
+											setCode += insertCode;
+												if(tr%3 == 0){
+													setCode  +="</tr>"
+													$(setCode).appendTo("#cardTable")
+													setCode ="<tr>"
+													
+												}else if(tr == card.length){
+													setCode  +="</tr>"
+													$(setCode).appendTo("#cardTable")
+													setCode ="<tr>"
+												}
 										}
 								)
 									
@@ -93,6 +102,7 @@
 
 #compTable{
 	background-color:#fff;
+	
 }
 
 #compTable td{
@@ -185,9 +195,7 @@
 						<div class = "row">
 							<div id = "cardDiv">
 								<table id ="cardTable">
-									<tr id="cardTr">
-									
-									</tr>
+							
 								</table>
 							</div>
 						</div>
