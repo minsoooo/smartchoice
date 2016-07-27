@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import com.smartchoice.app.domain.CalendarDto;
 
 @Repository
-public class CalendarDaoImpl implements CalendarDao {
+public class CalendarDAOImpl implements CalendarDAO {
 	public static final int START_DATE = 1;
 	Calendar cal = Calendar.getInstance();
 	StringBuilder today = new StringBuilder();
