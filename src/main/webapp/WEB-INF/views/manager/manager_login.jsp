@@ -19,21 +19,6 @@
  			}
  		}		
  	);
- 	
- 	function fnRegiOpen(){
- 		window.close();
- 		opener.document.location.href ="/member/member"
- 	}
- 	
- 	function fnSearchId(){
- 		window.open("/member/searchId","","width=350,height=180,top=+400,left=+600")
- 	}
- 	
- 	function fnSearchPw(){
- 		window.close();
- 		window.open("/member/searchPw","","width=350,height=260,top=+400,left=+600")
- 		
- 	}
 </script>
 <style>
  #mem_id, #mem_pw{
@@ -64,7 +49,7 @@
 	-ms-user-select: none;
 	user-select: none;
 	background-image: none;
-	background-color:#8ba752;
+	background-color:#548eb3;
 	color:#ffffff; 
 	border: 1px solid transparent;
 	border-radius: 4px;
@@ -73,7 +58,7 @@
 }
 
 #btnLogin:hover{
-	background-color:#97b162;
+	background-color:#669aba;
 	border: 0;
 	outline: 0;
 }
@@ -82,28 +67,23 @@
 <body>
 	<span id="check" value="${check}"></span>
 	<div id="mainDiv">
-		<form class="form-search" method="post" action="/member/login">
+		<form class="form-search" method="post" action="/manager/manager_login">
 			<table style="margin-top:20px">
 				<tr>
 					<td>
-					<input type="text" name="mem_id" placeholder="아이디" id="mem_id" required="required" class="input"/><br/>
+					<input type="text" name="mng_id" placeholder="아이디" id="mem_id" required="required" class="input"/><br/>
 					</td>
 				</tr>
 				<tr>	
 					<td>
-					<input type="password" name="mem_pw" placeholder="패스워드" id ="mem_pw"  required="required" class="input"/>
+					<input type="password" name="mng_pw" placeholder="패스워드" id ="mem_pw"  required="required" class="input"/>
 					</td>
 				</tr>
 				<tr>
 					<td><br/>
-					<input type="submit" value="로그인" class="btn" id ="btnLogin"/><br/><br/>
+					<input type="submit" value="관리자 로그인" class="btn" id ="btnLogin"/><br/><br/>
 					</td>
 				</tr>
-				<tr><td align="center">	
-					<a href="javascript:fnRegiOpen()">회원가입 /</a>
-					<a href="javascript:fnSearchId()">아이디 찾기 /</a>
-					<a href="javascript:fnSearchPw()">비밀번호 찾기</a>
-				</td></tr>	
 			</table>		
 		</form>
 	</div>

@@ -46,6 +46,7 @@
 			        }
 				}		
 			);
+			
 			$("#companyList").change(
 				function(){
 					$("#cardList").empty();

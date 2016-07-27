@@ -302,10 +302,13 @@ public class MemberController {
 	//로그인 확인 페이지 /로그인되면 MEM_KEY로 세션 생성
 	@RequestMapping(value ="/login", method=RequestMethod.POST)
 	public String loginComplete(MemberDto member , HttpServletRequest req){
-		
+		logger.info("111");
 		try {
 			Cipher cipher = new Cipher();
 			String MD5Pw = cipher.getMD5(member.getMem_pw());
+			logger.info("2222");
+			logger.info(member.getMem_id());
+			logger.info(MD5Pw);
 			MemberDto dto = service_mem.getMember(member.getMem_id(), MD5Pw);
 			logger.info(dto.toString());
 			WebUtils.setSessionAttribute(req, "mem_pw", member.getMem_pw());

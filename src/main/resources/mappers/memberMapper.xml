@@ -7,9 +7,9 @@
 <mapper namespace="com.smartchoice.mappers.memberMapper">
 
 	<insert id="regiMember" parameterType="MemberDto">
-		insert into member(mem_level, mem_email, mem_pw, mem_fav1, mem_fav2, mem_fav3, mem_id,
+		insert into member(mem_level, mem_email, mem_pw, mem_fav1, mem_fav2, mem_fav3, mem_id,mem_birthdate
 		mem_cardcode)
-		values(#{mem_level}, #{mem_email}, #{mem_pw}, #{mem_fav1}, #{mem_fav2}, #{mem_fav3}, #{mem_id},
+		values(#{mem_level}, #{mem_email}, #{mem_pw}, #{mem_fav1}, #{mem_fav2}, #{mem_fav3}, #{mem_id},#{mem_birthdate},
 		#{mem_cardcode})
 	</insert>
 	

@@ -1,9 +1,19 @@
-<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page contentType="text/html; charset=UTF-8" isELIgnored="false"%>
+<%@ taglib prefix="c" uri ="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <title>Insert title here</title>
 </head>
+<script>
+	function fnMngLogin(){
+		window.open("/manager/manager_login","","width=350,height=200,top=+300,left=+500");
+	}
+	
+	function fnOpenMain(){
+		location.href ="/manager/manager_main";
+	}
+</script>
 <style>
 @import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
 
@@ -40,7 +50,6 @@
 
 </style>
 <body>
-
 	<div id="footer">
 		<div class="container">
 			<div class="row">
@@ -50,7 +59,14 @@
 						<a href="#">회사소개</a>
 						<a href="#">이용약관</a>
 						<a href="#">사이트맵</a>
-						<a href="#" style="font-weight:bold;">관리자 로그인</a>
+						<c:choose>
+							<c:when test="${sessionScope.MNG_KEY eq null }">
+								<a href="javascript:fnMngLogin()" style="font-weight:bold;">관리자 로그인</a>
+							</c:when>
+							<c:otherwise>
+								<a href="javascript:fnOpenMain()" style="font-weight:bold;">관리자 페이지</a>									
+							</c:otherwise>						
+						</c:choose>
 					</div>
 					<hr style="border:1px solid #c2bdb7;">
 					
