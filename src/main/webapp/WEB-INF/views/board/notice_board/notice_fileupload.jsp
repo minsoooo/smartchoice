@@ -49,12 +49,12 @@
 			<div class="span12">				
 				<div>
 					<div>
-						<h3 style="text-align: center">공지사항</h3>
+						<h3 style="text-align: center">파일 업로드 실험페이지</h3>
 					</div>
 					
 					<!-- body , 글쓰기버튼을 눌러서 들어오는 페이지로 작성자는 가입시 입력한 id를 받아오고 그외 내용을 작성해서 POST로 Controller에 전송한다. -->
 					
-					<form role="form" method="post" id="frm">
+					<form role="form" method="post" id="frm" enctype="multipart/form-data">
 						<div>
 							<div style="margin-left: 80px;">
 								<div>
@@ -100,6 +100,11 @@
 												oEditors.getById["ir1"].exec("UPDATE_CONTENTS_FIELD", []);
 												$("#frm").submit();
 											})
+											
+											var pasteHTML = function(filename){		//업로드한 사진을 화면에 보여주게 만드는 스크립트입니다.
+											    var sHTML = '<img src="${pageContext.request.contextPath}/resources/upload/'+filename+'">'; //사진이 저장된 경로입니다.
+											    oEditors.getById["ir1"].exec("PASTE_HTML", [sHTML]);
+											};											
 									});
 									
 									

@@ -102,7 +102,8 @@
 							</c:if>
 							<c:if test="${sessionScope.MEM_KEY ne null }">
 								<a href="/board/notice_board/notice_listPage" class="btn" id="btncolor">글목록</a>&nbsp;&nbsp;
-									<a href="/board/notice_board/notice_register" class="btn" id="btncolor">글쓰기</a>
+								<a href="/board/notice_board/notice_register" class="btn" id="btncolor">글쓰기</a>
+								<a href="/board/notice_board/notice_fileupload" class="btn" id="btncolor">업로드실험</a>
 							</c:if>
 						</div>
 					</div>

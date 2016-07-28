@@ -1,9 +1,17 @@
 package com.smartchoice.app.controller;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Random;
+import java.util.UUID;
 
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,6 +21,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.smartchoice.app.domain.Criteria;
@@ -31,8 +40,7 @@ public class BoardController {
 	@Inject // Service 연결
 	private BoardService service;
 
-	@RequestMapping(value = "/board/notice_board/notice_register") // 공지사항 글쓰기로
-																	// 가기
+	@RequestMapping(value = "/board/notice_board/notice_register") // 공지사항 글쓰기로 가기																	
 	public void registerGET() {
 	}
 
@@ -119,5 +127,25 @@ public class BoardController {
 		service.register_reply(replydto);
 		return "redirect:/board/notice_board/notice_read?num=" + replydto.getNreply_nboardnum();
 		// 리다이렉트로, 여러번 새로고침 되지않게 게시글 위치로 이동한다.
+	}
+	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+									// 	TEST PAGE //
+	
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	@RequestMapping(value = "/board/notice_board/notice_fileupload")
+	public void fileuploadGET() {
+	}
+
+	@RequestMapping(value = "/board/notice_board/notice_fileupload", method = RequestMethod.POST) 																							
+	public String fileuploadPOST(NoticeBoardDto board, RedirectAttributes rttr) throws Exception {		
+		System.out.println("fileupload POST 진입");		
+		
+		
+		service.register(board);
+		rttr.addFlashAttribute("msg", "SUCCESS"); // 성공 후 메세지 출력하게 전달한다.
+		return "redirect:/board/notice_board/notice_listPage"; // 리다이렉트로, 여러번 새로고침 되지않게 게시글 위치로 이동한다.
 	}
 }
