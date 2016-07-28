@@ -46,19 +46,16 @@
 
 	<div class="container" id="content">
 		<div class="row">
-			<div class="span12">
-
-				<!-- Main content -->
+			<div class="span12">				
 				<section class="content">
-					<div class="row">
-						<!-- left column -->
-						<div class="span12">
-							<!-- general form elements -->
+					<div class="row">						
+						<div class="span12">							
 							<div>
 								<div>
 									<h3 style="text-align: center">공지사항</h3>
 								</div>
-								<!-- /.box-header -->
+								
+								<!-- body DB 자료를 받아서 내용을 수정하고 다시 POST방식으로 controller에 전송한다. -->
 
 								<form role="form" id="frm" method="post">
 
@@ -85,6 +82,8 @@
 											<label>내용</label>
 											<textarea name="nboard_content" id="ir1" rows="15"
 												style="width: 800px;">${boardDto.nboard_content}</textarea>
+												
+											<!-- NAVER SMARTEDITOR SCRIPT -->	
 											<script type="text/javascript">
 												var oEditors = [];
 
@@ -109,15 +108,20 @@
 															});
 												});
 											</script>
+											<!-- /NAVER SMARTEDITOR SCRIPT -->	
 										</div>
 									</div>
-									<!-- /.box-body -->
+									<!-- /body -->
+									
 									<div align="center">
 										<br /> <input type="submit" id="notice_modifyPage"
 											value="수정하기" />&nbsp;&nbsp; <input type="submit" id="notice_cancel"
 											value="취소하기" />
 									</div>
+									
 								</form>
+								
+								<!-- NAVER SMARTEDITOR 내용을 작성하고 전송버튼을 눌렀을 때 실행되는 SCRIPT -->
 								<script>
 									$(document)
 											.ready(
@@ -134,16 +138,10 @@
 															})
 													});
 								</script>
-							</div>
-							<!-- /.box -->
+							</div>							
 						</div>
-						<!--/.col (left) -->
-
-					</div>
-					<!-- /.row -->
+					</div>					
 				</section>
-				<!-- /.content -->
-
 			</div>
 		</div>
 	</div>

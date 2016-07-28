@@ -44,14 +44,14 @@
 
 	<div class="container" id="content">
 		<div class="row">
-			<div class="span12">
-				<!-- general form elements -->
+			<div class="span12">				
 				<div>
 					<div>
 						<h3 style="text-align: center">공지사항</h3>
 					</div>
 				</div>
 				<div>
+					<!-- body -->
 					<div>
 						<table class="table table-bordered">
 							<tr>
@@ -61,7 +61,9 @@
 								<th style="width: 100px; text-align: center">작성일</th>
 								<th style="width: 60px; text-align: center">조회수</th>
 							</tr>
-
+							
+							<!-- 컨트롤러에서 자료를 받아서 출력한다. -->
+							
 							<c:forEach items="${list}" var="boardDto">
 							<c:set value="${cri.keyword}" var="cri.keyword" />
 								<tr>
@@ -76,6 +78,9 @@
 								</tr>
 							</c:forEach>
 						</table>
+						
+						<!-- 검색종류와 검색내용을 입력해서 전송한다. -->
+						
 						<div align="center">
 							<form role="form" class="form-search" method="post" accept-charset="utf-8">
 								<select style="width: 100px; height: 33px;" name="searchType" id="searchType">
@@ -83,13 +88,15 @@
 									<option value="nboard_writer">작성자</option>
 									<option value="nboard_content">내용</option>
 									<option value="nboard_titlecontent">제목+내용</option>
-								</select> <input type="text" size="30" style="height:23px;" name="keyword" id="keyword"
+								</select> 
+								<input type="text" size="30" style="height:23px;" name="keyword" id="keyword"
 									value="${cri.keyword}" /> <input type="submit" class="btn"
 									value="검색" id="btncolor"/> 
 							</form>
 						</div>
+						
+						<!-- 로그인을 해야 글쓰기 버튼이 나타나게한다. -->
 						<div align="right">
-							<!-- 로그인을 해야 글쓰기 버튼이 나타나게한다. -->
 							<c:if test="${sessionScope.MEM_KEY eq null }">
 								<a href="/board/notice_board/notice_listPage" class="btn" id="btncolor">글목록</a>
 							</c:if>
@@ -99,9 +106,9 @@
 							</c:if>
 						</div>
 					</div>
-					<!-- /.box-body -->
-
-
+					<!-- /body -->
+					
+					<!-- 페이징 처리  -->
 					<div class="pagination pagination-large pagination-centered" >
 						<div class="text-center">
 							<ul>
@@ -127,7 +134,7 @@
 							</ul>
 						</div>
 					</div>
-					<!-- /.box-footer-->
+					<!-- /페이징처리 -->
 				</div>
 			</div>
 		</div>

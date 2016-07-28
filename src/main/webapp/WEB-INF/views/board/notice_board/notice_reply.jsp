@@ -10,8 +10,11 @@
 	<div class="container">
 		<div class="row">
 			<div class="span8">
-				<!-- reply print page  -->							
-				<c:forEach items="${list}" var="replylist">			
+				<!-- body , reply print page , DB에서 하나의 게시판 글에 담긴 댓글목록을 전부 가져와서 출력해주는 페이지 -->							
+				<c:forEach items="${list}" var="replylist">	
+					
+					<!-- 글 번호와 댓글 번호를 hideen으로 전송해서, 댓글 삭제시, 해당글번호,댓글번호와 일치하면 삭제  -->
+						
 					<form class="form-search" method="post"
 						action="notice_reply_modify">
 						<input type='hidden' name='num' value="${boardDto.nboard_num}">
@@ -30,8 +33,9 @@
 							<pre>${replylist.nreply_content}</pre>
 						</div>
 					</form>
+					
 				</c:forEach>			
-				<!-- /reply print page  -->
+				<!-- /body , reply print page  -->
 
 			</div>
 		</div>

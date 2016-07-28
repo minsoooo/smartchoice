@@ -29,7 +29,8 @@
 			</list>
 		</property>
 	</bean>	
-	<!-- 파일 업로드용 resolver -->
+	
+	<!-- 파일 업로드용 resolver -규- -->
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 	 <property name="defaultEncoding" value="UTF-8" />
 	 <property name="maxUploadSize" value="10485760" />

@@ -46,16 +46,15 @@
 
 	<div class="container" id="content">
 		<div class="row">
-			<div class="span12">
-				<!-- general form elements -->
+			<div class="span12">				
 				<div>
 					<div>
 						<h3 style="text-align: center">공지사항</h3>
 					</div>
-					<!-- /.box-header -->
-
-					<!-- box-body -->
-					<form role="form" method="post" id="frm">
+					
+					<!-- body , 글쓰기버튼을 눌러서 들어오는 페이지로 작성자는 가입시 입력한 id를 받아오고 그외 내용을 작성해서 POST로 Controller에 전송한다. -->
+					
+					<form role="form" method="post" id="frm" enctype="multi-part/form-data">
 						<div>
 							<div style="margin-left: 80px;">
 								<div>
@@ -71,6 +70,8 @@
 								<label>내용</label>
 								<textarea name="nboard_content" id="ir1" rows="15"
 									placeholder="내용을 입력해주세요" style="width: 800px;"></textarea>
+									
+								<!-- NAVER SMARTEDITOR SCRIPT -->	
 								<script type="text/javascript">
 									var oEditors = [];
 
@@ -94,9 +95,6 @@
 													},													
 													fCreator : "createSEditor2"
 												});
-										
-										
-									       
 											
 											$("#btncolor").click(function(){
 												oEditors.getById["ir1"].exec("UPDATE_CONTENTS_FIELD", []);
@@ -106,9 +104,10 @@
 									
 									
 								</script>
+								
+								<!-- /NAVER SMARTEDITOR SCRIPT -->	
 							</div>
 						</div><br/>
-						<!-- /.box-body -->
 
 						<div align="center">
 							<input type="button" class="btn" id="btncolor" value="전송하기" />
@@ -116,6 +115,8 @@
 							<a href="/board/notice_board/notice_listPage" class="btn" id="btncolor" style="width:55px;">목록가기</a>
 						</div>
 					</form>
+					<!-- /body -->
+					
 				</div>
 			</div>
 		</div>
