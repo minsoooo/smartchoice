@@ -175,7 +175,7 @@
 				<div class="span8 offset4">
 					<a href="/planCard/planIntro.plan">카드추천</a>
 					<a href="javascript:fnAccount()">지출관리</a>
-					<a href="#">매장찾기</a>
+					<a href="/searchStore/showMap">매장찾기</a>
 					<a href="#">이벤트</a>
 					<a href="#">공지사항</a>
 				</div>
