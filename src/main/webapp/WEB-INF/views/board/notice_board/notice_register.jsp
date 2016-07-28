@@ -13,6 +13,32 @@
 	margin-top: 50px;
 	margin-bottom: 50px;
 }
+#btncolor{
+   display: inline-block;
+   padding: 6px 12px;
+   margin-bottom: 0;
+   font-size: 14px;
+   font-weight: 400;
+   line-height: 1.42857143;
+   text-align: center;
+   white-space: nowrap;
+   vertical-align: middle;
+   -ms-touch-action: manipulation;
+   touch-action: manipulation;
+   cursor: pointer;
+   -webkit-user-select: none;
+   -moz-user-select: none;
+   -ms-user-select: none;
+   user-select: none;
+   background-image: none;
+   background-color:#8ba752;
+   color:#fff; 
+   border: 1px solid transparent;
+   border-radius: 4px;
+   width:80px;
+   border: 0;
+   outline: 0;
+}   
 </style>
 <body style="background-color: #f5f4f0">
 
@@ -72,7 +98,7 @@
 										
 									       
 											
-											$("#savebutton").click(function(){
+											$("#btncolor").click(function(){
 												oEditors.getById["ir1"].exec("UPDATE_CONTENTS_FIELD", []);
 												$("#frm").submit();
 											})
@@ -81,13 +107,13 @@
 									
 								</script>
 							</div>
-						</div>
+						</div><br/>
 						<!-- /.box-body -->
 
 						<div align="center">
-							<input type="button" class="btn" id="savebutton" value="전송하기" />
-							&nbsp;&nbsp;&nbsp;&nbsp; <a
-								href="/board/notice_board/notice_listPage" class="btn">목록가기</a>
+							<input type="button" class="btn" id="btncolor" value="전송하기" />
+							&nbsp;&nbsp;&nbsp;&nbsp; 
+							<a href="/board/notice_board/notice_listPage" class="btn" id="btncolor" style="width:55px;">목록가기</a>
 						</div>
 					</form>
 				</div>

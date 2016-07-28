@@ -28,48 +28,49 @@
 	<select id="notice_listAll" resultType="NoticeBoardDto">
 		select * from NOTICEBOARD
 		where nboard_num>0 order by nboard_regdate desc
+	</select>	
+
+	<sql id="search">
+		<if test="searchType != null">
+			<if test="searchType == 'nboard_title'">
+				and nboard_title like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType == 'nboard_content'">
+				and nboard_content like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType == 'nboard_writer'">
+				and nboard_writer like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType == 'nboard_titlecontent'">
+				and ( nboard_title like CONCAT('%', #{keyword}, '%') OR nboard_content like
+				CONCAT('%', #{keyword}, '%'))
+			</if>			
+		</if>
+	</sql>
+
+	<select id="notice_listSearch" resultType="NoticeBoardDto" parameterType="SearchCriteria">
+		<![CDATA[  
+		  select * 
+		  from NOTICEBOARD 
+		  where nboard_num > 0 
+		]]>
+
+		<include refid="search"></include>
+		  
+		<![CDATA[    
+		  order by nboard_regdate desc
+		  limit #{pageStart}, #{perPageNum}
+		]]>
 	</select>
 
-	<select id="notice_title_listSearch" resultType="NoticeBoardDto"
-		parameterType="Map">
-		select * from NOTICEBOARD where nboard_num>0 and
-		nboard_title LIKE CONCAT('%',#{keyWord},'%') order by nboard_regdate
-		desc
-	</select>
-	<!-- 
-	<select id="notice_listCriteria" resultType="NoticeBoardDto">
-		select * from
-		NOTICEBOARD where nboard_num > 0 order by nboard_regdate limit
-		#{pageStart}, #{perPageNum}
-
-	</select>
-
-	<select id="countPaging" resultType="int">
-		select nboard_viewcnt from NOTICEBOARD where nboard_num > 0;
-	</select>
- 	-->
-
-	<select id="notice_writer_listSearch" resultType="NoticeBoardDto"
-		parameterType="Map">
-		select * from NOTICEBOARD where nboard_num>0 and
-		nboard_writer LIKE CONCAT('%',#{keyWord},'%') order by nboard_regdate
-		desc
-	</select>
-
-	<select id="notice_content_listSearch" resultType="NoticeBoardDto"
-		parameterType="Map">
-		select * from NOTICEBOARD where nboard_num>0 and
-		nboard_content LIKE CONCAT('%',#{keyWord},'%') order by nboard_regdate
-		desc
-	</select>
-
-	<select id="notice_titlecontent_listSearch" resultType="NoticeBoardDto"
-		parameterType="Map">
-		select * from NOTICEBOARD where nboard_num>0 and
-		nboard_title LIKE CONCAT('%',#{keyWord},'%') or
-		nboard_content LIKE
-		CONCAT('%',#{keyWord},'%') order by nboard_regdate desc
-	</select>
+	<select id="notice_listSearchCount" resultType="int">
+		<![CDATA[  
+		  select count(nboard_viewcnt) 
+		  from NOTICEBOARD 
+		  where nboard_num > 0 
+		]]>
+		<include refid="search"></include>
+	</select>	
 
 	<insert id="notice_register_reply">
 		insert into
@@ -78,7 +79,9 @@
 	</insert>
 
 	<select id="read_reply" resultType="NoticeBoardReplyDto">
-		select * from NOTICEBOARD_REPLY where nreply_nboardnum=#{num} order by nreply_regdate desc
+		select * from
+		NOTICEBOARD_REPLY where nreply_nboardnum=#{num} order by
+		nreply_regdate desc
 	</select>
 
 </mapper>

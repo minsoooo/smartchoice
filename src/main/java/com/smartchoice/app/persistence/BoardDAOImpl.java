@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 import com.smartchoice.app.domain.Criteria;
 import com.smartchoice.app.domain.NoticeBoardDto;
 import com.smartchoice.app.domain.NoticeBoardReplyDto;
+import com.smartchoice.app.domain.SearchCriteria;
 
 @Repository
 public class BoardDAOImpl implements BoardDAO {
@@ -51,7 +52,7 @@ public class BoardDAOImpl implements BoardDAO {
 		String sql = "";
 		
 		Map map = new HashMap();
-		map.put("keyWord", keyWord);		
+		map.put("keyWord", keyWord);
 		
 		if(keyField.equals("nboard_title")){
 			sql = ".notice_title_listSearch";			
@@ -69,25 +70,22 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public void register_reply(NoticeBoardReplyDto replydto) throws Exception {
-		System.out.println("Impl 진입 , 받은 글 번호는 : " + replydto.getNreply_nboardnum() + "받은 아이디는 : "+ replydto.getNreply_memid());
+	public void register_reply(NoticeBoardReplyDto replydto) throws Exception {		
 		sqlSession.insert(NAMESPACE + ".notice_register_reply" , replydto);
 	}
 	
 	@Override
-	public List<NoticeBoardReplyDto> read_reply(Integer num) throws Exception {	
-		System.out.println("받아온 글 번호 : " + num);
+	public List<NoticeBoardReplyDto> read_reply(Integer num) throws Exception {			
 		return sqlSession.selectList(NAMESPACE + ".read_reply" , num);
 	}
 	
 	@Override
-	public List<NoticeBoardDto> listCriteria(Criteria cri) throws Exception {
-		
-		return sqlSession.selectList(NAMESPACE + ".notice_listCriteria");
+	public List<NoticeBoardDto> listSearch(SearchCriteria cri) throws Exception {		
+		return sqlSession.selectList(NAMESPACE + ".notice_listSearch",cri);
 	}
 	
 	@Override
-	public int countPaging(Criteria cri) throws Exception {
-		  return sqlSession.selectOne(NAMESPACE + ".notice_countPaging", cri);
+	public int listSearchCount(SearchCriteria cri) throws Exception {
+		  return sqlSession.selectOne(NAMESPACE + ".notice_listSearchCount", cri);
 	}
 }

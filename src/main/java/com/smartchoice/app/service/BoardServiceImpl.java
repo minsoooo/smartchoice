@@ -10,6 +10,7 @@ import com.smartchoice.app.persistence.BoardDAO;
 import com.smartchoice.app.domain.Criteria;
 import com.smartchoice.app.domain.NoticeBoardDto;
 import com.smartchoice.app.domain.NoticeBoardReplyDto;
+import com.smartchoice.app.domain.SearchCriteria;
 
 @Service	// 서비스 연결하기
 public class BoardServiceImpl implements BoardService {
@@ -23,8 +24,7 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override	// 글번호를 전송받아서 DAO로 넘긴다
-	public NoticeBoardDto read(Integer num) throws Exception {		
-		System.out.println("service read 메서드");
+	public NoticeBoardDto read(Integer num) throws Exception {			
 		return dao.read(num);
 	}
 
@@ -54,19 +54,18 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	@Override
-	public List<NoticeBoardReplyDto> read_reply(Integer num) throws Exception{			
-		System.out.println("Service 진입 , 받은 글 번호는 : " + num);
+	public List<NoticeBoardReplyDto> read_reply(Integer num) throws Exception{
 		return dao.read_reply(num);
 	}
 	
 	@Override
-	public List<NoticeBoardDto> listCriteria(Criteria cri) throws Exception {
-		return dao.listCriteria(cri);
+	public List<NoticeBoardDto> listSearch(SearchCriteria cri) throws Exception {
+		return dao.listSearch(cri);
 	}
 	
 	@Override
-	public int listCountCriteria(Criteria cri) throws Exception {		
-		return dao.countPaging(cri);
+	public int listSearchCount(SearchCriteria cri) throws Exception {		
+		return dao.listSearchCount(cri);
 	}
 
 }

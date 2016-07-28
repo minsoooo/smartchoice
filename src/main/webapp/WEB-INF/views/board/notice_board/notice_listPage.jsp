@@ -12,6 +12,31 @@
 	margin-top: 50px;
 	margin-bottom: 50px;
 }
+#btncolor{
+   display: inline-block;
+   padding: 6px 12px;
+   margin-bottom: 0;
+   font-size: 14px;
+   font-weight: 400;
+   line-height: 1.42857143;
+   text-align: center;
+   white-space: nowrap;
+   vertical-align: middle;
+   -ms-touch-action: manipulation;
+   touch-action: manipulation;
+   cursor: pointer;
+   -webkit-user-select: none;
+   -moz-user-select: none;
+   -ms-user-select: none;
+   user-select: none;
+   background-image: none;
+   background-color:#8ba752;
+   color:#fff; 
+   border: 1px solid transparent;
+   border-radius: 4px;
+   width:80px;
+   border: 0;
+   outline: 0;
 </style>
 <body style="background-color: #f5f4f0">
 
@@ -33,21 +58,17 @@
 								<th style="width: 60px; text-align: center">글번호</th>
 								<th style="width: 300px; text-align: center">제목</th>
 								<th style="width: 150px; text-align: center">작성자</th>
-								<th style="width: 60px; text-align: center">작성일</th>
+								<th style="width: 100px; text-align: center">작성일</th>
 								<th style="width: 60px; text-align: center">조회수</th>
 							</tr>
 
 							<c:forEach items="${list}" var="boardDto">
+							<c:set value="${cri.keyword}" var="cri.keyword" />
 								<tr>
 									<td style="text-align: center">${boardDto.nboard_num}</td>
-									<!-- <td>
+									<td>
 										<a href='/board/notice_board/notice_readPage${pageMaker.makeQuery(pageMaker.cri.page)}
-										&num=${boardDto.nboard_num}'><label>${boardDto.nboard_title}</label></a></td> -->
-									<td><a
-										href='/board/notice_board/notice_readPage?num=${boardDto.nboard_num}&keyWord=${varkeyWord}
-										&keyField=${varkeyField}'>
-											<label>${boardDto.nboard_title}</label>
-									</a></td>
+										&num=${boardDto.nboard_num}&keyword=${cri.keyword}&searchType=${cri.searchType}'><label>${boardDto.nboard_title}</label></a></td>									
 									<td style="text-align: center">${boardDto.nboard_writer}</td>
 									<td style="text-align: center"><fmt:formatDate
 											pattern="yyyy-MM-dd HH:mm" value="${boardDto.nboard_regdate}" /></td>
@@ -57,81 +78,54 @@
 						</table>
 						<div align="center">
 							<form role="form" class="form-search" method="post" accept-charset="utf-8">
-								<select style="width: 100px; height: 30px;" name="keyField" id="keyField">
+								<select style="width: 100px; height: 33px;" name="searchType" id="searchType">
 									<option value="nboard_title">제목</option>
 									<option value="nboard_writer">작성자</option>
 									<option value="nboard_content">내용</option>
 									<option value="nboard_titlecontent">제목+내용</option>
-								</select> <input type="text" size="30" name="keyWord" id="keyWord"
-									value="${varkeyWord}" /> <input type="submit" class="btn"
-									value="검색" /> <input type="hidden" id="varkeyField"
-									value="${varkeyField}" />
+								</select> <input type="text" size="30" style="height:23px;" name="keyword" id="keyword"
+									value="${cri.keyword}" /> <input type="submit" class="btn"
+									value="검색" id="btncolor"/> 
 							</form>
 						</div>
 						<div align="right">
 							<!-- 로그인을 해야 글쓰기 버튼이 나타나게한다. -->
 							<c:if test="${sessionScope.MEM_KEY eq null }">
-								<a href="/board/notice_board/notice_listPage" class="btn">글목록</a>
+								<a href="/board/notice_board/notice_listPage" class="btn" id="btncolor">글목록</a>
 							</c:if>
 							<c:if test="${sessionScope.MEM_KEY ne null }">
-								<a href="/board/notice_board/notice_listPage" class="btn">글목록</a>&nbsp;&nbsp;
-									<a href="/board/notice_board/notice_register" class="btn">글쓰기</a>
+								<a href="/board/notice_board/notice_listPage" class="btn" id="btncolor">글목록</a>&nbsp;&nbsp;
+									<a href="/board/notice_board/notice_register" class="btn" id="btncolor">글쓰기</a>
 							</c:if>
 						</div>
 					</div>
 					<!-- /.box-body -->
 
 
-					<div>
-
+					<div class="pagination pagination-large pagination-centered" >
 						<div class="text-center">
-							<ul class="pagination">
+							<ul>
 
 								<c:if test="${pageMaker.prev}">
 									<li><a
-										href="/board/notice_board/notice_listPage${pageMaker.makeQuery(pageMaker.startPage - 1) }">&laquo;</a></li>
+										href="/board/notice_board/notice_listPage${pageMaker.makeQuery(pageMaker.startPage - 1) }&keyword=${cri.keyword}&searchType=${cri.searchType}">&laquo;</a></li>
 								</c:if>
 
 								<c:forEach begin="${pageMaker.startPage }"
 									end="${pageMaker.endPage }" var="idx">
 									<li
 										<c:out value="${pageMaker.cri.page == idx?'class =active':''}"/>>
-										<a href="/board/notice_board/notice_listPage${pageMaker.makeQuery(idx)}">${idx}</a>
+										<a href="/board/notice_board/notice_listPage${pageMaker.makeQuery(idx)}&keyword=${cri.keyword}&searchType=${cri.searchType}">${idx}</a>
 									</li>
 								</c:forEach>
 
 								<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
 									<li><a
-										href="/board/notice_board/notice_listPage${pageMaker.makeQuery(pageMaker.endPage +1) }">&raquo;</a></li>
+										href="/board/notice_board/notice_listPage${pageMaker.makeQuery(pageMaker.endPage +1) }&keyword=${cri.keyword}&searchType=${cri.searchType}">&raquo;</a></li>
 								</c:if>
 
 							</ul>
 						</div>
-
-
-						<div class="text-center">
-							<ul class="pagination">
-
-								<c:if test="${pageMaker.prev}">
-									<li><a href="${pageMaker.startPage - 1}">&laquo;</a></li>
-								</c:if>
-
-								<c:forEach begin="${pageMaker.startPage }"
-									end="${pageMaker.endPage }" var="idx">
-									<li
-										<c:out value="${pageMaker.cri.page == idx?'class =active':''}"/>>
-										<a href="${idx}">${idx}</a>
-									</li>
-								</c:forEach>
-
-								<c:if test="${pageMaker.next && pageMaker.endPage > 0}">
-									<li><a href="${pageMaker.endPage +1}">&raquo;</a></li>
-								</c:if>
-
-							</ul>
-						</div>
-
-
 					</div>
 					<!-- /.box-footer-->
 				</div>
@@ -144,8 +138,6 @@
 		<input type='hidden' name="perPageNum"
 			value=${pageMaker.cri.perPageNum}>
 	</form>
-
-
 	<script>
 		var result = '${msg}';
 

@@ -5,6 +5,7 @@ import java.util.List;
 import com.smartchoice.app.domain.Criteria;
 import com.smartchoice.app.domain.NoticeBoardDto;
 import com.smartchoice.app.domain.NoticeBoardReplyDto;
+import com.smartchoice.app.domain.SearchCriteria;
 
 public interface BoardDAO {
 	public void register(NoticeBoardDto dto) throws Exception;
@@ -23,8 +24,8 @@ public interface BoardDAO {
 	
 	public List<NoticeBoardReplyDto> read_reply(Integer num) throws Exception;
 	
-	public List<NoticeBoardDto> listCriteria(Criteria cri) throws Exception;
+	public List<NoticeBoardDto> listSearch(SearchCriteria cri) throws Exception;
 	
-	public int countPaging(Criteria cri) throws Exception;
+	public int listSearchCount(SearchCriteria cri) throws Exception;
 	
 }
