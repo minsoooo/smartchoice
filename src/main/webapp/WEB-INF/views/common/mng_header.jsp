@@ -7,7 +7,7 @@
 <title>mgr_header</title>
 <link rel="stylesheet"
 	href="/resources/bootstrap/css/bootstrap.min.css" />
-<script src="/resources/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 <script>
 	function fnLogout(){
 		location.href ="/manager/manager_logout"
@@ -133,7 +133,7 @@
 					<a href="#">혜택수정</a>
 					<a href="#">분류관리</a>
 					<a href="#">회원관리</a>
-					<a href="#">직원관리</a>
+					<a href="/manager/manager_chooseAdmin">직원관리</a>
 					<a href="#">이벤트등록</a>
 					<a href="#">통계보기</a>
 				</div>

@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 <link rel="stylesheet"
 	href="/resources/bootstrap/css/bootstrap.min.css" />
-<script src="/resources/plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 <script>
 	function fnLogin(){
 		window.open("/member/login","","width=350,height=200,top=+300,left=+500");

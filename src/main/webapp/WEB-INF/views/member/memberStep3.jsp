@@ -4,7 +4,6 @@
 <html>
 <head>
 <title>RegiMemberStep2</title>
-<link rel="stylesheet" href="/resources/bootstrap/css/bootstrap.min.css" />
 <script src="/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 <script>
 	$(document).ready(
@@ -210,7 +209,5 @@
 	
 	
 	<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
-	
-	<script src="/resources/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>
