@@ -20,4 +20,5 @@ public interface CardDAO {
 	public List<CardDto> getCardComp();
 	public int getCard_num();
 
+
 }

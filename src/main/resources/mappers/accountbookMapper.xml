@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smartchoice.mappers.accountbookMapper">
+	<delete id="deleteAccountBook">
+		delete from accountbook where abook_reginum=#{regi_num}
+	</delete>
+	
+	<delete id="deleteRegiABook">
+		delete from regi_abook where regi_month=#{regi_month} and regi_day=#{regi_day} and regi_memnum=#{regi_memnum}
+	</delete>
+
+	<insert id="insertRegiAbook">
+		insert into regi_abook(regi_month, regi_day, regi_memnum) values(#{regi_month}, #{regi_day}, #{regi_memnum}) 
+	</insert>
+
+	<select id="selectRegiNum" resultType="int">
+		select regi_num from regi_abook where regi_month=#{regi_month} and regi_day=#{regi_day} and regi_memnum=#{regi_memnum}
+	</select>
+	
+	<insert id="insertAccountBook">
+		insert into accountbook(abook_money, abook_bignum, abook_smallnum, abook_reginum)
+		values(#{abook_money}, #{abook_bignum}, #{abook_smallnum}, #{abook_reginum})
+	</insert>
+	
+	<select id="selectRegiDay" resultType="String">
+		select regi_day from regi_abook where regi_month=#{regi_month} and regi_memnum=#{regi_memnum}
+	</select>
+	
+	<select id="getAccountBook" resultType="AccountBookDto">
+		select * from accountbook where abook_reginum=#{abook_reginum}
+	</select>
+	
+	<select id="getCategoryName" resultType="CategoryDto">
+		select * from v_details_category where small_num=#{small_num}
+	</select>
+</mapper>

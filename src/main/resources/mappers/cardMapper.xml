@@ -49,4 +49,5 @@
 		update card set card_img=#{card_img} where card_code=#{card_code}
 	</update>
 
+
 </mapper>

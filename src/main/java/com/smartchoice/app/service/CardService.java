@@ -22,4 +22,5 @@ public interface CardService {
 	public List<CardDto> getCardList(int card_compnum);
 
 
+
 }

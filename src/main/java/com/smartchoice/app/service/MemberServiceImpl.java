@@ -48,4 +48,21 @@ public class MemberServiceImpl implements MemberService {
 
 	}
 
+	@Override
+	public String searchId(String mem_email) {
+		
+		return dao.searchId(mem_email);
+	}
+
+	@Override
+	public String searchPw(String mem_id, String mem_email) {
+		return dao.searchPw(mem_id, mem_email);
+	}
+
+	@Override
+	public void updatePw(String mem_id, String mem_pw) {
+			dao.updatePw(mem_id, mem_pw);
+		
+	}
+
 }

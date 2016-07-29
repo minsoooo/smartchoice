@@ -90,7 +90,4 @@ public class CardDto {
 				+ ", card_code=" + card_code + ", card_img=" + card_img + ", comp_num=" + comp_num + "]";
 	}
 	
-	
-	
-	
 }
