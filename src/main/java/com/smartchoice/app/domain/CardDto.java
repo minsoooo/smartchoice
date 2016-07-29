@@ -2,23 +2,30 @@
 package com.smartchoice.app.domain;
 
 public class CardDto {
-	private int comp_num;
+	private int card_compnum;
 	private String comp_name;
 	private int card_num;
 	private String card_name;
-	private String card_annualfee;
-	private String card_lastrecord;
-	private String card_typeflag;
-	private String card_useflag;
+	private int card_annualfee;
+	private int card_lastrecord;
+	private int card_typeflag;
+	private int card_useflag;
 	private String card_code;
 	private String card_img;
+	private int comp_num;
 	
-	
+
 	public int getComp_num() {
 		return comp_num;
 	}
 	public void setComp_num(int comp_num) {
 		this.comp_num = comp_num;
+	}
+	public int getCard_compnum() {
+		return card_compnum;
+	}
+	public void setCard_compnum(int card_compnum) {
+		this.card_compnum = card_compnum;
 	}
 	public String getComp_name() {
 		return comp_name;
@@ -38,28 +45,28 @@ public class CardDto {
 	public void setCard_name(String card_name) {
 		this.card_name = card_name;
 	}
-	public String getCard_annualfee() {
+	public int getCard_annualfee() {
 		return card_annualfee;
 	}
-	public void setCard_annualfee(String card_annualfee) {
+	public void setCard_annualfee(int card_annualfee) {
 		this.card_annualfee = card_annualfee;
 	}
-	public String getCard_lastrecord() {
+	public int getCard_lastrecord() {
 		return card_lastrecord;
 	}
-	public void setCard_lastrecord(String card_lastrecord) {
+	public void setCard_lastrecord(int card_lastrecord) {
 		this.card_lastrecord = card_lastrecord;
 	}
-	public String getCard_typeflag() {
+	public int getCard_typeflag() {
 		return card_typeflag;
 	}
-	public void setCard_typeflag(String card_typeflag) {
+	public void setCard_typeflag(int card_typeflag) {
 		this.card_typeflag = card_typeflag;
 	}
-	public String getCard_useflag() {
+	public int getCard_useflag() {
 		return card_useflag;
 	}
-	public void setCard_useflag(String card_useflag) {
+	public void setCard_useflag(int card_useflag) {
 		this.card_useflag = card_useflag;
 	}
 	public String getCard_code() {
@@ -75,6 +82,15 @@ public class CardDto {
 		this.card_img = card_img;
 
 	}
+	@Override
+	public String toString() {
+		return "CardDto [card_compnum=" + card_compnum + ", comp_name=" + comp_name + ", card_num=" + card_num
+				+ ", card_name=" + card_name + ", card_annualfee=" + card_annualfee + ", card_lastrecord="
+				+ card_lastrecord + ", card_typeflag=" + card_typeflag + ", card_useflag=" + card_useflag
+				+ ", card_code=" + card_code + ", card_img=" + card_img + ", comp_num=" + comp_num + "]";
+	}
+	
+	
 	
 	
 }

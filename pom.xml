@@ -8,7 +8,7 @@
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	<properties>
-		<java-version>1.8</java-version>
+		<java-version>1.6</java-version>
 		<org.springframework-version>4.3.1.RELEASE</org.springframework-version>
 		<org.aspectj-version>1.6.10</org.aspectj-version>
 		<org.slf4j-version>1.6.6</org.slf4j-version>
@@ -182,8 +182,11 @@
 		    <artifactId>jackson-mapper-asl</artifactId>
 		    <version>1.9.13</version>
 		</dependency>
-
-		
+		<dependency>
+		    <groupId>com.servlets</groupId>
+		    <artifactId>cos</artifactId>
+		    <version>09May2002</version>
+		</dependency>
 	</dependencies>
     <build>
         <plugins>

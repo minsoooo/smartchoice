@@ -5,6 +5,10 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.smartchoice.mappers.cardMapper">
+	<sql id="selectIdx">
+		SELECT IDX FROM MEMBER WHERE USERID=${userid}
+	</sql>
+
 	<select id="getCompanyList" resultType="CardDto">
 		select * from company
 	</select>
@@ -18,11 +22,31 @@
 	</select>
 	
 	<select id="getCardComp" resultType="CardDto">
-		select * from company order by comp_num desc;
+		select * from company order by comp_num desc
 	</select>
 	
 	<select id ="getCardList" resultType="CardDto">
 		select * from v_details_card where card_compnum = #{card_compnum}
 	</select>
+	
+	<select id="getCard_num" resultType="Integer">
+		select max(card_num) from card
+	</select>
+
+	<insert id="registerCard" parameterType="CardDto">
+		insert into card(card_name, card_annualfee, card_lastrecord, 
+					card_typeflag, card_useflag, card_compnum, 
+					card_code, card_img) 
+					values(#{card_name}, #{card_annualfee}, #{card_lastrecord}, #{card_typeflag}, #{card_useflag}, #{card_compnum}, #{card_code}, #{card_img})
+	</insert>
+	
+	<insert id="registerCardDiscount" parameterType="CardDiscountDto">
+		insert into discount(dc_min, dc_max, dc_value, dc_classify, dc_etc, dc_cardcode, dc_smallnum) 
+						values(#{dc_min}, #{dc_max}, #{dc_value}, #{dc_classify}, #{dc_etc}, #{dc_cardcode}, #{dc_smallnum})
+	</insert>
+	
+	<update id="updateCardImage" parameterType="CardDto">
+		update card set card_img=#{card_img} where card_code=#{card_code}
+	</update>
 
 </mapper>

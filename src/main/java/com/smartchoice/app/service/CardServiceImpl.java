@@ -8,6 +8,7 @@ import javax.inject.Inject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.smartchoice.app.domain.CardDiscountDto;
 import com.smartchoice.app.domain.CardDto;
 import com.smartchoice.app.persistance.CardDAO;
 
@@ -19,10 +20,14 @@ public class CardServiceImpl implements CardService {
 	
 	@Override
 	public void registerCard(CardDto dto) {
-		// TODO Auto-generated method stub
+		dao.registerCard(dto);
 
 	}
-
+	@Override
+	public void registerCardDiscount(List<CardDiscountDto> disDto) {
+		dao.registerCardDiscount(disDto);
+		
+	}
 
 	@Override
 	public List getBigCategoryList() {
@@ -34,12 +39,6 @@ public class CardServiceImpl implements CardService {
 	public List getSmallCategoryList(int big_num) {
 		// TODO Auto-generated method stub
 		return dao.getSmallCategoryList(big_num);
-	}
-
-	@Override
-	public List getDiscountList() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override
@@ -59,7 +58,6 @@ public class CardServiceImpl implements CardService {
 		return dao.getCardList(card_compnum);
 	}
 
-
 	@Override
 	public List<CardDto> CardList() {
 		// TODO Auto-generated method stub
@@ -70,5 +68,24 @@ public class CardServiceImpl implements CardService {
 
 		return dao.getCardComp();
 	}
+
+	@Override
+	public List<CardDiscountDto> getDiscountList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public int getCard_num() {
+		return dao.getCard_num();
+	}
+	@Override
+	public void updateCardImage(CardDto dto) {
+		System.out.println("서비스임플:"+dto);
+		dao.updateCardImage(dto);
+		
+	}
+
+
+
 
 }

@@ -132,19 +132,6 @@
 			</div>
 		</div>
 	</div>
-	
-<<<<<<< HEAD
-	<!-- ¸ŞÀÎ¸Ş´º -->
-	<div  id="header2">
-		<div class="container">
-			<div class="row">
-				<div class="span8 offset4">
-					<a href="/planCard/planIntro.plan">Ä«µåÃßÃµ</a>
-					<a href="/accountbook/index">ÁöÃâ°ü¸®</a>
-					<a href="#">¸ÅÀåÃ£±â</a>
-					<a href="#">ÀÌº¥Æ®</a>
-					<a href="#">°øÁö»çÇ×</a>
-=======
 	<!-- ë©”ì¸ë©”ë‰´ -->
 	<div  id="header2">
 		<div class="container">
@@ -155,8 +142,6 @@
 					<a href="#">ë§¤ì¥ì°¾ê¸°</a>
 					<a href="#">ì´ë²¤íŠ¸</a>
 					<a href="#">ê³µì§€ì‚¬í•­</a>
-
->>>>>>> refs/remotes/origin/master
 				</div>
 			</div>
 		</div>
