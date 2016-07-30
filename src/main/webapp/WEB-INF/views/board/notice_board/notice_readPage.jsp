@@ -6,6 +6,10 @@
 <html>
 <head>
 <title>공지사항</title>
+<script type="text/javascript"
+	src="/resources/se/js/HuskyEZCreator.js" charset="utf-8"></script>
+<script type="text/javascript"
+	src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.0/jquery.js"></script>
 </head>
 <script src="/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 <style>
@@ -68,18 +72,51 @@
 										<label>작성자</label> <input type="text" name="writer"
 											style="width: 800px;" value="${boardDto.nboard_writer}"
 											readonly="readonly">
-									</div>
+									</div><br/>
 									<div>
 										<label>제목</label> <input type="text" name='title'
 											style="width: 800px;" value="${boardDto.nboard_title}"
 											readonly="readonly">
-									</div>
+									</div><br/>
+									
+									<!-- 기존의 textarea는 내용을 출력할 때 태그를 전부 출력하기때문에, 네이버스마트에디터를 사용해서,
+										  기존의 textarea와 비슷한 느낌의 이미지로 변경했다. -->
 									<div>
-										<label>내용</label>
-										<textarea name="nboard_content" id="ir1" rows="15" style="width: 800px;"
-											readonly="readonly">${boardDto.nboard_content}
-										</textarea>
-									</div>
+										<label>내용</label><br/>										
+										<textarea name="nboard_content" id="ir1" rows="20" style="width: 810px;">${boardDto.nboard_content}</textarea>
+											
+										<!-- NAVER SMARTEDITOR SCRIPT -->	
+										<script type="text/javascript">
+											var oEditors = [];
+		
+											$(function() {
+												nhn.husky.EZCreator
+														.createInIFrame({
+															oAppRef : oEditors,
+															elPlaceHolder : "ir1",
+															//SmartEditor2Skin.html 파일이 존재하는 경로
+															sSkinURI : "/resources/se/SmartEditor2Skin.html",
+															htParams : {
+																// 툴바 사용 여부 (true:사용/ false:사용하지 않음)
+																bUseToolbar : false,
+																// 입력창 크기 조절바 사용 여부 (true:사용/ false:사용하지 않음)
+																bUseVerticalResizer : true,
+																// 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
+																bUseModeChanger : false,
+																fOnBeforeUnload : function() {
+		
+																}
+															},													
+															fCreator : "createSEditor2"
+														});												
+													
+											});
+											
+											
+										</script>
+										
+										<!-- /NAVER SMARTEDITOR SCRIPT -->	
+									</div><br/>
 								</div>
 								<!-- /body -->
 

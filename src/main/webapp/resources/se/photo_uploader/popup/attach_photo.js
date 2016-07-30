@@ -34,7 +34,7 @@
 	var welDropAreaUL = $Element(elDropAreaUL); 
 	var fnUploadImage = null;
 	
-	//File API 지원 여부로 결정
+	//File API 지원 여부로 결정 (다중파일업로드:드래그 방식)으로 변경하려면 else{bSupportDragAndDropAPI = false; 를 true로 변경한다 -규-
 	function checkDragAndDropAPI(){
 		try{
 			if( !oNavigator.ie ){
@@ -44,10 +44,10 @@
 					bSupportDragAndDropAPI = true;
 				}
 			} else {
-				bSupportDragAndDropAPI = false;
+				bSupportDragAndDropAPI = true;
 			}
 		}catch(e){
-			bSupportDragAndDropAPI = false;
+			bSupportDragAndDropAPI = true;
 		}
 	}
 	
@@ -334,7 +334,7 @@
     	var tempFile,
     		sUploadURL;
     	
-    	sUploadURL= 'file_uploader_html5.php'; 	//upload URL
+    	sUploadURL= '/multiplePhotoUpload'; 	//upload URL
     	
     	//파일을 하나씩 보내고, 결과를 받음.
     	for(var j=0, k=0; j < nImageInfoCnt; j++) {
@@ -478,8 +478,8 @@
  	 */
  	function callFileUploader (){
  		oFileUploader = new jindo.FileUploader(jindo.$("uploadInputBox"),{
- 			sUrl  : location.href.replace(/\/[^\/]*$/, '') + '/file_uploader.php',	//샘플 URL입니다.
- 	        sCallback : location.href.replace(/\/[^\/]*$/, '') + '/callback.html',	//업로드 이후에 iframe이 redirect될 콜백페이지의 주소
+ 			sUrl  : '/photoUpload',	//샘플 URL입니다.
+ 	        sCallback : '/resource/se/photo_uploader/popup/callback.html',	//업로드 이후에 iframe이 redirect될 콜백페이지의 주소
  	    	sFiletype : "*.jpg;*.png;*.bmp;*.gif",						//허용할 파일의 형식. ex) "*", "*.*", "*.jpg", 구분자(;)	
  	    	sMsgNotAllowedExt : 'JPG, GIF, PNG, BMP 확장자만 가능합니다',	//허용할 파일의 형식이 아닌경우에 띄워주는 경고창의 문구
  	    	bAutoUpload : false,									 	//파일이 선택됨과 동시에 자동으로 업로드를 수행할지 여부 (upload 메소드 수행)

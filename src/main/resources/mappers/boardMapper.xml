@@ -5,6 +5,7 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.smartchoice.mappers.boardMapper">
+	
 	<insert id="notice_register">
 		insert into
 		NOTICEBOARD(nboard_title,nboard_content,nboard_writer)
@@ -23,12 +24,7 @@
 
 	<delete id="notice_remove">
 		delete from NOTICEBOARD where nboard_num=#{num}
-	</delete>
-
-	<select id="notice_listAll" resultType="NoticeBoardDto">
-		select * from NOTICEBOARD
-		where nboard_num>0 order by nboard_regdate desc
-	</select>	
+	</delete>	
 
 	<sql id="search">
 		<if test="searchType != null">

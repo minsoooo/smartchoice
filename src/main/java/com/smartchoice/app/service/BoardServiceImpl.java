@@ -36,17 +36,7 @@ public class BoardServiceImpl implements BoardService {
 	@Override	// 글번호를 전송받아서 DAO로 넘긴다
 	public void remove(Integer num) throws Exception {		
 		dao.remove(num);
-	}
-	
-	@Override	// List 전체를 불러오기위해 DAO로 넘긴다
-	public List<NoticeBoardDto> listAll() throws Exception {		
-		return dao.listAll();		
-	}
-
-	@Override	// List 전체를 불러오기위해 DAO로 넘긴다
-	public List<NoticeBoardDto> listSearch(String keyWord,String keyField) throws Exception {		
-		return dao.listSearch(keyWord, keyField);	
-	}
+	}	
 
 	@Override
 	public void register_reply(NoticeBoardReplyDto replydto) throws Exception {

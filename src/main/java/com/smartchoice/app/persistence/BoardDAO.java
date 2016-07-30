@@ -15,10 +15,6 @@ public interface BoardDAO {
 	public void modify(NoticeBoardDto dto) throws Exception;
 
 	public void remove(Integer num) throws Exception;
-
-	public List<NoticeBoardDto> listAll() throws Exception;
-	
-	public List<NoticeBoardDto> listSearch(String keyWord,String keyField) throws Exception;
 	
 	public void register_reply(NoticeBoardReplyDto replydto) throws Exception;
 	

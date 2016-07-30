@@ -4,38 +4,31 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Random;
 import java.util.UUID;
-
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
-import com.smartchoice.app.domain.Criteria;
 import com.smartchoice.app.domain.MemberDto;
 import com.smartchoice.app.domain.NoticeBoardDto;
 import com.smartchoice.app.domain.NoticeBoardReplyDto;
 import com.smartchoice.app.domain.PageMaker;
+import com.smartchoice.app.domain.PhotoDto;
 import com.smartchoice.app.domain.SearchCriteria;
 import com.smartchoice.app.service.BoardService;
 
 @Controller
-public class BoardController {
-
-	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
+public class BoardController {	
 
 	@Inject // Service 연결
 	private BoardService service;
@@ -46,8 +39,7 @@ public class BoardController {
 
 	@RequestMapping(value = "/board/notice_board/notice_register", method = RequestMethod.POST) // 공지사항 글쓰기를 POST로 받아서 전달한다.
 																							
-	public String registerPOST(NoticeBoardDto board, RedirectAttributes rttr) throws Exception {		
-		System.out.println("registerPOST 에서 받은 editor_cotent : " + board.getNboard_content());
+	public String registerPOST(NoticeBoardDto board, RedirectAttributes rttr) throws Exception {			
 		
 		service.register(board);
 		rttr.addFlashAttribute("msg", "SUCCESS"); // 성공 후 메세지 출력하게 전달한다.
@@ -125,27 +117,65 @@ public class BoardController {
 	public String replyPOST(NoticeBoardReplyDto replydto, RedirectAttributes rttr) throws Exception {
 		System.out.println("전달받은 댓글이름,내용 : " + replydto.getNreply_memid() + "," + replydto.getNreply_content());
 		service.register_reply(replydto);
-		return "redirect:/board/notice_board/notice_read?num=" + replydto.getNreply_nboardnum();
+		return "redirect:/board/notice_board/notice_readPage?num=" + replydto.getNreply_nboardnum();
 		// 리다이렉트로, 여러번 새로고침 되지않게 게시글 위치로 이동한다.
 	}
 	
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
-									// 	TEST PAGE //
-	
-	//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	
-	@RequestMapping(value = "/board/notice_board/notice_fileupload")
-	public void fileuploadGET() {
-	}
-
-	@RequestMapping(value = "/board/notice_board/notice_fileupload", method = RequestMethod.POST) 																							
-	public String fileuploadPOST(NoticeBoardDto board, RedirectAttributes rttr) throws Exception {		
-		System.out.println("fileupload POST 진입");		
+	//다중파일업로드
+	@RequestMapping("/multiplePhotoUpload")
+	public void multiplePhotoUpload(HttpServletRequest request, HttpServletResponse response){
 		
-		
-		service.register(board);
-		rttr.addFlashAttribute("msg", "SUCCESS"); // 성공 후 메세지 출력하게 전달한다.
-		return "redirect:/board/notice_board/notice_listPage"; // 리다이렉트로, 여러번 새로고침 되지않게 게시글 위치로 이동한다.
+	    try {
+	         //파일정보
+	         String sFileInfo = "";
+	         //파일명을 받는다 - 일반 원본파일명
+	         String filename = request.getHeader("file-name");
+	         //파일 확장자
+	         String filename_ext = filename.substring(filename.lastIndexOf(".")+1);
+	         //확장자를소문자로 변경
+	         filename_ext = filename_ext.toLowerCase();	        
+	         //파일 기본경로
+	         String dftFilePath = request.getSession().getServletContext().getRealPath("/");
+	         //파일 기본경로 _ 상세경로
+	         String filePath = dftFilePath + "resources" + File.separator + "photo_upload" + File.separator;
+	         File file = new File(filePath);
+	         if(!file.exists()) {
+	            file.mkdirs();
+	         }
+	         String realFileNm = "";
+	         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+	         String today= formatter.format(new java.util.Date());
+	         
+	         // 파일 이름을 랜덤으로 바꿔준다.
+	         
+	         realFileNm = today+UUID.randomUUID().toString() + "." + filename_ext;
+	         String rlFileNm = filePath + realFileNm;
+	         ///////////////// 서버에 파일쓰기 ///////////////// 
+	         InputStream  is = request.getInputStream();
+	         OutputStream os=new FileOutputStream(rlFileNm);
+	         int numRead;
+	         byte b[] = new byte[Integer.parseInt(request.getHeader("file-size"))];
+	         while((numRead = is.read(b,0,b.length)) != -1){
+	            os.write(b,0,numRead);
+	         }
+	         if(is != null) {
+	            is.close();
+	         }
+	         os.flush();
+	         os.close();
+	         ///////////////// 서버에 파일쓰기 /////////////////
+	         // 정보 출력
+	         sFileInfo += "&bNewLine=true";
+	         // img 태그의 title 속성을 원본파일명으로 적용시켜주기 위함
+	         sFileInfo += "&sFileName="+ filename;;
+	         sFileInfo += "&sFileURL="+"/resources/photo_upload/"+realFileNm;
+	         PrintWriter print = response.getWriter();
+	         print.print(sFileInfo);
+	         print.flush();
+	         print.close();
+	        
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
 	}
 }
