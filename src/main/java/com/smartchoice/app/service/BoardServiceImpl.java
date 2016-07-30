@@ -44,6 +44,11 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	@Override
+	public void remove_reply(NoticeBoardReplyDto replydto) throws Exception {
+		dao.remove_reply(replydto);
+	}
+
+	@Override
 	public List<NoticeBoardReplyDto> read_reply(Integer num) throws Exception{
 		return dao.read_reply(num);
 	}

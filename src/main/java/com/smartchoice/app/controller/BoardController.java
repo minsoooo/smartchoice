@@ -121,6 +121,12 @@ public class BoardController {
 		// 리다이렉트로, 여러번 새로고침 되지않게 게시글 위치로 이동한다.
 	}
 	
+	@RequestMapping("/board/notice_board/notice_reply_remove") // 글 내부에서 댓글 삭제하기 버튼을 눌렀을 때 명령어를 받아 삭제하고 댓글달았던 글로 돌아간다.															
+	public String replyRemove(NoticeBoardReplyDto replydto, RedirectAttributes rttr) throws Exception {			
+		service.remove_reply(replydto);
+		return "redirect:/board/notice_board/notice_readPage?num=" + replydto.getNreply_nboardnum();
+	}
+	
 	//다중파일업로드
 	@RequestMapping("/multiplePhotoUpload")
 	public void multiplePhotoUpload(HttpServletRequest request, HttpServletResponse response){

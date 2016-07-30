@@ -168,18 +168,15 @@
 											<br />
 											<br />
 										</c:when>
-
+										
 										<c:otherwise>
 											<form class="form-search" method="post" action="notice_reply"
 												accept-charset="utf-8">
-												<input type='hidden' name='nreply_nboardnum'
-													value="${boardDto.nboard_num}"> <input
-													type='hidden' name='nreply_memnum'
-													value="${sessionScope.MEM_KEY.mem_num}"> <input
-													type="text" placeholder="${sessionScope.MEM_KEY.mem_id}"
-													name="nreply_memid" readonly="readonly" required="required"
-													value="${sessionScope.MEM_KEY.mem_id}"
-													style="width: 800px;" /><br />
+												<input type='hidden' name='nreply_nboardnum' value="${boardDto.nboard_num}"> 
+												<input type='hidden' name='nreply_memnum' value="${sessionScope.MEM_KEY.mem_num}"> 
+												<input type="text" placeholder="${sessionScope.MEM_KEY.mem_id}" 
+												name="nreply_memid" readonly="readonly" required="required" 
+												value="${sessionScope.MEM_KEY.mem_id}" style="width: 800px;" /><br />
 												<textarea rows="3" name="nreply_content"
 													style="width: 745px;" placeholder="댓글을 입력하세요"
 													required="required"></textarea>
@@ -189,6 +186,11 @@
 
 										</c:otherwise>
 									</c:choose>
+									
+									<!--									
+										댓글을 작성할 때 마다, 글번호가 댓글이 달린 글번호에 저장이되고, 세션의 멤버번호가 댓글멤버넘버로 저장이된다.
+										댓글에 사용되는 아이디는, 세션아이디가 저장된다.
+									-->
 
 
 									<!-- /댓글 입력 페이지 -->

@@ -79,5 +79,9 @@
 		NOTICEBOARD_REPLY where nreply_nboardnum=#{num} order by
 		nreply_regdate desc
 	</select>
+	
+	<delete id="notice_remove_reply">
+		delete from NOTICEBOARD_REPLY where nreply_num=#{nreply_num}
+	</delete>	
 
 </mapper>

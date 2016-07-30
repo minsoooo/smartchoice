@@ -1,8 +1,6 @@
 package com.smartchoice.app.persistence;
 
 import java.util.List;
-
-import com.smartchoice.app.domain.Criteria;
 import com.smartchoice.app.domain.NoticeBoardDto;
 import com.smartchoice.app.domain.NoticeBoardReplyDto;
 import com.smartchoice.app.domain.SearchCriteria;
@@ -17,6 +15,8 @@ public interface BoardDAO {
 	public void remove(Integer num) throws Exception;
 	
 	public void register_reply(NoticeBoardReplyDto replydto) throws Exception;
+	
+	public void remove_reply(NoticeBoardReplyDto replydto) throws Exception;
 	
 	public List<NoticeBoardReplyDto> read_reply(Integer num) throws Exception;
 	

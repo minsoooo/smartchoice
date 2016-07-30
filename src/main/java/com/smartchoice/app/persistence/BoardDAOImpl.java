@@ -38,8 +38,13 @@ public class BoardDAOImpl implements BoardDAO {
 	@Override
 	public void register_reply(NoticeBoardReplyDto replydto) throws Exception {		
 		sqlSession.insert(NAMESPACE + ".notice_register_reply" , replydto);
-	}
+	}	
 	
+	@Override
+	public void remove_reply(NoticeBoardReplyDto replydto) throws Exception {
+		sqlSession.delete(NAMESPACE + ".notice_remove_reply" , replydto);		
+	}
+
 	@Override
 	public List<NoticeBoardReplyDto> read_reply(Integer num) throws Exception {			
 		return sqlSession.selectList(NAMESPACE + ".read_reply" , num);
