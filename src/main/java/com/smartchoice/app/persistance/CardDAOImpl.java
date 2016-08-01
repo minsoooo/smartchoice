@@ -76,6 +76,12 @@ public class CardDAOImpl implements CardDAO {
 		return null;
 	}
 
+
+	@Override
+	public CardDto getCardName(String card_code) {
+		return sqlSession.selectOne(NAMESPACE + ".getCardName", card_code);
+	}
+
 }
 
 

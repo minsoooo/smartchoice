@@ -16,6 +16,6 @@ public interface CardDAO {
 	public void deleteCard(int card_useflag);
 	public List<CardDto> CardList();
 	public List<CardDto> getCardComp();
-
+	public CardDto getCardName(String card_code);
 
 }

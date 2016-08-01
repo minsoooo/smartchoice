@@ -17,6 +17,6 @@ public interface CardService {
 	public List<CardDto> CardList();
 	public List<CardDto> getCardComp();
 	public List<CardDto> getCardList(int card_compnum);
-
+	public CardDto getCardName(String card_code);
 
 }
