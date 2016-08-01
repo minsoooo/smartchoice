@@ -6,11 +6,11 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
-import com.smartchoice.app.persistence.BoardDAO;
 import com.smartchoice.app.domain.Criteria;
 import com.smartchoice.app.domain.NoticeBoardDto;
 import com.smartchoice.app.domain.NoticeBoardReplyDto;
 import com.smartchoice.app.domain.SearchCriteria;
+import com.smartchoice.app.persistance.BoardDAO;
 
 @Service	// 서비스 연결하기
 public class BoardServiceImpl implements BoardService {

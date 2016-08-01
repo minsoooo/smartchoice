@@ -1,3 +1,0 @@
-required.memberDto.mem_id=유저 ID를 입력해 주세요.
-required.memberDto.mem_pw=유저 pass를 입력해 주세요.
-login.memberDto=입력된 id와 pass가 존재하지 않습니다.

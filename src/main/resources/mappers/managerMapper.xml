@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smartchoice.mappers.managerMapper">
+	<select id="getManager"  resultType="ManagerDto">
+		select * from manager
+			<where>
+			  <if test="mng_id != null">mng_id=#{mng_id}</if>
+		      <if test="mng_pw != null"> and mng_pw=#{mng_pw}</if>			
+			</where>
+	</select>
+	
+	<insert id="regiManager">
+		insert into manager(mng_id, mng_pw, mng_name, mng_position, mng_level,
+		mng_pnum)
+		values(#{mng_id}, #{mng_pw}, #{mng_name}, #{mng_position}, #{mng_level}, #{mng_pnum})
+	</insert>
+	
+	<update id="updateManager">
+		update manager set mng_pnum = #{mng_pnum}, mng_level = #{mng_level}, mng_position = #{mng_position}
+		where mng_num = #{mng_num}
+	</update>
+	
+	<delete id="delManager">
+		delete from manager where mng_id =#{mng_id}
+	</delete>
+	
+</mapper>

@@ -11,6 +11,7 @@ import java.util.UUID;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,13 +26,24 @@ import com.smartchoice.app.domain.NoticeBoardReplyDto;
 import com.smartchoice.app.domain.PageMaker;
 import com.smartchoice.app.domain.PhotoDto;
 import com.smartchoice.app.domain.SearchCriteria;
+import com.smartchoice.app.service.AccountBookService;
 import com.smartchoice.app.service.BoardService;
+import com.smartchoice.app.service.CalendarService;
 
 @Controller
 public class BoardController {	
 
 	@Inject // Service 연결
 	private BoardService service;
+	
+	@Inject
+	private CalendarService calService;
+	
+	@Inject
+	private AccountBookService abookService;
+	
+	
+	////////////////////////////// NoticeBoard //////////////////////////////
 
 	@RequestMapping(value = "/board/notice_board/notice_register") // 공지사항 글쓰기로 가기																	
 	public void registerGET() {
@@ -184,4 +196,60 @@ public class BoardController {
 	        e.printStackTrace();
 	    }
 	}
+	
+	
+	///////////////////////// Event Board ///////////////////////////////
+	
+	@RequestMapping("/board/event_board/event_listPage")
+	public String eventlistPage(String now_year, String now_month, @ModelAttribute("cri") SearchCriteria cri, Model model, HttpServletRequest req) throws Exception{
+		List<String> list = null;
+		HttpSession session = req.getSession();
+		MemberDto dto = new MemberDto();
+		dto= (MemberDto)session.getAttribute("MEM_KEY");
+		int regi_memnum = dto.getMem_num();
+		
+		int cal_year = calService.getNowYear(now_year);
+		int cal_month = calService.getNowMonth(now_month);		// calendar객체를 통해 년,월을 받아옴
+		
+		String regi_month = "";		// 받아온 년,월을 2016-07 의 형태로 합치기 위함
+		
+		if(cal_month < 10){
+			regi_month = cal_year + "-0" + cal_month;
+		}
+		else{
+			regi_month = cal_year + "-" + cal_month;
+		}
+
+		list = abookService.selectRegiDay(regi_month, regi_memnum);	// 해당 '월' 중 등록된 '일'의 값을 리스트 형태로 가져옴
+		String regi_days = "";
+				
+		for(int i = 0; i < list.size(); i++){
+			regi_days += list.get(i) + ",";
+		}
+
+		model.addAttribute("now_year", cal_year);
+		model.addAttribute("now_month", cal_month);
+		model.addAttribute("regi_days", regi_days);
+		
+		if (cri.getSearchType() == null) {
+			cri.setSearchType("notice_title_listSearch");
+		}
+		if (cri.getKeyword() == null) {
+			cri.setKeyword("");
+		}
+
+		model.addAttribute("list", service.listSearch(cri));				
+
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+
+		pageMaker.setTotalCount(service.listSearchCount(cri));
+
+		model.addAttribute("pageMaker", pageMaker);
+		
+		
+		return "/board/event_board/event_listPage";
+	}
+	
+	
 }
