@@ -17,5 +17,8 @@ public interface CardDAO {
 	public List<CardDto> CardList();
 	public List<CardDto> getCardComp();
 	public CardDto getCardName(String card_code);
+	//카드네임만 가져오기/ by minsoo
+	public String getCardCompName(int comp_num);
+
 
 }

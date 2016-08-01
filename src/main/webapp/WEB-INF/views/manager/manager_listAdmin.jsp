@@ -27,6 +27,10 @@
 			location.href ="/manager/manager_delAdmin?mng_id="+mng_id;
 		}
 	}
+	
+	function goPage(page_num){
+		location.href="/manager/manager_listAdmin?page_num="+page_num;
+	}
 </script>
 <style>
 li{
@@ -49,7 +53,7 @@ li{
  
  #mngTable {
  	margin-top :30px;
- 	margin-left:80px;
+ 	margin-left:120px;
  }
 
  #mngTable th{
@@ -101,6 +105,10 @@ li{
 	outline: 0;
 }
 
+#pagingDiv{
+	margin-top: 40px;
+	margin-left:400px;
+}
 </style>
 <body style ="background-color: #f5f4f0">
 <jsp:include page="/WEB-INF/views/common/mng_header.jsp"></jsp:include>
@@ -135,5 +143,21 @@ li{
 			</div>
 		</div>
 	</div>
+	<div class ="container">
+		<div class ="row">
+			<div class ="span12" id ="pagingDiv">	
+				<jsp:include page="/WEB-INF/views/common/paging.jsp" flush="true">
+				    <jsp:param name="firstPageNo" value="${paging.firstPageNo}" />
+				    <jsp:param name="prevPageNo" value="${paging.prevPageNo}" />
+				    <jsp:param name="startPageNo" value="${paging.startPageNo}" />
+				    <jsp:param name="pageNo" value="${paging.pageNo}" />
+				    <jsp:param name="endPageNo" value="${paging.endPageNo}" />
+				    <jsp:param name="nextPageNo" value="${paging.nextPageNo}" />
+				    <jsp:param name="finalPageNo" value="${paging.finalPageNo}" />
+				</jsp:include>
+			</div>			
+		</div>
+	</div>
+	
 </body>
 </html>

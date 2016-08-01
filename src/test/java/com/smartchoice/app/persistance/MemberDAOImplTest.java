@@ -69,7 +69,7 @@ public class MemberDAOImplTest {
 	
 	@Test
 	public void testDeleteMember() throws Exception {
-		service.deleteMember(1);
+		service.deleteMember("");
 	}
 
 }

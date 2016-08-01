@@ -115,8 +115,8 @@
 	
 	function fnDelMember(){
 		if(confirm("정말 탈퇴하시겠습니까?")){
-			var mem_num =$("#mem_num").attr("value");
-			location.href ="/member/delete?mem_num="+mem_num;
+			var mem_id =$("#mem_id").attr("value");
+			location.href ="/member/delete?mem_id="+mem_id;
 		}
 		
 	}
@@ -294,7 +294,7 @@
 </style>
 <body style="background-color:#f5f4f0">
 	<span id ="mem_pw" value ="${sessionScope.mem_pw }"></span>
-	<span id = "mem_num" value ="${sessionScope.MEM_KEY.mem_num }"></span>
+	<span id = "mem_id" value ="${sessionScope.MEM_KEY.mem_id }"></span>
 	<span id ="mem_email" value ="${sessionScope.MEM_KEY.mem_email }"></span>
 	<span id ="check" value ="${check }"></span>
 	<span id ="check_pass" value ="false"></span>

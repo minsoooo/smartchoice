@@ -11,8 +11,9 @@ public interface MemberService {
 	public MemberDto getMember(String mem_id, String mem_pw);
 	public MemberDto getMemberWithId(String mem_id);
 	public void updateMember(MemberDto dto);
-	public void deleteMember(int mem_num);
+	public void deleteMember(String mem_id);
 	public String searchId(String mem_email);
 	public String searchPw(String mem_id, String mem_email);
 	public void updatePw(String mem_id, String mem_pw);
+	public List<MemberDto> getViewListMember(String keyword, String value);
 }

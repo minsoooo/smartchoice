@@ -6,7 +6,11 @@
 <mapper namespace="com.smartchoice.mappers.bigcategoryMapper">
 
 	<select id="readBigCategory" resultType="BigCategoryDto">
-		select * from bigcategory order by big_num asc
+		select * from bigcategory 
+			<where>
+				<if test ="big_num != null">big_num = #{big_num}</if>
+			</where>
+		order by big_num asc
 	</select>
 	
 </mapper>
