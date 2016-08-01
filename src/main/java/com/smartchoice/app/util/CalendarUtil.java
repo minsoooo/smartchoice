@@ -1,13 +1,10 @@
-package com.smartchoice.app.persistance;
+package com.smartchoice.app.util;
 
 import java.util.Calendar;
 
-import org.springframework.stereotype.Repository;
-
 import com.smartchoice.app.domain.CalendarDto;
 
-@Repository
-public class CalendarDAOImpl implements CalendarDAO {
+public class CalendarUtil {
 	public static final int START_DATE = 1;
 	Calendar cal = Calendar.getInstance();
 	StringBuilder today = new StringBuilder();
@@ -15,7 +12,6 @@ public class CalendarDAOImpl implements CalendarDAO {
 	int now_month = 0;
 	int now_day = cal.get(Calendar.DAY_OF_MONTH);
 	
-	@Override
 	public String getDate() {
 		CalendarDto dto = new CalendarDto();
 		String param_month = dto.getMonth();
@@ -42,7 +38,6 @@ public class CalendarDAOImpl implements CalendarDAO {
 		return param_day.toString();
 	}
 
-	@Override
 	public int getNowYear(String year) {
 		if (year != null && year != "") {
 			cal.set(Calendar.YEAR, Integer.parseInt(year));
@@ -56,7 +51,6 @@ public class CalendarDAOImpl implements CalendarDAO {
 		return now_year;
 	}
 
-	@Override
 	public int getNowMonth(String month) {
 		if (month != null && month != "") {
 			cal.set(Calendar.MONTH, Integer.parseInt(month) - 1);
@@ -69,5 +63,4 @@ public class CalendarDAOImpl implements CalendarDAO {
 	
 		return now_month;
 	}
-
 }

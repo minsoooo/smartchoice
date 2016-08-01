@@ -24,11 +24,12 @@ import com.smartchoice.app.domain.MemberDto;
 import com.smartchoice.app.domain.NoticeBoardDto;
 import com.smartchoice.app.domain.NoticeBoardReplyDto;
 import com.smartchoice.app.domain.PageMaker;
-import com.smartchoice.app.domain.PhotoDto;
+
 import com.smartchoice.app.domain.SearchCriteria;
 import com.smartchoice.app.service.AccountBookService;
 import com.smartchoice.app.service.BoardService;
-import com.smartchoice.app.service.CalendarService;
+import com.smartchoice.app.util.CalendarUtil;
+
 
 @Controller
 public class BoardController {	
@@ -37,11 +38,10 @@ public class BoardController {
 	private BoardService service;
 	
 	@Inject
-	private CalendarService calService;
-	
-	@Inject
+
 	private AccountBookService abookService;
 	
+	CalendarUtil cal = new CalendarUtil();
 	
 	////////////////////////////// NoticeBoard //////////////////////////////
 
@@ -208,9 +208,8 @@ public class BoardController {
 		dto= (MemberDto)session.getAttribute("MEM_KEY");
 		int regi_memnum = dto.getMem_num();
 		
-		int cal_year = calService.getNowYear(now_year);
-		int cal_month = calService.getNowMonth(now_month);		// calendar객체를 통해 년,월을 받아옴
-		
+		int cal_year = cal.getNowYear(now_year);
+		int cal_month = cal.getNowMonth(now_month);		// calendar객체를 통해 년,월을 받아옴
 		String regi_month = "";		// 받아온 년,월을 2016-07 의 형태로 합치기 위함
 		
 		if(cal_month < 10){

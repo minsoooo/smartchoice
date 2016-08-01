@@ -60,9 +60,9 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
+
 	public void updatePw(String mem_id, String mem_pw) {
-			dao.updatePw(mem_id, mem_pw);
-		
+		dao.updatePw(mem_id, mem_pw);
 	}
 
 	@Override

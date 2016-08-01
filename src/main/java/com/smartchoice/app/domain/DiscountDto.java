@@ -1,6 +1,5 @@
 package com.smartchoice.app.domain;
 
-
 public class DiscountDto {
 	private int dc_num;
 	private int dc_min;
@@ -80,7 +79,4 @@ public class DiscountDto {
 	public void setCard_typeflag(int card_typeflag) {
 		this.card_typeflag = card_typeflag;
 	}
-	
-	
-	
 }

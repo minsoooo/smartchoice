@@ -8,10 +8,20 @@
 <script src="/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 <script>
 	var select_tr, list_big_num, list_small_num, list_money;
-
+	
 	
 	$(document).ready(
 		function(){
+			var now_year = $("#now_year").attr("value").trim();
+			var now_month = $("#now_month").attr("value").trim();	// 현재 달력에 표시된 년,월을 받음
+			
+			var regi_month = "";			
+			if(now_month.length < 2){
+				regi_month = now_year + "-0" + now_month;
+			}
+			else{
+				regi_month = now_year + "-" + now_month;
+			}	// regi_month(2016-07의 형태)를 만든다.
 			
 			var regi_days = $("#regi_days").attr("value").split(",");	// 지출을 등록한 날을 split하여 배열에 담음
 			
@@ -81,17 +91,7 @@
 					);
 					
 					
-					var now_year = $("#now_year").attr("value").trim();
-					var now_month = $("#now_month").attr("value").trim();
 					var now_day = $("#now_date").attr("value").trim();					
-					var regi_month = "";
-					
-					if(now_month.length < 2){
-						regi_month = now_year + "-0" + now_month;
-					}
-					else{
-						regi_month = now_year + "-" + now_month;
-					}
 					
 					// 등록한 지출목록이 있는 경우
 					if($(this).attr("value") != ""){			
@@ -289,6 +289,13 @@
 			);
 			
 			
+			// 통계보기 버튼을 클릭한 경우
+			$("#btnStats").click(
+				function(){
+					location.href="/accountbook/stats?regi_month=" + regi_month + "&now_year=" + now_year + "&now_month=" +now_month;
+				}		
+			);
+			
 			
 		}
 	);
@@ -315,7 +322,7 @@
 @import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
 #content{
 	margin-top:100px;
-	margin-bottom:100px;
+	margin-bottom:30px;
 }
 
 #cal{
@@ -401,7 +408,7 @@
 	text-align: center;
 }
 
-#btnInsert, #btnDelete, #btnSubmit{
+#btnInsert, #btnDelete, #btnSubmit, #btnStats{
 	display: inline-block;
 	padding: 6px 12px;
 	margin-bottom: 0;
@@ -428,7 +435,7 @@
 	outline: 0;
 }
 
-#btnInsert:hover, #btnDelete:hover{
+#btnInsert:hover, #btnDelete:hover, #btnStats:hover{
 	background-color:#97b162;
 	border: 0;
 	outline: 0;
@@ -472,6 +479,15 @@
 	margin-right:10px;
 	text-align:right;
 }
+
+#btnStats{
+	margin-top:30px;
+	margin-bottom:50px;
+	margin-left:10px;
+	width:243px;
+	height:40px;
+}
+
 </style>
 <body style="background-color:#f5f4f0; font-family: 'Noto Sans KR', sans-serif;">
 
@@ -644,6 +660,15 @@
 					<input type="button" value="삭 제" class="btn" id="btnDelete" /> <br/>
 					<input type="button" value="저 장 하 기" class="btn" id="btnSubmit" />
 				</form>
+				
+			</div>
+		</div>
+	</div>
+	
+	<div class="container">
+		<div class="row">
+			<div class="span2 offset7">
+				<input type="button" value="통 계 보 기" class="btn" id="btnStats" />
 			</div>
 		</div>
 	</div>

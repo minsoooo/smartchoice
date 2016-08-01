@@ -41,10 +41,6 @@ public class AccountBookServiceImpl implements AccountBookService {
 		return dao.getAccountBook(abook_reginum);
 	}
 
-	@Override
-	public CategoryDto getCategoryName(int small_num) {
-		return dao.getCategoryName(small_num);
-	}
 
 	@Override
 	public void deleteAccountBook(int regi_num) {

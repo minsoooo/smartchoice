@@ -88,11 +88,9 @@ public class MemberDAOImpl implements MemberDAO {
 		return sqlSession.selectList(NAMESPACE+".getViewListMember", param);
 	}
 
-	@Override
 	public List<MemberDto> getMemberWithFav(String mem_fav) {
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("mem_fav", mem_fav);
 		return sqlSession.selectList(NAMESPACE+".getViewListMember", param);
 	}
-
 }

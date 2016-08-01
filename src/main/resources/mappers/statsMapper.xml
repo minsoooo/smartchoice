@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.smartchoice.mappers.statsMapper">
+
+	<select id="getSmallNums" resultType="int">
+		select distinct abook_smallnum from v_details_accountbook where regi_month=#{regi_month} and regi_memnum=#{regi_memnum};
+	</select>
+	
+	<select id="getMoneyList" resultType="int">
+		select abook_money from v_details_accountbook 
+		where regi_month=#{regi_month} and regi_memnum=#{regi_memnum} and abook_smallnum=#{small_num};
+	</select>
+	
+	<select id="getStatsResult" resultType="StatsDto">
+		select * from v_details_category where small_num=#{small_num};
+	</select>
+</mapper>

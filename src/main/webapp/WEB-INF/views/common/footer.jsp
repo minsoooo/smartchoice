@@ -73,7 +73,6 @@
 					<div id="foot2">
 						<font id="copyright">Copyright 2016 $mart Choice. All rights reserved.</font><br/><br/>
 					</div>
-
 				</div>
 			</div>
 		</div>

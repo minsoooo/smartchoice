@@ -12,4 +12,8 @@
 	<select id="getDiscountName" resultType="DiscountDto">
 		select small_name from v_details_discount where dc_cardcode = #{dc_cardcode}
 	</select>
+	
+	<select id="getCardDCInfo" resultType="DiscountDto">
+		select * from discount where dc_cardcode=#{card_code}
+	</select>
 </mapper>
