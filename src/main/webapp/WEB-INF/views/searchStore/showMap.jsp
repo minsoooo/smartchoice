@@ -405,7 +405,6 @@ function dcListChange(){
 			message = '<div style="padding:5px;">여기에 계신가요?!</div>'; // 인포윈도우에 표시될 내용
 			searchAddrFromCoords(locPosition); // 현재 지도 중심좌표로 주소를 검색해서 지도 좌측 하단에 표시
 			displayMarker(locPosition, message); // 마커와 인포윈도우를 표시
-			displayCircleDot(locPosition, 0);
 		});
 	} else { // HTML5의 GeoLocation을 사용할 수 없을때 마커 표시 위치와 인포윈도우 내용을 설정
 		var locPosition = new daum.maps.LatLng(33.450701, 126.570667), message = 'geolocation을 사용할수 없습니다.';
