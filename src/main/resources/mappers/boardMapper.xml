@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.smartchoice.mappers.boardMapper">
+	
+	<insert id="notice_register">
+		insert into
+		NOTICEBOARD(nboard_title,nboard_content,nboard_writer)
+		values(#{nboard_title},#{nboard_content},#{nboard_writer})
+	</insert>
+	<select id="notice_read" resultType="NoticeBoardDto">
+		select * from NOTICEBOARD
+		where nboard_num=#{num}
+	</select>
+
+	<update id="notice_modify">
+		update NOTICEBOARD set nboard_title=#{nboard_title},
+		nboard_content=#{nboard_content}, nboard_writer=#{nboard_writer} where
+		nboard_num=#{nboard_num}
+	</update>
+
+	<delete id="notice_remove">
+		delete from NOTICEBOARD where nboard_num=#{num}
+	</delete>	
+
+	<sql id="search">
+		<if test="searchType != null">
+			<if test="searchType == 'nboard_title'">
+				and nboard_title like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType == 'nboard_content'">
+				and nboard_content like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType == 'nboard_writer'">
+				and nboard_writer like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType == 'nboard_titlecontent'">
+				and ( nboard_title like CONCAT('%', #{keyword}, '%') OR nboard_content like
+				CONCAT('%', #{keyword}, '%'))
+			</if>			
+		</if>
+	</sql>
+
+	<select id="notice_listSearch" resultType="NoticeBoardDto" parameterType="SearchCriteria">
+		<![CDATA[  
+		  select * 
+		  from NOTICEBOARD 
+		  where nboard_num > 0 
+		]]>
+
+		<include refid="search"></include>
+		  
+		<![CDATA[    
+		  order by nboard_regdate desc
+		  limit #{pageStart}, #{perPageNum}
+		]]>
+	</select>
+
+	<select id="notice_listSearchCount" resultType="int">
+		<![CDATA[  
+		  select count(nboard_viewcnt) 
+		  from NOTICEBOARD 
+		  where nboard_num > 0 
+		]]>
+		<include refid="search"></include>
+	</select>	
+
+	<insert id="notice_register_reply">
+		insert into
+		NOTICEBOARD_REPLY(nreply_content,nreply_nboardnum,nreply_memnum,nreply_memid)
+		values(#{nreply_content},#{nreply_nboardnum},#{nreply_memnum},#{nreply_memid})
+	</insert>
+
+	<select id="read_reply" resultType="NoticeBoardReplyDto">
+		select * from
+		NOTICEBOARD_REPLY where nreply_nboardnum=#{num} order by
+		nreply_regdate desc
+	</select>
+	
+	<delete id="notice_remove_reply">
+		delete from NOTICEBOARD_REPLY where nreply_num=#{nreply_num}
+	</delete>	
+
+</mapper>

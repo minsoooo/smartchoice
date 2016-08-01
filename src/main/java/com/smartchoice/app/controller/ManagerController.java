@@ -38,6 +38,7 @@ import com.smartchoice.app.service.MemberService;
 import com.smartchoice.app.util.Cipher;
 import com.smartchoice.app.util.Paging;
 
+
 @Controller
 @RequestMapping("/manager/")
 public class ManagerController {
@@ -228,7 +229,6 @@ public class ManagerController {
 	    model.addAttribute("cateList",cateList);
 		model.addAttribute("paging",paging);
 		model.addAttribute("memberList", memberList);
-	    
 	}
 
 	//관리자 회원 분류별 보기 by Minsoo

@@ -73,5 +73,4 @@ public class MemberServiceImpl implements MemberService {
 				return dao.getMemberWithCompNum(Integer.parseInt(value));
 			}
 	}
-
 }

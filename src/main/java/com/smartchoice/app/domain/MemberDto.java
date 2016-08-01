@@ -53,8 +53,6 @@ public class MemberDto {
 		this.comp_name = comp_name;
 	}
 
-	
-	
 	public String getMem_birthdate() {
 		return mem_birthdate;
 	}
@@ -159,6 +157,7 @@ public class MemberDto {
 				+getMem_level() +" getMem_email : "+getMem_email()+
 				" getMem_pw : " +getMem_pw() + " getMem_id : "+getMem_id() +
 				 " getMem_fav1 : "+getMem_fav1()+" getMem_fav2 : "+
+
 				getMem_fav2()+" getMem_fav3 : " +getMem_fav3() +" getMem_cardcode : "
 				+getMem_cardcode() +" getCard_name : "+getCard_name()+" getComp_num : " +getComp_num() + " getMem_birthdate : "
 				+getMem_birthdate() + "getFav1_name : "+getFav1_name()+" getFav2_name : "+getFav2_name()+ " getFav3_name : "
