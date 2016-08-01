@@ -34,7 +34,9 @@
 			alert("로그인이 필요합니다.");
 			fnLogin();
 		}
+
 	}
+	
 	
 	function fnEventBoard(){
 		var mem_num = $("#mem_num").attr("value")
@@ -187,8 +189,8 @@
 			<div class="row">
 				<div class="span8 offset4">
 					<a href="/planCard/planIntro.plan">카드추천</a>
-					<a href="javascript:fnAccount()">지출관리</a>
-					<a href="#">매장찾기</a>
+					<a href="javascript:fnAccount()">지출관리</a>			
+					<a href="/searchStore/showMap">매장찾기</a>
 					<a href="javascript:fnEventBoard()">이벤트</a>
 					<a href="/board/notice_board/notice_listPage">공지사항</a>
 				</div>

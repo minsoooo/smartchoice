@@ -1,6 +1,8 @@
 package com.smartchoice.app.persistance;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -19,6 +21,13 @@ public class BigCategoryDAOImpl implements BigCategoryDAO {
 	@Override
 	public List<BigCategoryDto> getBigCategory() {
 		return sqlSession.selectList(NAMESPACE + ".readBigCategory");
+	}
+
+	@Override
+	public BigCategoryDto getBigCateWithNum(int big_num) {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("big_num", big_num);
+		return sqlSession.selectOne(NAMESPACE + ".readBigCategory",param);
 	}
 	
 }

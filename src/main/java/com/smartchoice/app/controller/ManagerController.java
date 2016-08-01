@@ -25,12 +25,18 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.WebUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.smartchoice.app.domain.BigCategoryDto;
+import com.smartchoice.app.domain.CardDto;
 import com.smartchoice.app.domain.ManagerDto;
 import com.smartchoice.app.domain.MemberDto;
 import com.smartchoice.app.domain.SmallCategoryDto;
+import com.smartchoice.app.service.BigCategoryService;
 import com.smartchoice.app.service.CardService;
+import com.smartchoice.app.service.CategoryService;
 import com.smartchoice.app.service.ManagerService;
+import com.smartchoice.app.service.MemberService;
 import com.smartchoice.app.util.Cipher;
+import com.smartchoice.app.util.Paging;
 
 @Controller
 @RequestMapping("/manager/")
@@ -42,6 +48,13 @@ public class ManagerController {
 	
 	@Inject
 	private ManagerService service_mng;
+	
+
+	@Inject
+	private MemberService service_mem;
+	
+	@Inject
+	private BigCategoryService service_cate;
 	
 	//관리자 아이디 중복체크 AJAX코드 
 	@RequestMapping("/manager_idCheck")
@@ -115,11 +128,29 @@ public class ManagerController {
 		rttr.addAttribute("success", "success");
 		return "redirect:/manager/manager_listAdmin";
 	}
-	//직원리스트 페이지로 이동 by Minsoo
+	//직원리스트 페이지로 이동 by Minsoo// 페이징처리까지
 	@RequestMapping("/manager_listAdmin")
-	public void managerList(Model model){
+	public void managerList(Model model, int page_num){
 		List<ManagerDto> managerList = new ArrayList<ManagerDto>();
-		managerList = service_mng.getManager();
+		List<ManagerDto> list = new ArrayList<ManagerDto>();
+		list = service_mng.getManager(); 	
+		
+		Paging paging = new Paging();
+		paging.setPageNo(page_num);//페이지번호셋팅
+	    paging.setPageSize(2);//페이지 사이즈 셋팅
+	    paging.setTotalCount(list.size());//토탈카운트 셋팅
+	   
+	    if((page_num)*2 >= list.size()){
+	    	  for(int i =(page_num-1)*2  ; i<list.size();i++ ){
+	  	    	managerList.add(list.get(i));	    	
+	  	    }
+	    }else{
+	    	 for(int i =(page_num-1)*2 ; i<(page_num-1)*2+2;i++ ){
+	 	    	managerList.add(list.get(i));	    	
+	 	    }
+	    }
+	   
+		model.addAttribute("paging",paging);
 		model.addAttribute("managerList", managerList);
 	}
 	
@@ -152,12 +183,110 @@ public class ManagerController {
 	public void managerMainGET() throws Exception{
 	}
 
-	//관리자 회원정보리스트 페이지
-	@RequestMapping("/manager_memberList")
-	public void managerMemberListGET() throws Exception{
-		//return "/manager/manager_main";
+	//관리자 회원 리스트 페이지 이동  by minsoo
+	@RequestMapping("/manager_listMember")
+	public void listMemberGET(Model model, int page_num) throws Exception{
+		
+		List<MemberDto> list = new ArrayList<MemberDto>();
+		List<MemberDto>	setList = new ArrayList<MemberDto>();
+		List<MemberDto> memberList = new ArrayList<MemberDto>();
+		List<BigCategoryDto> cateList = new ArrayList<BigCategoryDto>();
+		List<CardDto> compList = new ArrayList<CardDto>();
+		
+		MemberDto memDto =null;
+		BigCategoryDto cateDto = null;
+		
+		list = service_mem.getMemberList();
+		cateList = service_cate.getBigCategory();
+		compList = service.getCardComp();
+		
+		for(int j = 0 ; j < list.size(); j++){
+			memDto = (MemberDto)list.get(j);
+			cateDto = service_cate.getBigCateWithNum(Integer.parseInt(memDto.getMem_fav1()));
+			memDto.setFav1_name(cateDto.getBig_name());
+			cateDto = service_cate.getBigCateWithNum(Integer.parseInt(memDto.getMem_fav2()));
+			memDto.setFav2_name(cateDto.getBig_name());
+			cateDto = service_cate.getBigCateWithNum(Integer.parseInt(memDto.getMem_fav3()));
+			memDto.setFav3_name(cateDto.getBig_name());
+			setList.add(memDto);
+		}
+		
+		Paging paging = new Paging();
+		paging.setPageNo(page_num);//페이지번호셋팅
+	    paging.setPageSize(2);//페이지 사이즈 셋팅
+	    paging.setTotalCount(setList.size());//토탈카운트 셋팅
+	    
+	    if((page_num)*2 >= list.size()){
+	    	  for(int i = (page_num-1)*2  ; i < setList.size(); i++ ){
+	  	    	memberList.add(setList.get(i));	    	
+	  	    }
+	    }else{
+	    	 for(int i = (page_num-1)*2 ; i < (page_num-1)*2+2; i++ ){
+	 	    	memberList.add(setList.get(i));	    	
+	 	    }
+	    }
+	    model.addAttribute("compList",compList);
+	    model.addAttribute("cateList",cateList);
+		model.addAttribute("paging",paging);
+		model.addAttribute("memberList", memberList);
+	    
 	}
-	
+
+	//관리자 회원 분류별 보기 by Minsoo
+	@RequestMapping("/manager_viewListMember")
+	public void viewListMember(Model model, int page_num, String keyword, String value){
+		List<MemberDto> list = new ArrayList<MemberDto>();
+		List<MemberDto>	setList = new ArrayList<MemberDto>();
+		List<MemberDto> memberList = new ArrayList<MemberDto>();
+		List<BigCategoryDto> cateList = new ArrayList<BigCategoryDto>();
+		List<CardDto> compList = new ArrayList<CardDto>();
+		
+		MemberDto memDto =null;
+		BigCategoryDto cateDto = null;
+		
+		list = service_mem.getViewListMember(keyword, value);
+		cateList = service_cate.getBigCategory();
+		compList = service.getCardComp();
+		
+		for(int j = 0 ; j < list.size(); j++){
+			memDto = (MemberDto)list.get(j);
+			cateDto = service_cate.getBigCateWithNum(Integer.parseInt(memDto.getMem_fav1()));
+			memDto.setFav1_name(cateDto.getBig_name());
+			cateDto = service_cate.getBigCateWithNum(Integer.parseInt(memDto.getMem_fav2()));
+			memDto.setFav2_name(cateDto.getBig_name());
+			cateDto = service_cate.getBigCateWithNum(Integer.parseInt(memDto.getMem_fav3()));
+			memDto.setFav3_name(cateDto.getBig_name());
+			setList.add(memDto);
+		}
+		
+		Paging paging = new Paging();
+		paging.setPageNo(page_num);//페이지번호셋팅
+	    paging.setPageSize(2);//페이지 사이즈 셋팅
+	    paging.setTotalCount(setList.size());//토탈카운트 셋팅
+	    
+	    if((page_num)*2 >= list.size()){
+	    	  for(int i = (page_num-1)*2  ; i < setList.size(); i++ ){
+	  	    	memberList.add(setList.get(i));	    	
+	  	    }
+	    }else{
+	    	 for(int i = (page_num-1)*2 ; i < (page_num-1)*2+2; i++ ){
+	 	    	memberList.add(setList.get(i));	    	
+	 	    }
+	    }
+	    model.addAttribute("keyword",keyword);
+	    model.addAttribute("value",value);
+	    model.addAttribute("compList",compList);
+	    model.addAttribute("cateList",cateList);
+		model.addAttribute("paging",paging);
+		model.addAttribute("memberList", memberList);
+		
+	}
+	//관리자 회원 탈퇴처리 by Minsoo
+	@RequestMapping("/manager_delMember")
+	public String delMember(String mem_id){
+		service_mem.deleteMember(mem_id);
+		return "redirect:/manager/manager_listMember?page_num=1";
+	}
 	//관리자 회원정보수정 페이지
 	@RequestMapping("/manager_memberCor")
 	public void managerMemberCorGET() throws Exception{
@@ -190,7 +319,7 @@ public class ManagerController {
 	public @ResponseBody HashMap<Integer, Object> managerCardRegisterSmall(@RequestParam(value="big_num", defaultValue="1") String big_num){
 		HashMap<Integer, Object> hashmap = new HashMap<Integer, Object>();
 		List<SmallCategoryDto> list = service.getSmallCategoryList(Integer.parseInt(big_num));
-		for(int i=0; i<list.size(); i++){
+		for(int i = 0; i < list.size(); i++){
 			SmallCategoryDto dto = list.get(i);
 			hashmap.put(i, dto);
 		}

@@ -10,7 +10,7 @@
 	}
 	
 	function fnListOpen(){
-		location.href="/manager/manager_listAdmin?page_num=1";
+		location.href="/manager/manager_listAdmin";
 	}
 
 </script>

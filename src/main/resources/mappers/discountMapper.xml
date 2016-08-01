@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.smartchoice.mappers.discountMapper">
+
+	<select id="getSmallSelect" resultType="DiscountDto">
+		select * from discount where dc_smallnum=#{dc_smallnum} and dc_cardcode IN (select card_code from card where card_typeflag=#{card_typeflag})
+	</select>
+	
+	<select id="getDiscountName" resultType="DiscountDto">
+		select small_name from v_details_discount where dc_cardcode = #{dc_cardcode}
+	</select>
+</mapper>

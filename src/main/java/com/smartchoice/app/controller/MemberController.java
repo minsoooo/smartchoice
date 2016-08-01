@@ -214,8 +214,9 @@ public class MemberController {
 	
 	//회원 탈퇴하면 세션을 초기화후 index페이지로 이동
 	@RequestMapping( value ="/delete")
-	public String deleteMember(int mem_num,HttpServletRequest req){
-		service_mem.deleteMember(mem_num);
+
+	public String deleteMember(String mem_id,HttpServletRequest req){
+		service_mem.deleteMember(mem_id);
 		req.getSession().invalidate();
 		return "index";
 	}

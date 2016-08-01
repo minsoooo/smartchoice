@@ -7,4 +7,5 @@ import com.smartchoice.app.domain.BigCategoryDto;
 
 public interface BigCategoryService {
 	public List<BigCategoryDto> getBigCategory();
+	public BigCategoryDto getBigCateWithNum(int big_num);
 }

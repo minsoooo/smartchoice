@@ -43,8 +43,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public void deleteMember(int mem_num) {
-		dao.deleteMember(mem_num);
+	public void deleteMember(String mem_id) {
+		dao.deleteMember(mem_id);
 
 	}
 
@@ -65,4 +65,12 @@ public class MemberServiceImpl implements MemberService {
 		
 	}
 
+	@Override
+	public List<MemberDto> getViewListMember(String keyword, String value) {
+			if(keyword.equals("mem_fav")){
+				return dao.getMemberWithFav(value);
+			}else{
+				return dao.getMemberWithCompNum(Integer.parseInt(value));
+			}
+	}
 }

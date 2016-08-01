@@ -9,10 +9,33 @@
 	href="/resources/bootstrap/css/bootstrap.min.css" />
 <script src="/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 <script>
+	$(document).ready(
+		function(){
+			var mng_level = $("#mng_level").attr("value")
+		}		
+	);
+
 	function fnLogout(){
 		location.href ="/manager/manager_logout"
 	}
-
+	//mng_level 확인 function
+	function fnChooseAdmin(){
+		var mng_level = $("#mng_level").attr("value")
+		if(mng_level >= 3){
+			location.href ="/manager/manager_chooseAdmin";
+		}else{
+			alert("접근 권한이 없습니다.관리자에게 문의하세요.")
+		}
+	}
+	
+	function fnChooseMember(){
+		var mng_level = $("#mng_level").attr("value")
+		if(mng_level >= 2){
+			location.href ="/manager/manager_listMember?page_num=1";
+		}else{
+			alert("접근 권한이 없습니다.관리자에게 문의하세요.")
+		}
+	}
 </script>
 </head>
 <style>
@@ -102,7 +125,7 @@
 
 </style>
 <body>
-	<span id ="mem_num" value ="${sessionScope.MEM_KEY.mem_num }"></span>
+	<span id ="mng_level" value ="${sessionScope.MNG_KEY.mng_level }"></span>
 	<!-- 로고 -->
 	<div class="container">
 		<div class="row">
@@ -114,7 +137,6 @@
 	
 	<div  id="header1">
 		<div class="container">
-
 			<div class="row">
 						<div class="span5 offset7" id="header1Div">
 							<font id ="mem_id">${sessionScope.MNG_KEY.mng_name } 관리자 님 안녕하세요</font>
@@ -132,8 +154,8 @@
 					<a href="#">카드등록</a>
 					<a href="#">혜택수정</a>
 					<a href="#">분류관리</a>
-					<a href="#">회원관리</a>
-					<a href="/manager/manager_chooseAdmin">직원관리</a>
+					<a href="javascript:fnChooseMember()">회원관리</a>
+					<a href="javascript:fnChooseAdmin()">직원관리</a>
 					<a href="#">이벤트등록</a>
 					<a href="#">통계보기</a>
 				</div>
