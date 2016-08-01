@@ -17,8 +17,8 @@ public interface CardService {
 	public List<CardDto> CardList();
 	public List<CardDto> getCardComp();
 	public List<CardDto> getCardList(int card_compnum);
+	public CardDto getCardName(String card_code);
 	//카드네임만 가져오기/ by minsoo
 	public String getCardCompName(int comp_num);
-
 
 }
