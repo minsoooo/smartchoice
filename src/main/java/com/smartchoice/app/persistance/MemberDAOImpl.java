@@ -54,8 +54,8 @@ public class MemberDAOImpl implements MemberDAO {
 
 	
 	@Override
-	public void deleteMember(int mem_num) {
-		sqlSession.delete(NAMESPACE+".deleteMember",mem_num);
+	public void deleteMember(String mem_id) {
+		sqlSession.delete(NAMESPACE+".deleteMember", mem_id);
 
 	}
 
@@ -79,6 +79,20 @@ public class MemberDAOImpl implements MemberDAO {
 		params.put("mem_pw", mem_pw);
 		sqlSession.update(NAMESPACE+".updatePw",params);
 		
+	}
+
+	@Override
+	public List<MemberDto> getMemberWithCompNum(int comp_num) {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("comp_num", comp_num);
+		return sqlSession.selectList(NAMESPACE+".getViewListMember", param);
+	}
+
+	@Override
+	public List<MemberDto> getMemberWithFav(String mem_fav) {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("mem_fav", mem_fav);
+		return sqlSession.selectList(NAMESPACE+".getViewListMember", param);
 	}
 
 }

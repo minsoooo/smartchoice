@@ -75,8 +75,8 @@
 	);
 	function fnDelMember(){
 		if(confirm("정말 탈퇴하시겠습니까?")){
-			var mem_num =$("#mem_num").attr("value");
-			location.href ="/member/delete?mem_num="+mem_num;
+			var mem_id =$("#mem_id").attr("value");
+			location.href ="/member/delete?mem_id="+mem_id;
 		}
 		
 	}
@@ -212,7 +212,7 @@ li {
 	<span id ="mem_fav3" value ="${sessionScope.MEM_KEY.mem_fav3}"></span>
 	<span id ="mem_cardcode" value="${sessionScope.MEM_KEY.mem_cardcode }"></span>
 	<span id ="comp_num" value ="${sessionScope.MEM_KEY.comp_num }"></span>
-	<span id = "mem_num" value ="${sessionScope.MEM_KEY.mem_num }"></span>
+	<span id = "mem_id" value ="${sessionScope.MEM_KEY.mem_id }"></span>
 	<span id ="check" value ="${check }"></span>
 	<span id ="check_pass" value ="false"></span>
 	<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>

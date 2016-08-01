@@ -24,5 +24,8 @@
 	<select id ="getCardList" resultType="CardDto">
 		select * from v_details_card where card_compnum = #{card_compnum}
 	</select>
-
+	
+	<select id ="getCardCompName" resultType ="String">
+		select comp_name from company where comp_num = #{comp_num}
+	</select>
 </mapper>

@@ -16,6 +16,7 @@ public interface CardDAO {
 	public void deleteCard(int card_useflag);
 	public List<CardDto> CardList();
 	public List<CardDto> getCardComp();
-
+	//카드네임만 가져오기/ by minsoo
+	public String getCardCompName(int comp_num);
 
 }
