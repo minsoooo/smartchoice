@@ -73,4 +73,16 @@ public class MemberServiceImpl implements MemberService {
 				return dao.getMemberWithCompNum(Integer.parseInt(value));
 			}
 	}
+
+	@Override
+	public int getMemberCount() {
+	
+		return dao.getMemberCount();
+	}
+
+	@Override
+	public int getMemberCount(String mem_fav) {
+		// TODO Auto-generated method stub
+		return dao.getMemberCount(mem_fav);
+	}
 }

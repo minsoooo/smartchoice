@@ -33,6 +33,10 @@
 	<select id="getAccountBook" resultType="AccountBookDto">
 		select * from accountbook where abook_reginum=#{abook_reginum}
 	</select>
+	
+	<select id ="getAccountBookList" resultType="AccountBookDto">
+		select * from v_details_accountbook;
+	</select>
 
 	
 </mapper>
