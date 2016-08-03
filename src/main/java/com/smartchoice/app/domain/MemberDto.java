@@ -19,7 +19,7 @@ public class MemberDto {
 	private int comp_num;
 	private String comp_name;
 	private String mem_birthdate;
-	
+	private String card_img;
 
 	public String getFav1_name() {
 		return fav1_name;
@@ -27,6 +27,7 @@ public class MemberDto {
 	
 	public void setFav1_name(String fav1_name) {
 		this.fav1_name = fav1_name;
+
 	}
 	
 	public String getFav2_name() {
@@ -45,6 +46,7 @@ public class MemberDto {
 		this.fav3_name = fav3_name;
 	}
 	
+
 	public String getComp_name() {
 		return comp_name;
 	}
@@ -149,8 +151,14 @@ public class MemberDto {
 		this.mem_id = mem_id;
 	}
 
-	
-	
+	public String getCard_img() {
+		return card_img;
+	}
+
+	public void setCard_img(String card_img) {
+		this.card_img = card_img;
+	}
+
 	@Override
 	public String toString() {
 		return "MemberDto getMem_num():" +getMem_num()+" getMem_level() : "

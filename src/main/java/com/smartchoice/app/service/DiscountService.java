@@ -7,7 +7,8 @@ import com.smartchoice.app.domain.DiscountDto;
 
 public interface DiscountService {
 	public List<DiscountDto> getSmallSelect(int dc_smallnum, int card_typeflag);
-
 	public List<DiscountDto> getDiscountName(String dc_cardcode);
-	public List<DiscountDto> getCardDCInfo(String card_code);
+	public DiscountDto getCardDCInfo(String card_code, int small_num);
+	public List<DiscountDto> getAllCardDCInfo(int small_num);
+	public List<DiscountDto> getAllCardDCInfo(String card_code);
 }

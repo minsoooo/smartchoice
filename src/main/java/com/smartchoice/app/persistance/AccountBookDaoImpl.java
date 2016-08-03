@@ -75,8 +75,14 @@ public class AccountBookDaoImpl implements AccountBookDAO {
 	}
 
 	@Override
+	public List<Integer> getTotalMoney(int regi_memnum, String regi_month) {
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("regi_memnum", regi_memnum);
+		paramMap.put("regi_month", regi_month);
+		return sqlSession.selectList(NAMESPACE + ".getTotalMoney", paramMap);
+	}
+	
 	public List<AccountBookDto> getAccountBookList() {
-		// TODO Auto-generated method stub
 		return sqlSession.selectList(NAMESPACE+".getAccountBookList");
 	}
 

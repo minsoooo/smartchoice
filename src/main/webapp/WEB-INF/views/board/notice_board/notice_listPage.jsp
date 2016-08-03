@@ -139,7 +139,6 @@
 			</div>
 		</div>
 	</div>
-
 	<script>
 		var result = '${msg}';
 

@@ -24,7 +24,6 @@ import com.smartchoice.app.domain.MemberDto;
 import com.smartchoice.app.domain.NoticeBoardDto;
 import com.smartchoice.app.domain.NoticeBoardReplyDto;
 import com.smartchoice.app.domain.PageMaker;
-
 import com.smartchoice.app.domain.SearchCriteria;
 import com.smartchoice.app.service.AccountBookService;
 import com.smartchoice.app.service.BoardService;
@@ -38,7 +37,6 @@ public class BoardController {
 	private BoardService service;
 	
 	@Inject
-
 	private AccountBookService abookService;
 	
 	CalendarUtil cal = new CalendarUtil();

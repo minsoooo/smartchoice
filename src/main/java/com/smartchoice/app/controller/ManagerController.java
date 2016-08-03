@@ -40,9 +40,7 @@ import com.smartchoice.app.service.ManagerService;
 import com.smartchoice.app.service.MemberService;
 import com.smartchoice.app.util.Cipher;
 import com.smartchoice.app.util.Paging;
-
 import net.sf.json.JSONArray;
-
 
 @Controller
 @RequestMapping("/manager/")

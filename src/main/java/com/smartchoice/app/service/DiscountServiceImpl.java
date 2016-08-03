@@ -23,9 +23,18 @@ public class DiscountServiceImpl implements DiscountService {
 	public List<DiscountDto> getDiscountName(String dc_cardcode) {
 		return dao.getDiscountName(dc_cardcode);
 	}
-	
 	@Override
-	public List<DiscountDto> getCardDCInfo(String card_code) {
-		return dao.getCardDCInfo(card_code);
+	public DiscountDto getCardDCInfo(String card_code, int small_num) {
+		return dao.getCardDCInfo(card_code, small_num);
+	}
+
+	@Override
+	public List<DiscountDto> getAllCardDCInfo(int small_num) {
+		return dao.getAllCardDCInfo(small_num);
+	}
+
+	@Override
+	public List<DiscountDto> getAllCardDCInfo(String card_code) {
+		return dao.getAllCardDCInfo(card_code);
 	}
 }

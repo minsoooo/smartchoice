@@ -14,5 +14,6 @@ public interface AccountBookService {
 	public List<String> selectRegiDay(String regi_month, int regi_memnum);
 	public List<AccountBookDto> getAccountBook(int abook_reginum);
 	public void deleteRegiAbook(String regi_month, String regi_day, int regi_memnum);
+	public List<Integer> getTotalMoney(int regi_memnum, String regi_month); 
 	public List<AccountBookDto> getAccountBookList();
 }

@@ -32,6 +32,32 @@ public class DiscountDAOImpl implements DiscountDAO {
 		return sqlSession.selectList(NAMESPACE + ".getDiscountName", dc_cardcode);
 	}
 	@Override
+	public DiscountDto getCardDCInfo(String card_code, int small_num) {
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("card_code", card_code);
+		paramMap.put("small_num", small_num);
+		
+		return sqlSession.selectOne(NAMESPACE + ".getCardDCInfoWithTwo", paramMap);
+	}
+
+	@Override
+	public List<DiscountDto> getAllCardDCInfo(int small_num) {
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("small_num", small_num);
+		
+		return sqlSession.selectList(NAMESPACE + ".getCardDCInfoWithOne", paramMap);
+	}
+
+	@Override
+	public List<DiscountDto> getAllCardDCInfo(String card_code) {
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("card_code", card_code);
+		
+		return sqlSession.selectList(NAMESPACE + ".getCardDCInfoWithOne", paramMap);
+	}	
+
+	
+	@Override
 	public List<DiscountDto> getCardDCInfo(String card_code) {
 		return sqlSession.selectList(NAMESPACE + ".getCardDCInfo", card_code);
 	}	

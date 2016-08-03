@@ -35,8 +35,7 @@
 		}else{
 			alert("접근 권한이 없습니다.관리자에게 문의하세요.")
 		}
-	}
-	
+	}	
 	function fnStatistic(){
 		var mng_level = $("#mng_level").attr("value")
 		if(mng_level >= 2){

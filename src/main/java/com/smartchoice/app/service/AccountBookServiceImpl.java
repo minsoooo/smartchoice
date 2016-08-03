@@ -55,6 +55,10 @@ public class AccountBookServiceImpl implements AccountBookService {
 	}
 
 	@Override
+	public List<Integer> getTotalMoney(int regi_memnum, String regi_month) {
+		return dao.getTotalMoney(regi_memnum, regi_month);
+	}
+	
 	public List<AccountBookDto> getAccountBookList() {
 		return dao.getAccountBookList();
 	}

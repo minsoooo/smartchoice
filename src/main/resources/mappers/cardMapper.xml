@@ -32,4 +32,8 @@
 	<select id ="getCardCompName" resultType ="String">
 		select comp_name from company where comp_num = #{comp_num}
 	</select>
+	
+	<select id="getCompName" resultType="String">
+		select comp_name from v_details_card where card_code=#{card_code};
+	</select>
 </mapper>

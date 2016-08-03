@@ -86,6 +86,12 @@ public class CardDAOImpl implements CardDAO {
 	public String getCardCompName(int comp_num) {
 		
 		return sqlSession.selectOne(NAMESPACE+".getCardCompName", comp_num);
+
+	}
+
+	@Override
+	public String getCompName(String card_code) {
+		return sqlSession.selectOne(NAMESPACE+".getCompName", card_code);
 	}
 
 }

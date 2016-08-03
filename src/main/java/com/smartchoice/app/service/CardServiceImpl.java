@@ -83,5 +83,11 @@ public class CardServiceImpl implements CardService {
 	}
 
 
+	@Override
+	public String getCompName(String card_code) {
+		return dao.getCompName(card_code);
+	}
+
+	
 }
 
