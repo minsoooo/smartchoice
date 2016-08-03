@@ -6,6 +6,7 @@
 	작성자 : 김상덕
  */
 
+
 package com.smartchoice.app.persistance;
 
 import java.util.List;
@@ -19,4 +20,6 @@ public interface DiscountDAO {
 	public List<DiscountDto> getAllCardDCInfo(int small_num);
 	public List<DiscountDto> getAllCardDCInfo(String card_code);
 	public List<DiscountDto> getCardDCInfo(String card_code);
+	public List<DiscountDto> getDiscountDetail(String dc_cardcode);
 }
+

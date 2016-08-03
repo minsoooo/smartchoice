@@ -60,5 +60,11 @@ public class DiscountDAOImpl implements DiscountDAO {
 	@Override
 	public List<DiscountDto> getCardDCInfo(String card_code) {
 		return sqlSession.selectList(NAMESPACE + ".getCardDCInfo", card_code);
+
+	}	
+	
+	@Override
+	public List<DiscountDto> getDiscountDetail(String dc_cardcode) {
+		return sqlSession.selectList(NAMESPACE + ".getDiscountDetail", dc_cardcode);
 	}	
 }

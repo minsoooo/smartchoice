@@ -15,4 +15,5 @@ public interface CategoryDAO {
 	public List<CategoryDto> getAllSmallCategory();
 	public List<CategoryDto> getSmallCategory(Integer big_num) throws Exception;
 	public CategoryDto getCategoryName(int small_num);
+
 }

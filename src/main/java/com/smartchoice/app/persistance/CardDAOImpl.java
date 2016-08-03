@@ -2,7 +2,6 @@ package com.smartchoice.app.persistance;
 
 import java.util.List;
 
-
 import javax.inject.Inject;
 
 import org.apache.ibatis.session.SqlSession;
@@ -92,6 +91,12 @@ public class CardDAOImpl implements CardDAO {
 	@Override
 	public String getCompName(String card_code) {
 		return sqlSession.selectOne(NAMESPACE+".getCompName", card_code);
+	}
+	
+	@Override
+	public CardDto getCard(String card_code) {//카드코드로 정보 가져오기 by.Santori
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne(NAMESPACE+".getCard",card_code);
 	}
 
 }

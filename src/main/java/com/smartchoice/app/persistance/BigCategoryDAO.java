@@ -15,4 +15,5 @@ import com.smartchoice.app.domain.BigCategoryDto;
 public interface BigCategoryDAO {
 	public List<BigCategoryDto> getBigCategory();
 	public BigCategoryDto getBigCateWithNum(int big_num);
+
 }

@@ -14,7 +14,6 @@
 			var mng_level = $("#mng_level").attr("value")
 		}		
 	);
-
 	function fnLogout(){
 		location.href ="/manager/manager_logout"
 	}

@@ -42,8 +42,7 @@ public class CalendarUtil {
 		if (year != null && year != "") {
 			cal.set(Calendar.YEAR, Integer.parseInt(year));
 		}
-
-		
+	
 		now_year = cal.get(Calendar.YEAR);
 		
 		return now_year;
@@ -52,6 +51,7 @@ public class CalendarUtil {
 	public int getNowMonth(String month) {
 		if (month != null && month != "") {
 			cal.set(Calendar.MONTH, Integer.parseInt(month) - 1);
+
 		}
 		
 		now_month = cal.get(Calendar.MONTH)+1;

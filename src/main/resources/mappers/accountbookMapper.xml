@@ -41,5 +41,4 @@
 	<select id ="getAccountBookList" resultType="AccountBookDto">
 		select * from v_details_accountbook;
 	</select>
-	
 </mapper>

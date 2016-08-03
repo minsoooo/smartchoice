@@ -11,4 +11,5 @@ public interface ManagerService {
 	public void regiManager(ManagerDto dto);
 	public void updateManager(ManagerDto dto);
 	public void delManager(String mng_id);
+
 }

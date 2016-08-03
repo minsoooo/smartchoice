@@ -58,7 +58,6 @@ public class MemberServiceImpl implements MemberService {
 	public String searchPw(String mem_id, String mem_email) {
 		return dao.searchPw(mem_id, mem_email);
 	}
-
 	@Override
 	public void updatePw(String mem_id, String mem_pw) {
 		dao.updatePw(mem_id, mem_pw);

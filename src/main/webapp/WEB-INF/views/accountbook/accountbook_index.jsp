@@ -8,8 +8,6 @@
 <script src="/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 <script>
 	var select_tr, list_big_num, list_small_num, list_money;
-	
-	
 	$(document).ready(
 		function(){
 			var now_year = $("#now_year").attr("value").trim();

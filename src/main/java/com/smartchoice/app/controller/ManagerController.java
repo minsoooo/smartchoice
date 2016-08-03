@@ -1,4 +1,3 @@
-
 package com.smartchoice.app.controller;
 import java.util.List;
 import java.util.Map;
@@ -292,6 +291,7 @@ public class ManagerController {
 		service_mem.deleteMember(mem_id);
 		return "redirect:/manager/manager_listMember?page_num=1";
 	}
+
 	//관리자 통계페이지로 이동 by Minsoo
 	@RequestMapping("/manager_stats")
 	public void statsGET(){

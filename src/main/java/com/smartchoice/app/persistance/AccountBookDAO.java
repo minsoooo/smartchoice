@@ -16,4 +16,5 @@ public interface AccountBookDAO {
 	public void deleteRegiAbook(String regi_month, String regi_day, int regi_memnum);
 	public List<Integer> getTotalMoney(int regi_memnum, String regi_month); 
 	public List<AccountBookDto> getAccountBookList();
+
 }

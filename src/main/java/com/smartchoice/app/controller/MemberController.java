@@ -210,11 +210,11 @@ public class MemberController {
 		}
 		
 		
+
 	}
 	
 	//회원 탈퇴하면 세션을 초기화후 index페이지로 이동
 	@RequestMapping( value ="/delete")
-
 	public String deleteMember(String mem_id,HttpServletRequest req){
 		service_mem.deleteMember(mem_id);
 		req.getSession().invalidate();
@@ -230,7 +230,6 @@ public class MemberController {
 	//회원기본정보 수정페이지 이동
 	@RequestMapping("/update_basic")
 	public void update_basic(){
-		
 	}
 	
 	//회원기본정보 DB연동

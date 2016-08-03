@@ -10,6 +10,7 @@
 <script>
  	$(document).ready(
  		function(){
+
  			var check = $("#check").attr("value")
  			if(check =="success"){
  				window.close();
@@ -26,12 +27,12 @@
  	}
  	
  	function fnSearchId(){
- 		window.open("/member/searchId","","width=350,height=180,top=+400,left=+600")
+ 		window.open("/member/searchId","","width=350,height=180,top=+400,left=+600");
  	}
  	
  	function fnSearchPw(){
  		window.close();
- 		window.open("/member/searchPw","","width=350,height=260,top=+400,left=+600")
+ 		window.open("/member/searchPw","","width=350,height=260,top=+400,left=+600");
  		
  	}
 </script>

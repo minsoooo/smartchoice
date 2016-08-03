@@ -23,6 +23,13 @@
 	
 	<select id="getCardDCInfoWithTwo" resultType="DiscountDto">
 		select * from v_details_discount where small_num=#{small_num} and dc_cardcode=#{card_code}
->>>>>>> refs/remotes/Minsoo/AccountBookSnapshot3.0
+	</select>	
+	
+	<select id="getDiscountDetail" resultType="DiscountDto">
+		select * from v_details_dc where dc_cardcode = #{dc_cardcode}
+	</select>
+	
+	<select id="getCardDCInfo" resultType="DiscountDto">
+		select * from discount where dc_cardcode=#{card_code}
 	</select>
 </mapper>

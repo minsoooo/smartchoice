@@ -129,3 +129,4 @@ public class DiscountDto {
 		this.comp_name = comp_name;
 	}
 }
+

@@ -45,12 +45,12 @@ public class MemberDto {
 	public void setFav3_name(String fav3_name) {
 		this.fav3_name = fav3_name;
 	}
-	
+
 
 	public String getComp_name() {
 		return comp_name;
 	}
-	
+
 	public void setComp_name(String comp_name) {
 		this.comp_name = comp_name;
 	}
@@ -178,6 +178,7 @@ public class MemberDto {
 
 	public void setCard_name(String card_name) {
 		this.card_name = card_name;
+
 	}
 
 }

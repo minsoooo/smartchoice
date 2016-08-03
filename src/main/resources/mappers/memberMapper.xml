@@ -52,7 +52,6 @@
 	
 	<update id="updatePw">
 		update member set mem_pw =#{mem_pw} where mem_id =#{mem_id}
-
 	</update>
 	
 	<select id ="getViewListMember" resultType="MemberDto">

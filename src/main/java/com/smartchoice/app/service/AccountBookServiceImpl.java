@@ -40,8 +40,6 @@ public class AccountBookServiceImpl implements AccountBookService {
 	public List<AccountBookDto> getAccountBook(int abook_reginum) {
 		return dao.getAccountBook(abook_reginum);
 	}
-
-
 	@Override
 	public void deleteAccountBook(int regi_num) {
 		dao.deleteAccountBook(regi_num);
@@ -61,5 +59,6 @@ public class AccountBookServiceImpl implements AccountBookService {
 	
 	public List<AccountBookDto> getAccountBookList() {
 		return dao.getAccountBookList();
+
 	}
 }

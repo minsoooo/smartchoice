@@ -35,7 +35,6 @@ public class BoardController {
 
 	@Inject // Service 연결
 	private BoardService service;
-	
 	@Inject
 	private AccountBookService abookService;
 	

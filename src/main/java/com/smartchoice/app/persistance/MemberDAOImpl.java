@@ -78,7 +78,6 @@ public class MemberDAOImpl implements MemberDAO {
 		params.put("mem_id", mem_id);
 		params.put("mem_pw", mem_pw);
 		sqlSession.update(NAMESPACE+".updatePw",params);
-		
 	}
 
 	@Override

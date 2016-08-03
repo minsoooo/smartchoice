@@ -16,12 +16,10 @@
 </script>
 <style>
 @import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
-
 #footer{
 	background-color:#d4d1ca;
 	font-family: 'Noto Sans KR', sans-serif;
 }
-
 #copyright{
 	color:#706b67;
 	margin-right:20px;

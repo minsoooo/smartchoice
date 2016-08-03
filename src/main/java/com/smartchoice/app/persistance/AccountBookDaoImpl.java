@@ -64,7 +64,6 @@ public class AccountBookDaoImpl implements AccountBookDAO {
 		return sqlSession.selectList(NAMESPACE + ".getAccountBook", abook_reginum);
 	}
 
-	
 	@Override
 	public void deleteRegiAbook(String regi_month, String regi_day, int regi_memnum) {
 		Map<String, Object> paramMap = new HashMap<String, Object>();

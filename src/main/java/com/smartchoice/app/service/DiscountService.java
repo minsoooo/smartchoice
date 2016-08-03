@@ -11,4 +11,6 @@ public interface DiscountService {
 	public DiscountDto getCardDCInfo(String card_code, int small_num);
 	public List<DiscountDto> getAllCardDCInfo(int small_num);
 	public List<DiscountDto> getAllCardDCInfo(String card_code);
+	public List<DiscountDto> getDiscountDetail(String dc_cardcode);
 }
+

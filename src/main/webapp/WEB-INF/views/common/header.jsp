@@ -153,7 +153,6 @@
 	
 	<div  id="header1">
 		<div class="container">
-
 			<div class="row">
 				<c:choose>
 					<c:when test="${sessionScope.MEM_KEY ne null }">

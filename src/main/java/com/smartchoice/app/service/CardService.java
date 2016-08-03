@@ -4,8 +4,6 @@ import java.util.List;
 
 import com.smartchoice.app.domain.CardDto;
 
-
-
 public interface CardService {
 
 	public void registerCard(CardDto dto);	//카드등록
@@ -21,4 +19,6 @@ public interface CardService {
 	//카드네임만 가져오기/ by minsoo
 	public String getCardCompName(int comp_num);
 	public String getCompName(String card_code);
+	public CardDto getCard(String card_code); //카드코드로 정보 가져오기 by.Santori
+
 }
