@@ -9,11 +9,25 @@ public class EventBoardDto {
 	private String eboard_title;
 	private String eboard_content;
 	private Date eboard_regdate;
-	private Date eboard_start;
-	private Date eboard_end;
+	private String eboard_start;
+	private String eboard_end;
 	private String eboard_filename;	
 	private int eboard_viewcnt;
+	private Integer eboard_trans_startDate;
+	private Integer eboard_trans_endDate;
 	
+	public Integer getEboard_trans_startDate() {
+		return eboard_trans_startDate;
+	}
+	public void setEboard_trans_startDate(Integer eboard_trans_startDate) {
+		this.eboard_trans_startDate = eboard_trans_startDate;
+	}
+	public Integer getEboard_trans_endDate() {
+		return eboard_trans_endDate;
+	}
+	public void setEboard_trans_endDate(Integer eboard_trans_endDate) {
+		this.eboard_trans_endDate = eboard_trans_endDate;
+	}
 	public Integer getEboard_num() {
 		return eboard_num;
 	}
@@ -44,16 +58,16 @@ public class EventBoardDto {
 	public void setEboard_regdate(Date eboard_regdate) {
 		this.eboard_regdate = eboard_regdate;
 	}
-	public Date getEboard_start() {
+	public String getEboard_start() {
 		return eboard_start;
 	}
-	public void setEboard_start(Date eboard_start) {
+	public void setEboard_start(String eboard_start) {
 		this.eboard_start = eboard_start;
 	}
-	public Date getEboard_end() {
+	public String getEboard_end() {
 		return eboard_end;
 	}
-	public void setEboard_end(Date eboard_end) {
+	public void setEboard_end(String eboard_end) {
 		this.eboard_end = eboard_end;
 	}
 	public String getEboard_filename() {
@@ -67,5 +81,5 @@ public class EventBoardDto {
 	}
 	public void setEboard_viewcnt(int eboard_viewcnt) {
 		this.eboard_viewcnt = eboard_viewcnt;
-	}	
+	}
 }

@@ -6,12 +6,13 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -20,23 +21,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import com.smartchoice.app.domain.MemberDto;
+
+import com.smartchoice.app.domain.EventBoardDto;
 import com.smartchoice.app.domain.NoticeBoardDto;
 import com.smartchoice.app.domain.NoticeBoardReplyDto;
 import com.smartchoice.app.domain.PageMaker;
 import com.smartchoice.app.domain.SearchCriteria;
-import com.smartchoice.app.service.AccountBookService;
 import com.smartchoice.app.service.BoardService;
 import com.smartchoice.app.util.CalendarUtil;
 
+import net.sf.json.JSONArray;
 
 @Controller
 public class BoardController {	
 
 	@Inject // Service 연결
 	private BoardService service;
-	@Inject
-	private AccountBookService abookService;
 	
 	CalendarUtil cal = new CalendarUtil();
 	
@@ -123,8 +123,7 @@ public class BoardController {
 	}
 
 	@RequestMapping(value = "/board/notice_board/notice_reply", method = RequestMethod.POST) // 글 내부에서 쓴 댓글을 POST로 전달받는다.
-	public String replyPOST(NoticeBoardReplyDto replydto, RedirectAttributes rttr) throws Exception {
-		System.out.println("전달받은 댓글이름,내용 : " + replydto.getNreply_memid() + "," + replydto.getNreply_content());
+	public String replyPOST(NoticeBoardReplyDto replydto, RedirectAttributes rttr) throws Exception {		
 		service.register_reply(replydto);
 		return "redirect:/board/notice_board/notice_readPage?num=" + replydto.getNreply_nboardnum();
 		// 리다이렉트로, 여러번 새로고침 되지않게 게시글 위치로 이동한다.
@@ -135,6 +134,8 @@ public class BoardController {
 		service.remove_reply(replydto);
 		return "redirect:/board/notice_board/notice_readPage?num=" + replydto.getNreply_nboardnum();
 	}
+	
+	///////////////////////// 파일 업로드 시작 ///////////////////////////////
 	
 	//다중파일업로드
 	@RequestMapping("/multiplePhotoUpload")
@@ -152,7 +153,9 @@ public class BoardController {
 	         //파일 기본경로
 	         String dftFilePath = request.getSession().getServletContext().getRealPath("/");
 	         //파일 기본경로 _ 상세경로
+	         System.out.println("dftPath : " + dftFilePath);
 	         String filePath = dftFilePath + "resources" + File.separator + "photo_upload" + File.separator;
+	         System.out.println("파일 path : " + filePath);
 	         File file = new File(filePath);
 	         if(!file.exists()) {
 	            file.mkdirs();
@@ -184,6 +187,7 @@ public class BoardController {
 	         // img 태그의 title 속성을 원본파일명으로 적용시켜주기 위함
 	         sFileInfo += "&sFileName="+ filename;;
 	         sFileInfo += "&sFileURL="+"/resources/photo_upload/"+realFileNm;
+	         System.out.println("입력 경로 : " + sFileInfo);
 	         PrintWriter print = response.getWriter();
 	         print.print(sFileInfo);
 	         print.flush();
@@ -192,60 +196,147 @@ public class BoardController {
 	    } catch (Exception e) {
 	        e.printStackTrace();
 	    }
-	}
+	}	
+	///////////////////////// 파일 업로드 종료 ///////////////////////////////
+	
 	
 	
 	///////////////////////// Event Board ///////////////////////////////
 	
 	@RequestMapping("/board/event_board/event_listPage")
-	public String eventlistPage(String now_year, String now_month, @ModelAttribute("cri") SearchCriteria cri, Model model, HttpServletRequest req) throws Exception{
-		List<String> list = null;
-		HttpSession session = req.getSession();
-		MemberDto dto = new MemberDto();
-		dto= (MemberDto)session.getAttribute("MEM_KEY");
-		int regi_memnum = dto.getMem_num();
+	public String eventlistPage(String now_year, String now_month, EventBoardDto dto, Model model, HttpServletRequest req) throws Exception{
+		JSONArray json = null;
 		
 		int cal_year = cal.getNowYear(now_year);
 		int cal_month = cal.getNowMonth(now_month);		// calendar객체를 통해 년,월을 받아옴
-		String regi_month = "";		// 받아온 년,월을 2016-07 의 형태로 합치기 위함
 		
-		if(cal_month < 10){
-			regi_month = cal_year + "-0" + cal_month;
-		}
-		else{
-			regi_month = cal_year + "-" + cal_month;
-		}
-
-		list = abookService.selectRegiDay(regi_month, regi_memnum);	// 해당 '월' 중 등록된 '일'의 값을 리스트 형태로 가져옴
-		String regi_days = "";
+		Calendar cal2 = Calendar.getInstance();
+		int cal_lastdays = cal2.getActualMaximum(Calendar.DATE);		
+		
+		String eboard_start = cal_year + "/" + cal_month + "/" + 1;
+		String eboard_end = cal_year + "/" + cal_month + "/" + cal_lastdays;
+		
+		System.out.println("DB에 넣을 시작일  : " + eboard_start);
+		System.out.println("DB에 넣을 종료일  : " + eboard_end);			
+			
+		// DB를 호출해서 DB상에 있는 모든 게시판 글을 가져온다.
+		
+		List list = (List)service.event_listAll(eboard_start,eboard_end);
 				
-		for(int i = 0; i < list.size(); i++){
-			regi_days += list.get(i) + ",";
+		
+		// DB 안의 Eboard_start의 값 (EX:2016/7/5)과 Eboard_end의 값 (EX:2016/7/31)을 split("/")으로 배열에 잘라서 담고, 하나의 String으로 연결해서 보낸다.		
+		// EX) 2016/7/1 -> 201671 
+				
+		String[] split_startDate = null;	// 스플릿 하기위한 변수
+		String[] split_endDate = null;
+		int trans_startDate = 0;		// 나눈 스플릿3개의 마지막 일자(2016,7,1)중에서 1을 담을 변수  -> EX) 201671 / 1 
+		int trans_endDate = 0;
+		
+		List<Integer> count = new ArrayList();
+		count.add(0);
+					
+		System.out.println("가져온 게시글의 갯수는 : " + list.size());
+		
+		for(int i=1; i<cal_lastdays+1; i++){
+			count.add(0);
+			for(int j=0; j<list.size(); j++){
+				EventBoardDto edto = (EventBoardDto) list.get(j);						
+						
+				split_startDate = edto.getEboard_start().split("/");
+				split_endDate = edto.getEboard_end().split("/");
+				
+				trans_startDate = Integer.parseInt(split_startDate[2]);
+				trans_endDate = Integer.parseInt(split_endDate[2]);				
+				
+				if(trans_startDate <= i && i <= trans_endDate){
+					count.set(i, count.get(i)+1);
+				}
+			}
 		}
-
+		
+		json = JSONArray.fromObject(count);
+		
 		model.addAttribute("now_year", cal_year);
 		model.addAttribute("now_month", cal_month);
-		model.addAttribute("regi_days", regi_days);
+		model.addAttribute("list", list);	
+		model.addAttribute("countList", count);
 		
-		if (cri.getSearchType() == null) {
-			cri.setSearchType("notice_title_listSearch");
-		}
-		if (cri.getKeyword() == null) {
-			cri.setKeyword("");
-		}
-
-		model.addAttribute("list", service.listSearch(cri));				
-
-		PageMaker pageMaker = new PageMaker();
-		pageMaker.setCri(cri);
-
-		pageMaker.setTotalCount(service.listSearchCount(cri));
-
-		model.addAttribute("pageMaker", pageMaker);
-		
-		
-		return "/board/event_board/event_listPage";
+		return "/board/event_board/event_listPage";		
+	}	
+	
+	@RequestMapping(value = "/board/event_board/event_register") // 이벤트게시판 글쓰기로 가기																	
+	public void eventregisterGET() {
 	}
 	
-	
+	@RequestMapping(value = "/board/event_board/event_register", method = RequestMethod.POST) // 이벤트게시판 글쓰기를 POST로 받아서 전달한다.																							
+	public String eventregisterPOST(HttpServletRequest req, EventBoardDto board, RedirectAttributes rttr) throws Exception {
+		
+		// 게시판에서 시작일과 종료일을 select문으로 보내면 받아서 EventBoardDto에 시작일,종료일에 각각 넣는다.
+		String event_startdate = req.getParameter("start_year")+"/"+req.getParameter("start_month")+"/"+req.getParameter("start_day");
+		String event_enddate = req.getParameter("end_year")+"/"+req.getParameter("end_month")+"/"+req.getParameter("end_day");
+		
+		board.setEboard_start(event_startdate);
+		board.setEboard_end(event_enddate);
+		
+		service.event_register(board);
+		
+		rttr.addFlashAttribute("msg", "SUCCESS"); // 성공 후 메세지 출력하게 전달한다.
+		return "redirect:/board/event_board/event_listPage"; // 리다이렉트로, 여러번 새로고침 되지않게 게시글 위치로 이동한다.
+	}
+
+	@RequestMapping("/board/event_board/event_select")
+	public void getEventSelect(String year, String month, String date, HttpServletRequest req, HttpServletResponse resp) throws Exception{
+		resp.setCharacterEncoding("UTF-8");
+		resp.setContentType("text/json");
+		
+		JSONArray json = null;
+		PrintWriter out = null;
+		
+		Calendar cal = Calendar.getInstance();
+		int cal_lastdays = cal.getActualMaximum(Calendar.DATE);	
+				
+		String eboard_start = year + "/" + month + "/" + 1;
+		String eboard_end = year + "/" + month + "/" + cal_lastdays;
+		
+		List list = (List)service.event_listAll(eboard_start, eboard_end);		
+		List resultList = new ArrayList();
+		
+		String[] split_startDate = null;	// 스플릿 하기위한 변수
+		String[] split_endDate = null;
+		int trans_startDate = 0;		// 나눈 스플릿3개의 마지막 일자(2016,7,1)중에서 1을 담을 변수  -> EX) 201671 / 1 
+		int trans_endDate = 0;
+		EventBoardDto edto = null;
+		
+		for(int i=0; i<list.size(); i++){
+			edto = (EventBoardDto) list.get(i);						
+					
+			split_startDate = edto.getEboard_start().split("/");
+			split_endDate = edto.getEboard_end().split("/");
+			
+			trans_startDate = Integer.parseInt(split_startDate[2]);
+			trans_endDate = Integer.parseInt(split_endDate[2]);
+			System.out.println(trans_startDate + ", " + trans_endDate);
+			
+			int num = Integer.parseInt(date);
+			
+			
+			if(trans_startDate <= num && num <= trans_endDate){
+				resultList.add(edto);
+			}	
+		}
+		
+		
+		try{
+			out = resp.getWriter();
+			json = JSONArray.fromObject(resultList);
+			out.println(json);
+		}
+		catch(Exception e){
+			
+		}
+		finally{
+			out.close();
+		}
+		
+	}
 }

@@ -6,6 +6,8 @@
 
 <mapper namespace="com.smartchoice.mappers.boardMapper">
 	
+	<!-- NoticeBoard Mapper -->
+	
 	<insert id="notice_register">
 		insert into
 		NOTICEBOARD(nboard_title,nboard_content,nboard_writer)
@@ -83,5 +85,51 @@
 	<delete id="notice_remove_reply">
 		delete from NOTICEBOARD_REPLY where nreply_num=#{nreply_num}
 	</delete>	
+	
+	
+	<!-- EventBoard Mapper -->
+	
+	<insert id="event_register">
+		insert into
+		EVENTBOARD(eboard_title,eboard_content,eboard_writer,eboard_start,eboard_end)
+		values(#{eboard_title},#{eboard_content},#{eboard_writer},#{eboard_start},#{eboard_end})
+	</insert>
+	<select id="event_read" resultType="EventBoardDto">
+		select * from EVENTBOARD
+		where eboard_num=#{num}
+	</select>
 
+	<update id="event_modify">
+		update EVENTBOARD set eboard_title=#{eboard_title},
+		eboard_content=#{eboard_content}, eboard_writer=#{eboard_writer} where
+		eboard_num=#{eboard_num}
+	</update>
+
+	<delete id="event_remove">
+		delete from EVENTBOARD where eboard_num=#{num}
+	</delete>
+
+	<select id="event_listAll" parameterType="Map" resultType="EventBoardDto" >		
+		<![CDATA[
+		select * from EVENTBOARD where STR_TO_DATE(eboard_start,  '%Y/%m/%d') >= '${eboard_start}' and 
+		STR_TO_DATE(eboard_end,'%Y/%m/%d') <= '${eboard_end}' order by eboard_regdate desc
+		]]>
+	</select>
+
+	<insert id="event_register_reply">
+		insert into
+		EVENTBOARD_REPLY(ereply_content,ereply_nboardnum,ereply_memnum,ereply_memid)
+		values(#{ereply_content},#{ereply_nboardnum},#{ereply_memnum},#{ereply_memid})
+	</insert>
+
+	<select id="event_read_reply" resultType="NoticeBoardReplyDto">
+		select * from
+		EVENTBOARD_REPLY where ereply_eboardnum=#{num} order by
+		ereply_regdate desc
+	</select>
+	
+	<delete id="event_remove_reply">
+		delete from EVENTBOARD_REPLY where ereply_num=#{ereply_num}
+	</delete>
+	
 </mapper>
