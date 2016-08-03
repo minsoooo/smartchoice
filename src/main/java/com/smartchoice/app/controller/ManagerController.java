@@ -26,11 +26,13 @@ import org.springframework.web.util.WebUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.smartchoice.app.domain.AccountBookDto;
+
 import com.smartchoice.app.domain.BigCategoryDto;
 import com.smartchoice.app.domain.CardDto;
 import com.smartchoice.app.domain.ManagerDto;
 import com.smartchoice.app.domain.MemberDto;
 import com.smartchoice.app.domain.SmallCategoryDto;
+
 import com.smartchoice.app.service.AccountBookService;
 import com.smartchoice.app.service.BigCategoryService;
 import com.smartchoice.app.service.CardService;
@@ -470,6 +472,7 @@ public class ManagerController {
 			out.close();
 		}
 	}
+
 	
 	//관리자 카드사별 통계페이지 이동 by Minsoo
 	@RequestMapping("/manager_statsComp")
@@ -580,7 +583,6 @@ public class ManagerController {
 				out.close();
 			}
 		}
-	
 	
 	//관리자 카드정보리스트 페이지
 	@RequestMapping("/manager_cardList")

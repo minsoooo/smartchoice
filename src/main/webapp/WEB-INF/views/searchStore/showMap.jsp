@@ -1,7 +1,7 @@
 <!-- 
 	매장찾기 페이지 
 	작성일 : 2016-07-21
-	수정일 : 2016-07-31
+	수정일 : 2016-08-03
 	작성자 : 이재승
  -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
@@ -13,18 +13,21 @@
 <head>
 <title>매장 찾기</title>
 <style>
-.map_wrap1, .map_wrap2, .map_wrap3 {position: relative; width: 100%; margin-bottom: 30px; margin-top: 10px;}
+.map_wrap1 {position: relative; width: 100%; margin-bottom: 30px; margin-top: 10px;}
 .title {font-weight: bold; display: block;}
-.hAddr {position: absolute;}
-#centerAddr {display: block; margin-top: 2px; font-weight: normal;}
+.hAddr {position: relative;}
+.hAddr span{text-align: center;}
+#centerAddr, #useCard {display: block; margin-top: 2px; margin-bottom: 20px; font-weight: normal;}
+#discountList, #dcBigList {margin-bottom: 30px;}
+#st {margin-left: 0px; margin-right: 0px;}
 .bAddr {padding: 5px; text-overflow: ellipsis; overflow: hidden; white-space: nowrap;}
 .map_wrap, .map_wrap * {margin: 0; padding: 0; font-family: 'Malgun Gothic',dotum,'돋움',sans-serif; font-size: 12px;}
 .map_wrap a, .map_wrap a:hover, .map_wrap a:active{color: #000; text-decoration: none;}
-.map_wrap {position: relative; width: 100%; height: 700px; border: 2px black solid;}
+.map_wrap {position: relative; width: 100%; height: 700px; border: 2px black solid; margin-bottom: 30px;}
 #menu_wrap {position: absolute; top: 0; left: 0;bottom: 0; width: 250px; margin: 10px 0 30px 10px; padding: 5px; overflow-y: auto; background: rgba(255, 255, 255, 0.7); z-index: 1; font-size: 12px; border-radius: 10px;}
 .bg_white {background: #fff;}
 #menu_wrap hr {display: block; height: 1px; border: 0; border-top: 2px solid #5F5F5F; margin:3px 0;}
-#menu_wrap .option{text-align: center;} #menu_wrap .option p {margin: 10px 0;} #menu_wrap .option button {margin-left: 5px;}
+#menu_wrap .option{text-align: center;}
 #placesList li {list-style: none;}
 #placesList .item {position: relative; border-bottom: 1px solid #888; overflow: hidden; cursor: pointer; min-height: 65px;}
 #placesList .item span {display: block; margin-top: 4px;}
@@ -63,6 +66,12 @@ $(function(){
 	
 	$("#discountList").bind("change", dcListChange);
 	dcListChange();
+	
+	$("#dcBigList").bind("change", dcBigListChange);
+	dcBigListChange();
+	
+	$("#dcSmallList").bind("change", dcSmallListChange);
+	dcSmallListChange();
 });
 
 function bigCateChange(){
@@ -71,7 +80,7 @@ function bigCateChange(){
 	$.get("/map/getSmallCategory",{"big_num":big_num}).done(
 		function(xmlData){
 			var category = $(xmlData).find("category");
-			var card = $(xmlData).find("card");
+			
 			if(category.length){
 				$(category).each(
 					function(){
@@ -98,79 +107,108 @@ function dcListChange(){
 	$("#keyword").val(small_name1);
 	$("#search").submit();
 }
+
+function dcBigListChange(){
+	$("#dcSmallList").empty();
+	var small_bignum = $("#dcBigList option:selected").attr("value");
+	$.get("/map/getDcSmallCategory",{"small_bignum":small_bignum}).done(
+		function(xmlData){
+			var category = $(xmlData).find("category");
+			
+			if(category.length){
+				$(category).each(
+					function(){
+						var small_num = $(this).find("small_num").text();
+						var small_name = $(this).find("small_name").text();
+						var insertCode ="<option id ='"+small_num+"' value ='"+small_name+"'>"+small_name+"</option>";
+						$(insertCode).appendTo("#dcSmallList");
+					}
+				)
+			}
+			dcSmallListChange();
+		}		
+	);
+}
+
+function dcSmallListChange(){
+	var small_name2 = $("select[name='dcSmallList'] option:selected").attr("value");
+	$("#keyword").val(small_name2);
+	$("#search").submit();
+}
 </script>
 </head>
 <body style="background-color: #f5f4f0; font-family: 'Noto Sans KR', sans-serif;">
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
-	<div class="container">
-		<div class="row" style="margin-top: 30px">
-			<center><p><em style="color: red;">지도를 마우스로 클릭하면 선 그리기가 시작되고 오른쪽 마우스를 클릭하면 선 그리기가 종료됩니다</em></p></center>
-		</div>
+	<div class="container" style="margin-top: 30px;">
 		<div class="row">
-			<div class="map_wrap">
-				<div id="map" style="width: 100%; height: 100%; position: relative; overflow: hidden;"></div>
-				<div id="menu_wrap" class="bg_white">
-					<div class="option">
-						<div>
-							<b>카테고리로 검색</b>
-							<select id="bigCateList" name="comp_num">
-								<option id="bigTitle">대분류</option>
-								<c:forEach items="${bigDtoList}" var="bigClassDto">
-									<option value="${bigClassDto.big_num}">${bigClassDto.big_name}</option>
-								</c:forEach>
-							</select>
-							<select id="smallCateList" name="smallCateList">
-								<option id="smallTitle">소분류</option>
-								<c:forEach items="${smallCateList}" var="smallList">
-									<option id="${smallList.small_num}" value="${smallList.small_name}">${smallList.small_name}</option>
-								</c:forEach>
-							</select>
+			<div style="width: 1200px;">
+				<center><p><em style="color: red;">지도를 마우스로 클릭하면 선 그리기가 시작되고 오른쪽 마우스를 클릭하면 선 그리기가 종료됩니다</em></p></center>
+				<div class="span12 map_wrap" style="float: left;" id="st">
+					<div id="map" style="width: 100%; height: 100%; position: relative; overflow: hidden;"></div>
+			
+					<div id="menu_wrap" class="bg_white">
+						<div class="option">
+							<div>
+								<b>카테고리로 검색</b>
+								<select id="bigCateList" name="bigCateList">
+								<option>대분류</option>
+									<c:forEach items="${bigDtoList}" var="bigClassDto">
+										<option value="${bigClassDto.big_num}">${bigClassDto.big_name}</option>
+									</c:forEach>
+								</select>
+								<select id="smallCateList" name="smallCateList">
+								<option>소분류</option>
+									<c:forEach items="${smallCateList}" var="smallList">
+										<option id="${smallList.small_num}" value="${smallList.small_name}">${smallList.small_name}</option>
+									</c:forEach>
+								</select>
+							</div>
+							<hr/>
+							<div class="keywordSearch">
+								<form onsubmit="searchPlaces(); return false;">
+									<input type="hidden" id="addr" value="">
+									<b>키워드로 검색</b>							
+									<div class="input-append">
+										<input class="span2" id="keyword" type="text" onfocus="this.value=''">
+										<input type="submit" class="btn" value="검색" id="search" />
+									</div>
+								</form>
+							</div>
 						</div>
 						<hr/>
-						<div class="keywordSearch">
-							<form onsubmit="searchPlaces(); return false;">
-								<input type="hidden" id="addr" value="">
-								<b>키워드로 검색</b>							
-								<div class="input-append">
-									<input class="span2" id="keyword" type="text" onfocus="this.value=''">
-									<input type="submit" class="btn" value="검색" id="search" />
-								</div>
-							</form>
-						</div>
+						<ul id="placesList"></ul>
+						<div id="pagination"></div>
 					</div>
-					<hr/>
-					<ul id="placesList"></ul>
-					<div id="pagination"></div>
 				</div>
-			</div>
 			
-			<div class="span12" id="map" style="width: 100%; height: 100%;"></div>
-			<div class="row">
-				<div class="span4 map_wrap1">
-					<div id="map" style="width: 100%; height: 100%;"></div>
+				<div class="span3 map_wrap1" style="float: right;" id="st">
 					<div class="hAddr">
-						<span class="title" align="center">지도중심기준 행정동 주소정보</span> <span id="centerAddr" align="center"></span>
+						<span class="title">지도중심기준 행정동 주소정보</span><span id="centerAddr"></span>
+						<span class="title">나의 카드</span><span id="useCard">${cardCode}</span>
+						<select id="discountList" name="discountList">
+							<option>------나의 할인 목록(전체)------</option>
+							<c:forEach items="${discount}" var="discountList">
+								<option value="${discountList.small_name}">${discountList.small_name}</option>
+							</c:forEach>
+						</select>
+						<select id="dcBigList" name="dcBigList">
+							<option>----나의 할인 목록(대분류)----</option>
+							<c:forEach items="${DcBigCategory}" var="dcBigList">
+								<option value="${dcBigList.small_bignum}">${dcBigList.big_name}</option>
+							</c:forEach>
+						</select>
+						<select id="dcSmallList" name="dcSmallList">
+							<option>----나의 할인 목록(소분류)----</option>
+							<c:forEach items="${discount}" var="discountList">
+								<option value="${discountList.small_name}">${discountList.small_name}</option>
+							</c:forEach>
+						</select>
 					</div>
-				</div>
-				<div class="span4 map_wrap2">
-					<div class="hAddr">
-						<span class="title" align="center">나의 카드</span> 
-						<span id="useCard" align="center">${cardCode}</span>
-					</div>
-				</div>
-				<div class="span4 map_wrap3">
-					<select id="discountList" name="discountList" style="float: right">
-						<option>---------나의 할인 목록---------</option>
-						<c:forEach items="${discount}" var="discountList">
-							<option value="${discountList.small_name}">${discountList.small_name}</option>
-						</c:forEach>
-					</select>
 				</div>
 			</div>
 		</div>
 	</div>
-	
-<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=b1e545840b02f1b23a464afd6bd416b8&libraries=services"></script>
+<script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=433224976d79735d9c0f8427046d40be&libraries=services"></script>
 <script>
 	// 마커를 담을 배열
 	var markers = [];

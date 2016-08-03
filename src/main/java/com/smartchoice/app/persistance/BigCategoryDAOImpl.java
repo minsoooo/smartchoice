@@ -29,5 +29,10 @@ public class BigCategoryDAOImpl implements BigCategoryDAO {
 		param.put("big_num", big_num);
 		return sqlSession.selectOne(NAMESPACE + ".readBigCategory",param);
 	}
+
+	@Override
+	public List<BigCategoryDto> getDcBigCategory(String dc_cardcode) {
+		return sqlSession.selectList(NAMESPACE + ".readDcBigCategory", dc_cardcode);
+	}
 	
 }

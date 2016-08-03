@@ -77,8 +77,6 @@ public class CardDAOImpl implements CardDAO {
 
 
 	@Override
-
-
 	public CardDto getCardName(String card_code) {
 		return sqlSession.selectOne(NAMESPACE + ".getCardName", card_code);
 	}
@@ -98,7 +96,6 @@ public class CardDAOImpl implements CardDAO {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne(NAMESPACE+".getCard",card_code);
 	}
-
 }
 
 

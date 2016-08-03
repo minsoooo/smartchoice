@@ -9,10 +9,6 @@
 		select * from discount where dc_smallnum=#{dc_smallnum} and dc_cardcode IN (select card_code from card where card_typeflag=#{card_typeflag})
 	</select>
 	
-	<select id="getDiscountName" resultType="DiscountDto">
-		select small_name from v_details_discount where dc_cardcode = #{dc_cardcode}
-	</select>
-	
 	<select id="getCardDCInfoWithOne" resultType="DiscountDto">
 		select * from v_details_discount 
 		<where>
@@ -31,5 +27,17 @@
 	
 	<select id="getCardDCInfo" resultType="DiscountDto">
 		select * from discount where dc_cardcode=#{card_code}
+	</select>
+	
+		<select id="getDiscountName" resultType="DiscountDto">
+		select * from v_details_discount where dc_cardcode = #{dc_cardcode}
+	</select>
+	
+	<select id="getDcBigCategory" resultType="DiscountDto">
+		select distinct big_name, small_bignum from v_details_discount where dc_cardcode = #{dc_cardcode}
+	</select>
+	
+	<select id="getDcSmallCategory" resultType="DiscountDto">
+		select * from v_details_discount where dc_cardcode = #{dc_cardcode} and small_bignum = #{small_bignum}
 	</select>
 </mapper>

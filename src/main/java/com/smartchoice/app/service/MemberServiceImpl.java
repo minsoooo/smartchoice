@@ -77,7 +77,6 @@ public class MemberServiceImpl implements MemberService {
 	
 		return dao.getMemberCount();
 	}
-
 	@Override
 	public int getMemberCount(String mem_fav) {
 		// TODO Auto-generated method stub

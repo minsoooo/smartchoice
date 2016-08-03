@@ -16,6 +16,9 @@ public class DiscountDto {
 	private String card_img;
 	private String card_name;
 	private String comp_name;
+	private int small_bignum; // 대분류 번호
+	private String big_name; // 대분류 이름
+	private int small_num; // 소분류 번호
 
 	public String getSmall_name() {
 		return small_name;
@@ -128,5 +131,28 @@ public class DiscountDto {
 	public void setComp_name(String comp_name) {
 		this.comp_name = comp_name;
 	}
-}
 
+	public int getSmall_bignum() {
+		return small_bignum;
+	}
+
+	public void setSmall_bignum(int small_bignum) {
+		this.small_bignum = small_bignum;
+	}
+
+	public String getBig_name() {
+		return big_name;
+	}
+
+	public void setBig_name(String big_name) {
+		this.big_name = big_name;
+	}
+
+	public int getSmall_num() {
+		return small_num;
+	}
+
+	public void setSmall_num(int small_num) {
+		this.small_num = small_num;
+	}
+}

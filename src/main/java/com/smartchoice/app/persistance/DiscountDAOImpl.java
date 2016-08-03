@@ -67,4 +67,17 @@ public class DiscountDAOImpl implements DiscountDAO {
 	public List<DiscountDto> getDiscountDetail(String dc_cardcode) {
 		return sqlSession.selectList(NAMESPACE + ".getDiscountDetail", dc_cardcode);
 	}	
+	
+	@Override
+	public List<DiscountDto> getDcBigCategory(String dc_cardcode) {
+		return sqlSession.selectList(NAMESPACE + ".getDcBigCategory", dc_cardcode);
+	}
+	
+	@Override
+	public List<DiscountDto> getDcSmallCategory(String dc_cardcode, int small_bignum) {
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("dc_cardcode", dc_cardcode);
+		paramMap.put("small_bignum", small_bignum);
+		return sqlSession.selectList(NAMESPACE + ".getDcSmallCategory", paramMap);
+	}
 }

@@ -112,6 +112,7 @@
 			
 		}		
 	);
+	
 	function fnDelMember(){
 		if(confirm("정말 탈퇴하시겠습니까?")){
 			var mem_id =$("#mem_id").attr("value");

@@ -17,6 +17,7 @@ public class MemberDto {
 	private String card_name;
 	private String mem_regdate;
 	private int comp_num;
+
 	private String comp_name;
 	private String mem_birthdate;
 	private String card_img;
@@ -54,7 +55,6 @@ public class MemberDto {
 	public void setComp_name(String comp_name) {
 		this.comp_name = comp_name;
 	}
-
 	public String getMem_birthdate() {
 		return mem_birthdate;
 	}
@@ -178,7 +178,6 @@ public class MemberDto {
 
 	public void setCard_name(String card_name) {
 		this.card_name = card_name;
-
 	}
 
 }

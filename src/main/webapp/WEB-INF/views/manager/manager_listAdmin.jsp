@@ -30,6 +30,7 @@
 	
 	function goPage(page_num){
 		location.href="/manager/manager_listAdmin?page_num="+page_num;
+
 	}
 </script>
 <style>

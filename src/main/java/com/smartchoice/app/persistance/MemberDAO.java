@@ -19,5 +19,4 @@ public interface MemberDAO {
 	public List<MemberDto> getMemberWithFav(String mem_fav);
 	public int getMemberCount();
 	public int getMemberCount(String mem_fav);
-
 }
