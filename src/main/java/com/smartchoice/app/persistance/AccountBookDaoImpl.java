@@ -65,17 +65,24 @@ public class AccountBookDaoImpl implements AccountBookDAO {
 	}
 
 	@Override
-	public CategoryDto getCategoryName(int small_num) {
-		return sqlSession.selectOne(NAMESPACE + ".getCategoryName", small_num);
-	}
-	
-	@Override
 	public void deleteRegiAbook(String regi_month, String regi_day, int regi_memnum) {
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("regi_month", regi_month);
 		paramMap.put("regi_day", regi_day);
 		paramMap.put("regi_memnum", regi_memnum);
 		sqlSession.delete(NAMESPACE + ".deleteRegiABook", paramMap);
+	}
+
+	@Override
+	public List<Integer> getTotalMoney(int regi_memnum, String regi_month) {
+		Map<String, Object> paramMap = new HashMap<String, Object>();
+		paramMap.put("regi_memnum", regi_memnum);
+		paramMap.put("regi_month", regi_month);
+		return sqlSession.selectList(NAMESPACE + ".getTotalMoney", paramMap);
+	}
+	
+	public List<AccountBookDto> getAccountBookList() {
+		return sqlSession.selectList(NAMESPACE+".getAccountBookList");
 	}
 
 }

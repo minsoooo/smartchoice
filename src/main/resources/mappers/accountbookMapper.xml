@@ -33,8 +33,12 @@
 	<select id="getAccountBook" resultType="AccountBookDto">
 		select * from accountbook where abook_reginum=#{abook_reginum}
 	</select>
+
+	<select id="getTotalMoney" resultType="int">
+		select abook_money from v_details_accountbook where regi_memnum=#{regi_memnum} and regi_month=#{regi_month};
+	</select>
 	
-	<select id="getCategoryName" resultType="CategoryDto">
-		select * from v_details_category where small_num=#{small_num}
+	<select id ="getAccountBookList" resultType="AccountBookDto">
+		select * from v_details_accountbook;
 	</select>
 </mapper>

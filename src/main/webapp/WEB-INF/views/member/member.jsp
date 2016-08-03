@@ -130,6 +130,7 @@
 #year, #month, #day{
 	width:99px;
 }
+
 #imgTd{
 	width : 20px
 }
@@ -229,7 +230,6 @@
 	border: 0;
 	outline: 0;
 	}
-
 	
 #btnCheckCode:hover{
 	background-color:#97b162;
@@ -311,6 +311,7 @@
 	int now_year = cal.get(Calendar.YEAR);
 	request.setAttribute("now_year",now_year);
 %>
+
 <jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 	<span id ="check" value = "false"></span>
 	<span id ="checkCode" value =""></span>

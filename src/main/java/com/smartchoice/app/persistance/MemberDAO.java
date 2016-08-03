@@ -17,4 +17,6 @@ public interface MemberDAO {
 	public void updatePw(String mem_id, String mem_pw);
 	public List<MemberDto> getMemberWithCompNum(int comp_num);
 	public List<MemberDto> getMemberWithFav(String mem_fav);
+	public int getMemberCount();
+	public int getMemberCount(String mem_fav);
 }

@@ -1,19 +1,19 @@
-
 package com.smartchoice.app.controller;
 import java.util.List;
+import java.util.Map;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 
 import javax.inject.Inject;
+import javax.security.auth.login.AccountNotFoundException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.junit.runners.Parameterized.Parameter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -25,11 +25,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.WebUtils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.smartchoice.app.domain.AccountBookDto;
+
 import com.smartchoice.app.domain.BigCategoryDto;
 import com.smartchoice.app.domain.CardDto;
 import com.smartchoice.app.domain.ManagerDto;
 import com.smartchoice.app.domain.MemberDto;
 import com.smartchoice.app.domain.SmallCategoryDto;
+
+import com.smartchoice.app.service.AccountBookService;
 import com.smartchoice.app.service.BigCategoryService;
 import com.smartchoice.app.service.CardService;
 import com.smartchoice.app.service.CategoryService;
@@ -37,6 +41,7 @@ import com.smartchoice.app.service.ManagerService;
 import com.smartchoice.app.service.MemberService;
 import com.smartchoice.app.util.Cipher;
 import com.smartchoice.app.util.Paging;
+import net.sf.json.JSONArray;
 
 @Controller
 @RequestMapping("/manager/")
@@ -54,6 +59,9 @@ public class ManagerController {
 	
 	@Inject
 	private BigCategoryService service_cate;
+	
+	@Inject
+	private AccountBookService service_account;
 	
 	//관리자 아이디 중복체크 AJAX코드 
 	@RequestMapping("/manager_idCheck")
@@ -136,15 +144,15 @@ public class ManagerController {
 		
 		Paging paging = new Paging();
 		paging.setPageNo(page_num);//페이지번호셋팅
-	    paging.setPageSize(2);//페이지 사이즈 셋팅
+	    paging.setPageSize(5);//페이지 사이즈 셋팅
 	    paging.setTotalCount(list.size());//토탈카운트 셋팅
 	   
-	    if((page_num)*2 >= list.size()){
-	    	  for(int i =(page_num-1)*2  ; i<list.size();i++ ){
+	    if((page_num)*5 >= list.size()){
+	    	  for(int i =(page_num-1)*5  ; i<list.size();i++ ){
 	  	    	managerList.add(list.get(i));	    	
 	  	    }
 	    }else{
-	    	 for(int i =(page_num-1)*2 ; i<(page_num-1)*2+2;i++ ){
+	    	 for(int i =(page_num-1)*5 ; i<(page_num-1)*5+5;i++ ){
 	 	    	managerList.add(list.get(i));	    	
 	 	    }
 	    }
@@ -212,15 +220,15 @@ public class ManagerController {
 		
 		Paging paging = new Paging();
 		paging.setPageNo(page_num);//페이지번호셋팅
-	    paging.setPageSize(2);//페이지 사이즈 셋팅
+	    paging.setPageSize(10);//페이지 사이즈 셋팅
 	    paging.setTotalCount(setList.size());//토탈카운트 셋팅
 	    
-	    if((page_num)*2 >= list.size()){
-	    	  for(int i = (page_num-1)*2  ; i < setList.size(); i++ ){
+	    if((page_num)*10 >= list.size()){
+	    	  for(int i = (page_num-1)*10  ; i < setList.size(); i++ ){
 	  	    	memberList.add(setList.get(i));	    	
 	  	    }
 	    }else{
-	    	 for(int i = (page_num-1)*2 ; i < (page_num-1)*2+2; i++ ){
+	    	 for(int i = (page_num-1)*10 ; i < (page_num-1)*10+10; i++ ){
 	 	    	memberList.add(setList.get(i));	    	
 	 	    }
 	    }
@@ -228,7 +236,6 @@ public class ManagerController {
 	    model.addAttribute("cateList",cateList);
 		model.addAttribute("paging",paging);
 		model.addAttribute("memberList", memberList);
-	    
 	}
 
 	//관리자 회원 분류별 보기 by Minsoo
@@ -260,15 +267,15 @@ public class ManagerController {
 		
 		Paging paging = new Paging();
 		paging.setPageNo(page_num);//페이지번호셋팅
-	    paging.setPageSize(2);//페이지 사이즈 셋팅
+	    paging.setPageSize(5);//페이지 사이즈 셋팅
 	    paging.setTotalCount(setList.size());//토탈카운트 셋팅
 	    
-	    if((page_num)*2 >= list.size()){
-	    	  for(int i = (page_num-1)*2  ; i < setList.size(); i++ ){
+	    if((page_num)*5 >= list.size()){
+	    	  for(int i = (page_num-1)*5  ; i < setList.size(); i++ ){
 	  	    	memberList.add(setList.get(i));	    	
 	  	    }
 	    }else{
-	    	 for(int i = (page_num-1)*2 ; i < (page_num-1)*2+2; i++ ){
+	    	 for(int i = (page_num-1)*5 ; i < (page_num-1)*5+5; i++ ){
 	 	    	memberList.add(setList.get(i));	    	
 	 	    }
 	    }
@@ -286,17 +293,296 @@ public class ManagerController {
 		service_mem.deleteMember(mem_id);
 		return "redirect:/manager/manager_listMember?page_num=1";
 	}
-	//관리자 회원정보수정 페이지
-	@RequestMapping("/manager_memberCor")
-	public void managerMemberCorGET() throws Exception{
-		//return "/manager/manager_main";
+
+	//관리자 통계페이지로 이동 by Minsoo
+	@RequestMapping("/manager_stats")
+	public void statsGET(){
+
+	}
+	//관리자 통계/대분류별 회원수 불러오기 ajax 코드 
+	@RequestMapping("/manager_getStats1")
+	public void getStats1(HttpServletResponse resp){
+		resp.setCharacterEncoding("utf-8");
+		resp.setContentType("text/json");
+		PrintWriter out = null;
+		Map<String,String> jsonMap = null;
+		List<BigCategoryDto> cateList = new ArrayList<BigCategoryDto>();
+		List<Map<String,String>> jsonList = new ArrayList<Map<String,String>>();
+		JSONArray json;
+		cateList = service_cate.getBigCategory();
+		
+		for(int i = 0 ; i < cateList.size(); i++){
+			jsonMap = new HashMap<String, String>();
+			jsonMap.put("big_name", cateList.get(i).getBig_name());
+			jsonMap.put("value",Integer.toString(service_mem.getMemberCount(Integer.toString(cateList.get(i).getBig_num()))));
+			jsonList.add(jsonMap);
+		}
+			json = JSONArray.fromObject(jsonList);	
+		try{
+			out = resp.getWriter();
+			out.println(json);
+		}catch(Exception err){
+			err.printStackTrace();
+		}finally{
+			out.close();
+		}
+	}
+	//관리자 통계불러오기/ 연령별 가입자수 불러오기
+	@RequestMapping("/manager_getStats2")
+	public void getStats2(HttpServletResponse resp){
+		resp.setCharacterEncoding("utf-8");
+		resp.setContentType("text/json");
+		
+		Calendar cal = Calendar.getInstance();
+		int thisYear = cal.get(Calendar.YEAR);
+		int memYear =0;
+		//세대별 인원수를 저장할 변수 초기화
+		int g1=0; int g2=0; int g3=0;int g4=0; int g5=0; int g6=0;
+		
+		PrintWriter out = null;
+		Map<String,String> jsonMap = null;
+		List<MemberDto> memList = new ArrayList<MemberDto>();
+		List<Map<String,String>> jsonList = new ArrayList<Map<String,String>>();
+		JSONArray json;
+		memList = service_mem.getMemberList();
+		for(int i = 0; i < memList.size(); i++){
+			
+			memYear = Integer.parseInt(memList.get(i).getMem_birthdate().split("/")[0]);
+			int disYear = thisYear - memYear;
+			
+			if( disYear<20){
+				g1 += 1;
+			}else if(disYear>=20 && disYear <30){
+				g2 +=1;
+			}else if(disYear>=30 && disYear <40){
+				g3 +=1;
+			}else if(disYear>=40 && disYear <50){
+				g4 +=1;
+			}else if(disYear>=50 && disYear <60){
+				g5 +=1;
+			}else if(disYear>=60){
+				g6 +=1;
+			}
+			
+		}
+		jsonMap = new HashMap<String, String>();
+		jsonMap.put("generation", "10대");
+		jsonMap.put("value",Integer.toString(g1));
+		jsonList.add(jsonMap);
+		
+		jsonMap = new HashMap<String, String>();
+		jsonMap.put("generation", "20대");
+		jsonMap.put("value",Integer.toString(g2));
+		jsonList.add(jsonMap);
+		
+		jsonMap = new HashMap<String, String>();
+		jsonMap.put("generation", "30대");
+		jsonMap.put("value",Integer.toString(g3));
+		jsonList.add(jsonMap);
+		
+		jsonMap = new HashMap<String, String>();
+		jsonMap.put("generation", "40대");
+		jsonMap.put("value",Integer.toString(g4));
+		jsonList.add(jsonMap);
+		
+		jsonMap = new HashMap<String, String>();
+		jsonMap.put("generation", "50대");
+		jsonMap.put("value",Integer.toString(g5));
+		jsonList.add(jsonMap);
+		
+		jsonMap = new HashMap<String, String>();
+		jsonMap.put("generation", "60대이상");
+		jsonMap.put("value",Integer.toString(g6));
+		jsonList.add(jsonMap);
+		
+			json = JSONArray.fromObject(jsonList);	
+		try{
+			out = resp.getWriter();
+			out.println(json);
+		}catch(Exception err){
+			err.printStackTrace();
+		}finally{
+			out.close();
+		}
 	}
 	
-	//관리자 회원정보수정 전송
-	@RequestMapping(value="/manager_memberCor", method=RequestMethod.POST)
-	public String managerMemberCorPOST() throws Exception{
-		return "redirect:/manager/manager_memberList";
+	//관리자 통계/대분류별/연령별 회원수 불러오기 ajax 코드 
+	
+	@RequestMapping("/manager_getStats3")
+	public void getStats3(HttpServletResponse resp){
+		resp.setCharacterEncoding("utf-8");
+		resp.setContentType("text/json");
+		PrintWriter out = null;
+		Map<String,Object> jsonMap = null;
+		List<MemberDto> memList =null;
+		
+		Calendar cal = Calendar.getInstance();
+		int thisYear = cal.get(Calendar.YEAR);
+		int memYear =0;
+		//세대별 인원수를 저장할 변수 초기화
+		int g1=0; int g2=0; int g3=0;int g4=0; int g5=0; int g6=0;
+		
+		List<BigCategoryDto> cateList = new ArrayList<BigCategoryDto>();
+		List<Map<String,Object>> jsonList = new ArrayList<Map<String,Object>>();
+		String[] values = null;
+		JSONArray json;
+		cateList = service_cate.getBigCategory();
+		
+		for(int i = 0 ; i < cateList.size(); i++){
+			jsonMap = new HashMap<String, Object>();
+			jsonMap.put("big_name", cateList.get(i).getBig_name());
+			memList = service_mem.getViewListMember("mem_fav", Integer.toString(cateList.get(i).getBig_num()));
+			for(int j = 0; j < memList.size(); j++){	
+				memYear = Integer.parseInt(memList.get(j).getMem_birthdate().split("/")[0]);
+				int disYear = thisYear - memYear;	
+				if( disYear<20){
+					g1 += 1;
+				}else if(disYear>=20 && disYear <30){
+					g2 +=1;
+				}else if(disYear>=30 && disYear <40){
+					g3 +=1;
+				}else if(disYear>=40 && disYear <50){
+					g4 +=1;
+				}else if(disYear>=50 && disYear <60){
+					g5 +=1;
+				}else if(disYear>=60){
+					g6 +=1;
+				}
+				
+			}
+			values = new String[6];
+			values[0]  =Integer.toString(g1);
+			values[1]  =Integer.toString(g2);
+			values[2]  =Integer.toString(g3);
+			values[3]  =Integer.toString(g4);
+			values[4]  =Integer.toString(g5);
+			values[5]  =Integer.toString(g6);
+			
+			jsonMap.put("value",values);
+			jsonList.add(jsonMap);
+			g1=0;g2=0;g3=0;g4=0;g5=0;g6=0;
+		}
+			json = JSONArray.fromObject(jsonList);	
+		try{
+			out = resp.getWriter();
+			out.println(json);
+		}catch(Exception err){
+			err.printStackTrace();
+		}finally{
+			out.close();
+		}
 	}
+
+	
+	//관리자 카드사별 통계페이지 이동 by Minsoo
+	@RequestMapping("/manager_statsComp")
+	public void statsCompGET(){
+		
+	}
+	
+	//관리자 카드사별 지출내역 불러오기 AJAX 코드
+	@RequestMapping("/manager_getStatsComp")
+	public void getStatsComp(HttpServletResponse resp){
+		resp.setCharacterEncoding("utf-8");
+		resp.setContentType("text/json");
+		
+		Map<String,Object> jsonMap = null;
+		List<Map<String,Object>> jsonList = new ArrayList<Map<String,Object>>();
+		JSONArray json;
+		
+		Calendar cal = Calendar.getInstance();
+		String thisYear = Integer.toString(cal.get(Calendar.YEAR));
+		String thisMonth = Integer.toString(cal.get(Calendar.MONTH));
+		String workMonth ="";
+		if(thisMonth.length()<2){
+			workMonth = thisYear +"-0"+thisMonth;
+		}else{
+			workMonth = thisYear +"-"+thisMonth;
+		}
+		PrintWriter out = null;
+		List<AccountBookDto> accountList = new ArrayList<AccountBookDto>();
+		List<AccountBookDto> workMonthList = new ArrayList<AccountBookDto>();
+		List<CardDto> compList = new ArrayList<CardDto>();
+		List<BigCategoryDto> cateList = new ArrayList<BigCategoryDto>();
+		List<AccountBookDto> accountCompList =null;
+		//전체 카테고리 리스트 받아오기
+		cateList = service_cate.getBigCategory();
+		// 카테 리스트 크기만큼의 스트링 배열 만들기 
+		int[] cates = null;
+		//전체 카드사 내역 가져오기 
+		compList = service.getCardComp();
+		//전체 지출정보 가져오기
+		accountList = service_account.getAccountBookList();
+		//직전 달 정보 가져오기 // 전체 지출 리스트중 직전달 리스트만 새로운 리스트에 추가
+		for(int i = 0 ; i < accountList.size() ; i ++){
+			if(accountList.get(i).getRegi_month().equals(workMonth)){
+				workMonthList.add(accountList.get(i));
+			}
+		}
+		
+		//카드사별로 리스트를 만들어 담기 
+		for(int k = 0; k< compList.size(); k++){
+			jsonMap = new HashMap<String, Object>();
+			accountCompList = new ArrayList<AccountBookDto>();
+			cates = new int[cateList.size()];
+			jsonMap.put("comp_name", compList.get(k).getComp_name());
+			for(int j = 0; j < workMonthList.size(); j ++){
+				if(compList.get(k).getComp_name().equals(workMonthList.get(j).getComp_name())){
+					accountCompList.add(workMonthList.get(j));
+				}
+			}
+			
+			
+			for(int t = 0; t < cateList.size() ; t ++){
+				for(int y = 0 ; y < accountCompList.size() ; y++){
+					if(accountCompList.get(y).getAbook_bignum() == cateList.get(t).getBig_num()){
+						cates[t] += accountCompList.get(y).getAbook_money();
+					}
+				}
+			}
+			jsonMap.put("value", cates);
+			jsonList.add(jsonMap);	
+		}
+		json = JSONArray.fromObject(jsonList);	
+		System.out.println(json);
+		try{
+			out = resp.getWriter();
+			out.println(json);
+		}catch(Exception err){
+			err.printStackTrace();
+		}finally{
+			out.close();
+		}		
+	}
+	
+	//관리자 통계/대분류 이름 가져오기 ajax 코드 
+		@RequestMapping("/manager_getStatsCate")
+		public void getStatsCate(HttpServletResponse resp){
+			resp.setCharacterEncoding("utf-8");
+			resp.setContentType("text/json");
+			PrintWriter out = null;
+			Map<String,String> jsonMap = null;
+			List<BigCategoryDto> cateList = new ArrayList<BigCategoryDto>();
+			List<Map<String,String>> jsonList = new ArrayList<Map<String,String>>();
+			JSONArray json;
+			cateList = service_cate.getBigCategory();
+			
+			for(int i = 0 ; i < cateList.size(); i++){
+				jsonMap = new HashMap<String, String>();
+				jsonMap.put("big_name", cateList.get(i).getBig_name());
+				jsonList.add(jsonMap);
+			}
+				json = JSONArray.fromObject(jsonList);
+				System.out.println(json);
+			try{
+				out = resp.getWriter();
+				out.println(json);
+			}catch(Exception err){
+				err.printStackTrace();
+			}finally{
+				out.close();
+			}
+		}
 	
 	//관리자 카드정보리스트 페이지
 	@RequestMapping("/manager_cardList")

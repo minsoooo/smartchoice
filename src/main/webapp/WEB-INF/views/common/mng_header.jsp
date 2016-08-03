@@ -14,7 +14,6 @@
 			var mng_level = $("#mng_level").attr("value")
 		}		
 	);
-
 	function fnLogout(){
 		location.href ="/manager/manager_logout"
 	}
@@ -32,6 +31,14 @@
 		var mng_level = $("#mng_level").attr("value")
 		if(mng_level >= 2){
 			location.href ="/manager/manager_listMember?page_num=1";
+		}else{
+			alert("접근 권한이 없습니다.관리자에게 문의하세요.")
+		}
+	}	
+	function fnStatistic(){
+		var mng_level = $("#mng_level").attr("value")
+		if(mng_level >= 2){
+			location.href ="/manager/manager_stats";
 		}else{
 			alert("접근 권한이 없습니다.관리자에게 문의하세요.")
 		}
@@ -124,7 +131,11 @@
 }
 
 </style>
+<<<<<<< HEAD
 <body>
+=======
+<body>
+>>>>>>> refs/remotes/origin/master
 	<span id ="mng_level" value ="${sessionScope.MNG_KEY.mng_level }"></span>
 	<!-- 로고 -->
 	<div class="container">
@@ -157,7 +168,7 @@
 					<a href="javascript:fnChooseMember()">회원관리</a>
 					<a href="javascript:fnChooseAdmin()">직원관리</a>
 					<a href="#">이벤트등록</a>
-					<a href="#">통계보기</a>
+					<a href="javascript:fnStatistic()">통계보기</a>
 				</div>
 			</div>
 		</div>

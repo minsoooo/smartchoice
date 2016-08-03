@@ -40,12 +40,6 @@ public class AccountBookServiceImpl implements AccountBookService {
 	public List<AccountBookDto> getAccountBook(int abook_reginum) {
 		return dao.getAccountBook(abook_reginum);
 	}
-
-	@Override
-	public CategoryDto getCategoryName(int small_num) {
-		return dao.getCategoryName(small_num);
-	}
-
 	@Override
 	public void deleteAccountBook(int regi_num) {
 		dao.deleteAccountBook(regi_num);
@@ -56,5 +50,15 @@ public class AccountBookServiceImpl implements AccountBookService {
 	public void deleteRegiAbook(String regi_month, String regi_day, int regi_memnum) {
 		dao.deleteRegiAbook(regi_month, regi_day, regi_memnum);
 		
+	}
+
+	@Override
+	public List<Integer> getTotalMoney(int regi_memnum, String regi_month) {
+		return dao.getTotalMoney(regi_memnum, regi_month);
+	}
+	
+	public List<AccountBookDto> getAccountBookList() {
+		return dao.getAccountBookList();
+
 	}
 }

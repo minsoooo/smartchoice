@@ -4,12 +4,14 @@ import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
 
+
 import com.smartchoice.app.persistance.CalendarDAO;
 
 @Service
 public class CalendarServiceImpl implements CalendarService {
 	@Inject
 	private CalendarDAO dao;
+
 	
 	@Override
 	public String getDate() {

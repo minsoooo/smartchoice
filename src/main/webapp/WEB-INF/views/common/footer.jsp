@@ -16,12 +16,10 @@
 </script>
 <style>
 @import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
-
 #footer{
 	background-color:#d4d1ca;
 	font-family: 'Noto Sans KR', sans-serif;
 }
-
 #copyright{
 	color:#706b67;
 	margin-right:20px;
@@ -30,13 +28,13 @@
 
 #foot1{
 	margin-top:30px;
-	margin-left:130px;
+	margin-left:220px;
 }
 
 #foot1 a{
 	color:#706b67;
-	font-size:17px;
-	margin-right:70px;
+	font-size:10px;
+	margin-right:50px;
 }
 
 #foot1 a:hover{
@@ -73,7 +71,6 @@
 					<div id="foot2">
 						<font id="copyright">Copyright 2016 $mart Choice. All rights reserved.</font><br/><br/>
 					</div>
-
 				</div>
 			</div>
 		</div>

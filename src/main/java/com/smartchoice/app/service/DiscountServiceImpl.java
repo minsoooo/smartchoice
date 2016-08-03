@@ -19,11 +19,32 @@ public class DiscountServiceImpl implements DiscountService {
 		return dao.getSmallSelect(dc_smallnum, card_typeflag);
 	}
 
+
 	@Override
 	public List<DiscountDto> getDiscountName(String dc_cardcode) {
 		return dao.getDiscountName(dc_cardcode);
 	}
+	@Override
+	public DiscountDto getCardDCInfo(String card_code, int small_num) {
+		return dao.getCardDCInfo(card_code, small_num);
+	}
 
+	@Override
+	public List<DiscountDto> getAllCardDCInfo(int small_num) {
+		return dao.getAllCardDCInfo(small_num);
+	}
+
+	@Override
+	public List<DiscountDto> getAllCardDCInfo(String card_code) {
+		return dao.getAllCardDCInfo(card_code);
+	}
+	
+	@Override
+	public List<DiscountDto> getDiscountDetail(String dc_cardcode) {
+		// TODO Auto-generated method stub
+		return dao.getDiscountDetail(dc_cardcode);
+	}
+	
 	@Override
 	public List<DiscountDto> getDcBigCategory(String dc_cardcode) {
 		return dao.getDcBigCategory(dc_cardcode);
@@ -34,3 +55,5 @@ public class DiscountServiceImpl implements DiscountService {
 		return dao.getDcSmallCategory(dc_cardcode, small_bignum);
 	}
 }
+
+

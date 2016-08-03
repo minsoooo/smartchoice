@@ -117,8 +117,6 @@ function big_cate_Change(){
 	<br/><br/>
 	</div>
 </div>
-
-
 <script src="/resources/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>

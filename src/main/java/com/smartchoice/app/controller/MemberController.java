@@ -157,7 +157,7 @@ public class MemberController {
 		dto.setMem_fav1(mem_fav1);
 		dto.setMem_fav2(mem_fav2);
 		dto.setMem_fav3(mem_fav3);
-		
+		logger.info("2단계 : " + dto.toString() );
 		rttr.addFlashAttribute("MemberDto", dto);
 		
 		return "redirect:/member/memberStep3";
@@ -176,7 +176,7 @@ public class MemberController {
 		Cipher cipher = new Cipher();
 		String MD5Pw = cipher.getMD5(dto.getMem_pw());
 		dto.setMem_pw(MD5Pw);
-
+		logger.info("3단계 : " + dto.toString());
 		service_mem.regiMember(dto);
 		req.setAttribute("regiCheck", "true");
 		return "index";
@@ -210,6 +210,7 @@ public class MemberController {
 		}
 		
 		
+
 	}
 	
 	//회원 탈퇴하면 세션을 초기화후 index페이지로 이동
@@ -229,7 +230,6 @@ public class MemberController {
 	//회원기본정보 수정페이지 이동
 	@RequestMapping("/update_basic")
 	public void update_basic(){
-		
 	}
 	
 	//회원기본정보 DB연동

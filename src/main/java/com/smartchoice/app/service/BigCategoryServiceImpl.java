@@ -5,7 +5,6 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
-
 import com.smartchoice.app.domain.BigCategoryDto;
 import com.smartchoice.app.persistance.BigCategoryDAO;
 
@@ -23,10 +22,10 @@ public class BigCategoryServiceImpl implements BigCategoryService {
 	public BigCategoryDto getBigCateWithNum(int big_num) {
 		return dao.getBigCateWithNum(big_num);
 	}
-
 	@Override
 	public List<BigCategoryDto> getDcBigCategory(String dc_cardcode) {
 		return dao.getDcBigCategory(dc_cardcode);
 	}
+
 
 }

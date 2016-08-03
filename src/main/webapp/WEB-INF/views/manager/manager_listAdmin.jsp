@@ -31,6 +31,10 @@
 	function goPage(page_num){
 		location.href="/manager/manager_listAdmin?page_num="+page_num;
 	}
+	
+	function goPage(page_num){
+		location.href="/manager/manager_listAdmin?page_num="+page_num;
+	}
 </script>
 <style>
 li{
@@ -158,6 +162,5 @@ li{
 			</div>			
 		</div>
 	</div>
-	
 </body>
 </html>

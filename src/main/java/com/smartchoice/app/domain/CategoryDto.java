@@ -13,6 +13,7 @@ public class CategoryDto {
 	private String big_name;
 	private int small_num;
 	private String small_name;
+	private String small_img;
 	
 	public int getBig_num() {
 		return big_num;
@@ -37,6 +38,12 @@ public class CategoryDto {
 	}
 	public void setSmall_name(String small_name) {
 		this.small_name = small_name;
+	}
+	public String getSmall_img() {
+		return small_img;
+	}
+	public void setSmall_img(String small_img) {
+		this.small_img = small_img;
 	}
 	
 }

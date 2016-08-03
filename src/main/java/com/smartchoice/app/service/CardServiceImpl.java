@@ -70,10 +70,7 @@ public class CardServiceImpl implements CardService {
 		return dao.getCardComp();
 	}
 
-	@Override
-	public CardDto getCardName(String card_code) {
-		return dao.getCardName(card_code);
-	}
+
 
 	@Override
 	public String getCardCompName(int comp_num) {
@@ -82,5 +79,22 @@ public class CardServiceImpl implements CardService {
 
 	}
 
+	@Override
+	public CardDto getCardName(String card_code) {
+		return dao.getCardName(card_code);
+	}
+
+
+	@Override
+	public String getCompName(String card_code) {
+		return dao.getCompName(card_code);
+	}
+	
+	@Override
+	public CardDto getCard(String card_code) {//카드코드로 정보 가져오기 by.Santori
+		// TODO Auto-generated method stub
+		return dao.getCard(card_code);
+	}
+	
 }
 

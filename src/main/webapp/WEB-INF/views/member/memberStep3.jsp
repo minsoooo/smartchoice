@@ -172,6 +172,7 @@
 					<input type ="hidden" name ="mem_fav1" value ="${MemberDto.mem_fav1 }"/>
 					<input type ="hidden" name ="mem_fav2" value ="${MemberDto.mem_fav2 }"/>
 					<input type ="hidden" name ="mem_fav3" value ="${MemberDto.mem_fav3 }"/>
+					<input type ="hidden" name ="mem_birthdate" value ="${MemberDto.mem_birthdate }"/>
 					<div class = "container">
 						<div class ="row">
 							<div class ="span10" id="tableDiv">
@@ -206,7 +207,6 @@
 			</div>
 		</div>
 	</div>
-	
 	
 	<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
 </body>

@@ -16,11 +16,13 @@
 	);
 </script>
 <style>
+
 #content{
 	margin-top:50px;
 	margin-bottom:50px;
 }
 </style>
+
 <body style="background-color:#f5f4f0">
 
 	<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>

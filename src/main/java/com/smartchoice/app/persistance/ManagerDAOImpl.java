@@ -56,6 +56,7 @@ public class ManagerDAOImpl implements ManagerDAO {
 	public void delManager(String mng_id) {
 		sqlSession.delete(NAMESPACE+".delManager",mng_id);
 		
+
 	}
 
 }

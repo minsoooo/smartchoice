@@ -78,7 +78,6 @@ public class MemberDAOImpl implements MemberDAO {
 		params.put("mem_id", mem_id);
 		params.put("mem_pw", mem_pw);
 		sqlSession.update(NAMESPACE+".updatePw",params);
-		
 	}
 
 	@Override
@@ -88,11 +87,22 @@ public class MemberDAOImpl implements MemberDAO {
 		return sqlSession.selectList(NAMESPACE+".getViewListMember", param);
 	}
 
-	@Override
 	public List<MemberDto> getMemberWithFav(String mem_fav) {
 		Map<String, Object> param = new HashMap<String, Object>();
 		param.put("mem_fav", mem_fav);
 		return sqlSession.selectList(NAMESPACE+".getViewListMember", param);
 	}
 
+	@Override
+	public int getMemberCount() {
+		
+		return sqlSession.selectOne(NAMESPACE+".getMemberCount");
+	}
+
+	@Override
+	public int getMemberCount(String mem_fav) {
+		Map<String, Object> param = new HashMap<String, Object>();
+		param.put("mem_fav", mem_fav);
+		return sqlSession.selectOne(NAMESPACE+".getMemberCount",param);
+	}
 }

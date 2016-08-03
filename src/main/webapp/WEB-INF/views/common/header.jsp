@@ -35,6 +35,20 @@
 			fnLogin();
 		}
 	}
+	
+	
+	function fnEventBoard(){
+		var mem_num = $("#mem_num").attr("value")
+		var mng_num = $("#mng_num").attr("value")
+		if(mem_num != ""){
+			location.href ="/board/event_board/event_listPage"
+		}else if(mng_num != ""){
+			alert("접근 권한이 없습니다.")
+		}else{
+			alert("로그인이 필요합니다.");
+			fnLogin();
+		}
+	}
 
 
 </script>
@@ -139,7 +153,6 @@
 	
 	<div  id="header1">
 		<div class="container">
-
 			<div class="row">
 				<c:choose>
 					<c:when test="${sessionScope.MEM_KEY ne null }">
@@ -174,10 +187,10 @@
 			<div class="row">
 				<div class="span8 offset4">
 					<a href="/planCard/planIntro.plan">카드추천</a>
-					<a href="javascript:fnAccount()">지출관리</a>
+					<a href="javascript:fnAccount()">지출관리</a>			
 					<a href="/searchStore/showMap">매장찾기</a>
-					<a href="#">이벤트</a>
-					<a href="#">공지사항</a>
+					<a href="javascript:fnEventBoard()">이벤트</a>
+					<a href="/board/notice_board/notice_listPage">공지사항</a>
 				</div>
 			</div>
 		</div>

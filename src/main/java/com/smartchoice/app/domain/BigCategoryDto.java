@@ -2,6 +2,16 @@
  *
  * 	2016.07.21
  * 	대분류 Dto 작성
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+<<<<<<< HEAD
+
+=======
+>>>>>>> refs/remotes/origin/master
+=======
+>>>>>>> refs/remotes/origin/master
+>>>>>>> refs/remotes/Minsoo/cardPlan_Snapshot_2.0
  */
 package com.smartchoice.app.domain;
 

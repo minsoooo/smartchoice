@@ -8,7 +8,7 @@
 
 	<insert id="regiMember" parameterType="MemberDto">
 		insert into member(mem_level, mem_email, mem_pw, mem_fav1, mem_fav2, mem_fav3, mem_id,mem_birthdate
-		mem_cardcode)
+		,mem_cardcode)
 		values(#{mem_level}, #{mem_email}, #{mem_pw}, #{mem_fav1}, #{mem_fav2}, #{mem_fav3}, #{mem_id},#{mem_birthdate},
 		#{mem_cardcode})
 	</insert>
@@ -62,4 +62,10 @@
 			</where>
 	</select>
 	
+	<select id ="getMemberCount" resultType="int">
+		select count(mem_id) from member
+			<where>
+				<if test="mem_fav != null">mem_fav1 = #{mem_fav} or mem_fav2= #{mem_fav} or mem_fav3 = #{mem_fav}</if>
+			</where>
+	</select>
 </mapper>

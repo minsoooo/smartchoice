@@ -183,6 +183,13 @@
 		    <artifactId>jackson-mapper-asl</artifactId>
 		    <version>1.9.13</version>
 		</dependency>
+		
+		<!-- 파일 업로드용 -규- -->
+		<dependency>
+			<groupId>com.liferay</groupId>
+			<artifactId>org.apache.commons.fileupload</artifactId>
+		    <version>1.2.2.LIFERAY-PATCHED-1</version>
+		</dependency>
 
 		<dependency>
 			<groupId>net.sf.json-lib</groupId>	
@@ -190,7 +197,7 @@
 			<version>2.4</version>	
 			<classifier>jdk15</classifier>	
 		</dependency>
-		
+	
 	</dependencies>
     <build>
         <plugins>

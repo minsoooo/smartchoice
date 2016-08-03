@@ -1,6 +1,7 @@
 <!-- 
 	매장찾기 페이지 
 	작성일 : 2016-07-21
+
 	수정일 : 2016-08-03
 	작성자 : 이재승
  -->
@@ -504,6 +505,7 @@ function dcSmallListChange(){
 		var input = document.getElementById('keyword').value;
 		var keyword = $("#addr").attr("value") + " " + input;
 		
+
 		if(keyword.length > 10){
 			ps.keywordSearch(keyword, placesSearchCB);
 		}

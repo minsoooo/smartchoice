@@ -26,4 +26,8 @@ public class CategoryServiceImpl implements CategoryService {
 		return dao.getSmallCategory(big_num);
 	}
 
+	@Override
+	public CategoryDto getCategoryName(int small_num) {
+		return dao.getCategoryName(small_num);
+	}
 }

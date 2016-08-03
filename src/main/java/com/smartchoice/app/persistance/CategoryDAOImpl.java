@@ -27,5 +27,10 @@ public class CategoryDAOImpl implements CategoryDAO {
 	public List<CategoryDto> getSmallCategory(Integer big_num) throws Exception {
 		return sqlSession.selectList(NAMESPACE + ".getSmallCategory", big_num);
 	}
+	
+	@Override
+	public CategoryDto getCategoryName(int small_num) {
+		return sqlSession.selectOne(NAMESPACE + ".getCategoryName", small_num);
+	}
 
 }
