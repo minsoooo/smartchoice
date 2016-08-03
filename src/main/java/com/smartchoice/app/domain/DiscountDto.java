@@ -12,8 +12,29 @@ public class DiscountDto {
 	private int dc_smallnum;
 	private int card_typeflag; //카드 구분
 	private int dc_discountMoney;//할인된 금액
+	private int small_bignum; // 대분류 번호
+	private String big_name; // 대분류 이름
+	private int small_num; // 소분류 번호
 	private String small_name; // 소분류 이름
 	
+	public int getSmall_bignum() {
+		return small_bignum;
+	}
+	public void setSmall_bignum(int small_bignum) {
+		this.small_bignum = small_bignum;
+	}
+	public String getBig_name() {
+		return big_name;
+	}
+	public void setBig_name(String big_name) {
+		this.big_name = big_name;
+	}
+	public int getSmall_num() {
+		return small_num;
+	}
+	public void setSmall_num(int small_num) {
+		this.small_num = small_num;
+	}
 	public String getSmall_name() {
 		return small_name;
 	}

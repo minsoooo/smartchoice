@@ -61,8 +61,10 @@ public class SearchStoreController {
 			CardDto cardDto = cardService.getCardName(cardCode);
 			List<DiscountDto> discountDto = discountService.getDiscountName(cardCode);
 
+			
 			model.addAttribute("cardCode", cardDto.getCard_name());
 			model.addAttribute("discount", discountDto);
+			model.addAttribute("DcBigCategory", discountService.getDcBigCategory(cardCode));
 		}
 		
 		List list = bigCategoryService.getBigCategory();
@@ -101,6 +103,44 @@ public class SearchStoreController {
 			e.printStackTrace();
 		} finally {
 			out.close();
+		}
+	}
+	
+	@RequestMapping("/map/getDcSmallCategory")
+	public void getDcSmallCategory(int small_bignum, HttpServletRequest req, HttpServletResponse resp) throws Exception {
+		HttpSession session = req.getSession();
+		MemberDto memberDto = (MemberDto)session.getAttribute("MEM_KEY");
+		
+		if(memberDto != null){
+			String cardCode = memberDto.getMem_cardcode();
+			
+			resp.setCharacterEncoding("utf-8");
+			resp.setContentType("text/xml");
+
+			List<DiscountDto> discountList = new ArrayList<DiscountDto>();
+			discountList = discountService.getDcSmallCategory(cardCode, small_bignum);
+
+			DiscountDto dto = null;
+			PrintWriter out = null;
+
+			try {
+				out = resp.getWriter();
+				out.println("<response>");
+				for (int i = 0; i < discountList.size(); i++) {
+					dto = discountList.get(i);
+					out.println("<category>");
+					out.println("<small_bignum>" + dto.getSmall_bignum() + "</small_bignum>");
+					out.println("<big_name><![CDATA[" + dto.getBig_name() + "]]></big_name>");
+					out.println("<small_num>" + dto.getSmall_num() + "</small_num>");
+					out.println("<small_name><![CDATA[" + dto.getSmall_name() + "]]></small_name>");
+					out.println("</category>");
+				}
+				out.println("</response>");
+			} catch (IOException e) {
+				e.printStackTrace();
+			} finally {
+				out.close();
+			}
 		}
 	}
 }

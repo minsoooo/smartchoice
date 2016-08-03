@@ -23,7 +23,14 @@ public class DiscountServiceImpl implements DiscountService {
 	public List<DiscountDto> getDiscountName(String dc_cardcode) {
 		return dao.getDiscountName(dc_cardcode);
 	}
-	
-	
 
+	@Override
+	public List<DiscountDto> getDcBigCategory(String dc_cardcode) {
+		return dao.getDcBigCategory(dc_cardcode);
+	}
+	
+	@Override
+	public List<DiscountDto> getDcSmallCategory(String dc_cardcode, int small_bignum) {
+		return dao.getDcSmallCategory(dc_cardcode, small_bignum);
+	}
 }

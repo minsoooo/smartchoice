@@ -10,6 +10,14 @@
 	</select>
 	
 	<select id="getDiscountName" resultType="DiscountDto">
-		select small_name from v_details_discount where dc_cardcode = #{dc_cardcode}
+		select * from v_details_discount where dc_cardcode = #{dc_cardcode}
+	</select>
+	
+	<select id="getDcBigCategory" resultType="DiscountDto">
+		select distinct big_name, small_bignum from v_details_discount where dc_cardcode = #{dc_cardcode}
+	</select>
+	
+	<select id="getDcSmallCategory" resultType="DiscountDto">
+		select * from v_details_discount where dc_cardcode = #{dc_cardcode} and small_bignum = #{small_bignum}
 	</select>
 </mapper>

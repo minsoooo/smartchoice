@@ -24,4 +24,9 @@ public class BigCategoryServiceImpl implements BigCategoryService {
 		return dao.getBigCateWithNum(big_num);
 	}
 
+	@Override
+	public List<BigCategoryDto> getDcBigCategory(String dc_cardcode) {
+		return dao.getDcBigCategory(dc_cardcode);
+	}
+
 }
