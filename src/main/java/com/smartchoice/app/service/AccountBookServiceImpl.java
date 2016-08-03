@@ -53,4 +53,9 @@ public class AccountBookServiceImpl implements AccountBookService {
 		dao.deleteRegiAbook(regi_month, regi_day, regi_memnum);
 		
 	}
+
+	@Override
+	public List<AccountBookDto> getAccountBookList() {
+		return dao.getAccountBookList();
+	}
 }

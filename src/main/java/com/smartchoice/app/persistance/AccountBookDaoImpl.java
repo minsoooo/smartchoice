@@ -74,4 +74,10 @@ public class AccountBookDaoImpl implements AccountBookDAO {
 		sqlSession.delete(NAMESPACE + ".deleteRegiABook", paramMap);
 	}
 
+	@Override
+	public List<AccountBookDto> getAccountBookList() {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList(NAMESPACE+".getAccountBookList");
+	}
+
 }

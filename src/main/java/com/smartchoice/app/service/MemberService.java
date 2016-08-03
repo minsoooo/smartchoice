@@ -16,4 +16,6 @@ public interface MemberService {
 	public String searchPw(String mem_id, String mem_email);
 	public void updatePw(String mem_id, String mem_pw);
 	public List<MemberDto> getViewListMember(String keyword, String value);
+	public int getMemberCount();
+	public int getMemberCount(String mem_fav);
 }

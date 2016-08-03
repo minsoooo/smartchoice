@@ -30,13 +30,13 @@
 
 #foot1{
 	margin-top:30px;
-	margin-left:130px;
+	margin-left:220px;
 }
 
 #foot1 a{
 	color:#706b67;
-	font-size:17px;
-	margin-right:70px;
+	font-size:10px;
+	margin-right:50px;
 }
 
 #foot1 a:hover{

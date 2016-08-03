@@ -125,7 +125,7 @@
 					<input type ="hidden" name ="mem_pw" value ="${MemberDto.mem_pw }"/>
 					<input type ="hidden" name ="mem_email" value ="${MemberDto.mem_email }"/>
 					<input type ="hidden" name ="mem_level" value ="${MemberDto.mem_level }"/>
-					
+					<input type ="hidden" name ="mem_birthdate" value ="${MemberDto.mem_birthdate }"/>
 					<div class ="span10" id="tableDiv">
 						<table id = "categoryTable">
 							<tr>
