@@ -1,7 +1,6 @@
 <!-- 
 	매장찾기 페이지 
 	작성일 : 2016-07-21
-
 	수정일 : 2016-08-03
 	작성자 : 이재승
  -->
@@ -76,6 +75,9 @@ $(function(){
 });
 
 function bigCateChange(){
+	$("#discountList").val("0");
+	$("#dcBigList").val("0");
+	$("#dcSmallList").val("0");
 	$("#smallCateList").empty();
 	var big_num = $("option:selected").attr("value");
 	$.get("/map/getSmallCategory",{"big_num":big_num}).done(
@@ -104,12 +106,19 @@ function smallCateChange(){
 }
 
 function dcListChange(){
+	$("#bigCateList").val("0");
+	$("#smallCateList").val("0");
+	$("#dcBigList").val("0");
+	$("#dcSmallList").val("0");
 	var small_name1 = $("select[name='discountList'] option:selected").attr("value");
 	$("#keyword").val(small_name1);
 	$("#search").submit();
 }
 
 function dcBigListChange(){
+	$("#bigCateList").val("0");
+	$("#smallCateList").val("0");
+	$("#discountList").val("0");
 	$("#dcSmallList").empty();
 	var small_bignum = $("#dcBigList option:selected").attr("value");
 	$.get("/map/getDcSmallCategory",{"small_bignum":small_bignum}).done(
@@ -146,19 +155,18 @@ function dcSmallListChange(){
 				<center><p><em style="color: red;">지도를 마우스로 클릭하면 선 그리기가 시작되고 오른쪽 마우스를 클릭하면 선 그리기가 종료됩니다</em></p></center>
 				<div class="span12 map_wrap" style="float: left;" id="st">
 					<div id="map" style="width: 100%; height: 100%; position: relative; overflow: hidden;"></div>
-			
 					<div id="menu_wrap" class="bg_white">
 						<div class="option">
 							<div>
 								<b>카테고리로 검색</b>
 								<select id="bigCateList" name="bigCateList">
-								<option>대분류</option>
+									<option value="0">대분류</option>
 									<c:forEach items="${bigDtoList}" var="bigClassDto">
 										<option value="${bigClassDto.big_num}">${bigClassDto.big_name}</option>
 									</c:forEach>
 								</select>
 								<select id="smallCateList" name="smallCateList">
-								<option>소분류</option>
+									<option value="0">소분류</option>
 									<c:forEach items="${smallCateList}" var="smallList">
 										<option id="${smallList.small_num}" value="${smallList.small_name}">${smallList.small_name}</option>
 									</c:forEach>
@@ -187,19 +195,19 @@ function dcSmallListChange(){
 						<span class="title">지도중심기준 행정동 주소정보</span><span id="centerAddr"></span>
 						<span class="title">나의 카드</span><span id="useCard">${cardCode}</span>
 						<select id="discountList" name="discountList">
-							<option>------나의 할인 목록(전체)------</option>
+							<option value="0">------나의 할인 목록(전체)------</option>
 							<c:forEach items="${discount}" var="discountList">
 								<option value="${discountList.small_name}">${discountList.small_name}</option>
 							</c:forEach>
 						</select>
 						<select id="dcBigList" name="dcBigList">
-							<option>----나의 할인 목록(대분류)----</option>
+							<option value="0">----나의 할인 목록(대분류)----</option>
 							<c:forEach items="${DcBigCategory}" var="dcBigList">
 								<option value="${dcBigList.small_bignum}">${dcBigList.big_name}</option>
 							</c:forEach>
 						</select>
 						<select id="dcSmallList" name="dcSmallList">
-							<option>----나의 할인 목록(소분류)----</option>
+							<option value="0">----나의 할인 목록(소분류)----</option>
 							<c:forEach items="${discount}" var="discountList">
 								<option value="${discountList.small_name}">${discountList.small_name}</option>
 							</c:forEach>
@@ -211,11 +219,9 @@ function dcSmallListChange(){
 	</div>
 <script type="text/javascript" src="//apis.daum.net/maps/maps3.js?apikey=433224976d79735d9c0f8427046d40be&libraries=services"></script>
 <script>
-	// 마커를 담을 배열
-	var markers = [];
+	var markers = []; // 마커를 담을 배열
 	var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
 	mapOption = {center : new daum.maps.LatLng(37.5679532, 126.9827), level : 3}; // 지도의 중심좌표, 지도의 확대 레벨
-
 	var map = new daum.maps.Map(mapContainer, mapOption); // 지도 생성
 	var geocoder = new daum.maps.services.Geocoder(); // 좌표-주소 변환 객체 생성
 	var drawingFlag = false; // 선이 그려지고 있는 상태를 가지고 있는 변수
@@ -251,9 +257,8 @@ function dcSmallListChange(){
 				strokeOpacity : 0.5, // 선의 불투명도(0에서 1 사이값이며 0에 가까울수록 투명하다.)
 				strokeStyle : 'solid' // 선의 스타일
 			});
-
-			// 클릭한 지점에 대한 정보를 지도에 표시
-			displayCircleDot(clickPosition, 0);
+			
+			displayCircleDot(clickPosition, 0); // 클릭한 지점에 대한 정보를 지도에 표시
 		} 
 		else { // 선이 그려지고 있는 상태면
 			var path = clickLine.getPath(); // 그려지고 있는 선의 좌표 배열
