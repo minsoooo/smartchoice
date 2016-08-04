@@ -166,18 +166,17 @@
 										dcSum += item.dc_discountMoney;		
 									});
 									
-									
 									var dcInfo = "<tr><td>나의 카드</td><td id='cardInfo'>" + data[0].comp_name + "<br/>" + data[0].card_name + "</td></tr>"
 												+"<tr><td>이번 달 <br/>총 사용 금액</td><td id='totalMoney'>"	+ totalMoney + "원</td></tr>"		
 												+"<tr><td>이번 달 <br/>예상 할인 금액</td><td id='dcSum'><font style='font-size:25px;color:#de5a69;font-weight:bold'>- " + dcSum + "</font>원</td></tr>"
 												+"<tr><td style='height:100px'>상세 할인 내역</td><td style='vertical-align:top'><div id='dcInfo'></div></td></tr>";
 									
 									$("#dcTable").append(dcInfo);			
-												
-									if(data[0] == null){									
+									if(dcSum == 0){									
 										$("#dcInfo").text("할인 내역이 없습니다.");
 									}
 									else{
+													
 										$.each(data, function(idx, item) {	
 											if(max_dc_money < item.dc_discountMoney){
 												max_dc_money = item.dc_discountMoney;
@@ -205,34 +204,40 @@
 						function(data){
 							$("#recommendCard").empty();
 							$("#cardDCInfo").empty();
-							var img = "<img src='/resources/images/card/" + data[0].card_img + "'/>";
-							$("#recommendCard").append(img);
-							var card_name = "<br/><font>" + data[0].comp_name + " " + data[0].card_name + "</font><br/>";
-							$("#recommendCard").append(card_name);
 							
-							if($("#card_code").val() == data[0].dc_cardcode){
-								var card_code = "<font style='color:#de5a69; font-size:13px'>&nbsp;* 현재 사용 중인 카드입니다. </font>";
-								$("#recommendCard").append(card_code);
+							if(data == null){
+								var img = "<img src='/resources/images/card/" + data[0].card_img + "'/>";
+								$("#recommendCard").append(img);
+								var card_name = "<br/><font>" + data[0].comp_name + " " + data[0].card_name + "</font><br/>";
+								$("#recommendCard").append(card_name);
+								
+								if($("#card_code").val() == data[0].dc_cardcode){
+									var card_code = "<font style='color:#de5a69; font-size:13px'>&nbsp;* 현재 사용 중인 카드입니다. </font>";
+									$("#recommendCard").append(card_code);
+								}
+								
+								$("#cardDcInfo").css("height", "110px");
+								var text = "<font style='font-size:20px'> * 주요 할인 정보 * </font><br/><br/>";
+								$("#cardDCInfo").append(text);
+								
+								$.each(data, function(idx, item) {																					
+									if(item.dc_classify == 0){	// '%'로 할인받는 경우
+										var p = "<p>" + item.small_name + " " + item.dc_value + "% 할인 (월 최대 " + item.dc_max + "원)</P>";
+									}
+									else{
+										var p = "<p>" + item.small_name + " " + item.dc_value + "원 할인 (월 최대 " + item.dc_max + "원)</P>";
+									}
+										
+									$("#cardDCInfo").append(p);
+								
+								});
+								
+								$('#cardDCInfo').css("background-color", "#fff").css("border", "1px solid #d4d1ca");	
 							}
-							
-							$("#cardDcInfo").css("height", "110px");
-							var text = "<font style='font-size:20px'> * 주요 할인 정보 * </font><br/><br/>";
-							$("#cardDCInfo").append(text);
-							
-							$.each(data, function(idx, item) {	
-								
-								// '%'로 할인받는 경우
-								if(item.dc_classify == 0){
-									var p = "<p>" + item.small_name + " " + item.dc_value + "% 할인 (월 최대 " + item.dc_max + "원)</P>";
-								}
-								else{
-									var p = "<p>" + item.small_name + " " + item.dc_value + "원 할인 (월 최대 " + item.dc_max + "원)</P>";
-								}
-								
-								$("#cardDCInfo").append(p);
-							});
-							
-							$('#cardDCInfo').css("background-color", "#fff").css("border", "1px solid #d4d1ca");							
+							else{
+								var p = "<p>추천카드가 존재하지 않습니다.</p>"
+								$("#recommendCard").append(p);
+							}
 						}
 					);
 				}		

@@ -58,23 +58,22 @@
 						<div>
 							<div style="margin-left: 80px;">
 								<div>
-									<label>작성자</label> <input type="text" style="width: 800px;"
+									<label>Writer</label> <input type="text" style="width: 800px;"
 										value="${sessionScope.MEM_KEY.mem_id}" name="nboard_writer"
 										placeholder="${sessionScope.MEM_KEY.mem_id}"
 										readonly="readonly">
 								</div>
-								<label>제목</label> <input type="text" name='nboard_title'
+								<label>Title</label> <input type="text" name='nboard_title'
 									placeholder="제목을 입력하세요." style="width: 800px;">
 							</div>
 							<div style="margin-left: 80px;">
-								<label>내용</label>
+								<label>Content</label>
 								<textarea name="nboard_content" id="ir1" rows="15"
 									placeholder="내용을 입력해주세요" style="width: 800px;"></textarea>
 									
 								<!-- NAVER SMARTEDITOR SCRIPT -->	
 								<script type="text/javascript">
 									var oEditors = [];
-
 									$(function() {
 										nhn.husky.EZCreator
 												.createInIFrame({
@@ -90,7 +89,6 @@
 														// 모드 탭(Editor | HTML | TEXT) 사용 여부 (true:사용/ false:사용하지 않음)
 														bUseModeChanger : true,
 														fOnBeforeUnload : function() {
-
 														}
 													},													
 													fCreator : "createSEditor2"
