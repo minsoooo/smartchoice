@@ -77,7 +77,7 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public NoticeBoardDto event_read(Integer num) throws Exception {
+	public EventBoardDto event_read(Integer num) throws Exception {
 		return dao.event_read(num);
 	}
 
@@ -109,5 +109,15 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public void event_remove_reply(EventBoardReplyDto replydto) throws Exception {
 		dao.event_remove_reply(replydto);
-	}	
+	}
+
+	@Override
+	public List<EventBoardDto> event_listSearch(SearchCriteria cri) throws Exception {		
+		return dao.event_listSearch(cri);
+	}
+
+	@Override
+	public int event_listSearchCount(SearchCriteria cri) throws Exception {		
+		return dao.event_listSearchCount(cri);
+	}
 }

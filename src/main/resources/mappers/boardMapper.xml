@@ -118,11 +118,11 @@
 
 	<insert id="event_register_reply">
 		insert into
-		EVENTBOARD_REPLY(ereply_content,ereply_nboardnum,ereply_memnum,ereply_memid)
-		values(#{ereply_content},#{ereply_nboardnum},#{ereply_memnum},#{ereply_memid})
+		EVENTBOARD_REPLY(ereply_content,ereply_eboardnum,ereply_memnum,ereply_memid)
+		values(#{ereply_content},#{ereply_eboardnum},#{ereply_memnum},#{ereply_memid})
 	</insert>
 
-	<select id="event_read_reply" resultType="NoticeBoardReplyDto">
+	<select id="event_read_reply" resultType="EventBoardReplyDto">
 		select * from
 		EVENTBOARD_REPLY where ereply_eboardnum=#{num} order by
 		ereply_regdate desc
@@ -131,5 +131,47 @@
 	<delete id="event_remove_reply">
 		delete from EVENTBOARD_REPLY where ereply_num=#{ereply_num}
 	</delete>
+	
+	<sql id="event_search">
+		<if test="searchType != null">
+			<if test="searchType == 'eboard_title'">
+				and eboard_title like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType == 'eboard_content'">
+				and eboard_content like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType == 'eboard_writer'">
+				and eboard_writer like CONCAT('%', #{keyword}, '%')
+			</if>
+			<if test="searchType == 'eboard_titlecontent'">
+				and ( eboard_title like CONCAT('%', #{keyword}, '%') OR eboard_content like
+				CONCAT('%', #{keyword}, '%'))
+			</if>			
+		</if>
+	</sql>
+
+	<select id="event_listSearch" resultType="EventBoardDto" parameterType="SearchCriteria">
+		<![CDATA[  
+		  select * 
+		  from EVENTBOARD 
+		  where eboard_num > 0 
+		]]>
+
+		<include refid="event_search"></include>
+		  
+		<![CDATA[    
+		  order by eboard_regdate desc
+		  limit #{pageStart}, #{perPageNum}
+		]]>
+	</select>
+
+	<select id="event_listSearchCount" resultType="int">
+		<![CDATA[  
+		  select count(eboard_viewcnt) 
+		  from EVENTBOARD 
+		  where eboard_num > 0 
+		]]>
+		<include refid="event_search"></include>
+	</select>	
 	
 </mapper>

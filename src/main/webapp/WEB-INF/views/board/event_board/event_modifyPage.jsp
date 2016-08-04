@@ -3,7 +3,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Insert title here</title>
 </head>
 <script src="/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 <script type="text/javascript" src="/resources/se/js/HuskyEZCreator.js"
@@ -42,7 +41,7 @@
 </style>
 <body style="background-color: #f5f4f0">
 
-	<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
+	<jsp:include page="/WEB-INF/views/common/mng_header.jsp"></jsp:include>
 
 	<div class="container" id="content">
 		<div class="row">
@@ -52,7 +51,7 @@
 						<div class="span12">							
 							<div>
 								<div>
-									<h3 style="text-align: center">공지사항</h3>
+									<h3 style="text-align: center">이벤트</h3>
 								</div>
 								
 								<!-- body DB 자료를 받아서 내용을 수정하고 다시 POST방식으로 controller에 전송한다. -->
@@ -64,24 +63,24 @@
 
 									<div style="margin-left: 80px;">
 										<div>
-											<label>글번호</label> <input type="text" name='nboard_num'
-												value="${boardDto.nboard_num}" style="width: 800px;"
+											<label>글번호</label> <input type="text" name='eboard_num'
+												value="${boardDto.eboard_num}" style="width: 800px;"
 												readonly="readonly">
 										</div>
 
 										<div>
-											<label>작성자</label> <input type="text" name="nboard_writer"
-												value="${boardDto.nboard_writer}" style="width: 800px;"
+											<label>작성자</label> <input type="text" name="eboard_writer"
+												value="${boardDto.eboard_writer}" style="width: 800px;"
 												readonly="readonly">
 										</div>
 										<div>
-											<label>제목</label> <input type="text" name='nboard_title'
-												value="${boardDto.nboard_title}" style="width: 800px;">
+											<label>제목</label> <input type="text" name='eboard_title'
+												value="${boardDto.eboard_title}" style="width: 800px;">
 										</div>
 										<div>
 											<label>내용</label>
-											<textarea name="nboard_content" id="ir1" rows="15"
-												style="width: 800px;">${boardDto.nboard_content}</textarea>
+											<textarea name="eboard_content" id="ir1" rows="15"
+												style="width: 800px;">${boardDto.eboard_content}</textarea>
 												
 											<!-- NAVER SMARTEDITOR SCRIPT -->	
 											<script type="text/javascript">
@@ -114,8 +113,8 @@
 									<!-- /body -->
 									
 									<div align="center">
-										<br /> <input type="submit" id="notice_modifyPage"
-											value="수정하기" />&nbsp;&nbsp; <input type="submit" id="notice_cancel"
+										<br /> <input type="submit" id="event_modifyPage"
+											value="수정하기" />&nbsp;&nbsp; <input type="submit" id="event_cancel"
 											value="취소하기" />
 									</div>
 									
@@ -131,7 +130,7 @@
 
 														console.log(formObj);
 
-														$("#notice_modifyPage").click(
+														$("#event_modifyPage").click(
 															function() {
 																oEditors.getById["ir1"].exec("UPDATE_CONTENTS_FIELD",[]);
 																	$formObj.submit();
@@ -145,9 +144,5 @@
 			</div>
 		</div>
 	</div>
-
-
-	<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
-
 </body>
 </html>

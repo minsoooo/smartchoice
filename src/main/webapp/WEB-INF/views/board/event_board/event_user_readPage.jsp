@@ -46,7 +46,7 @@
 </style>
 <body style="background-color: #f5f4f0">
 
-	<jsp:include page="/WEB-INF/views/common/mng_header.jsp"></jsp:include>
+	<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 
 	<div class="container" id="content">
 		<div class="row">
@@ -69,12 +69,12 @@
 
 								<div style="margin-left: 80px;">
 									<div>
-										<label>Writer</label> <input type="text" name="writer"
+										<label>작성자</label> <input type="text" name="writer"
 											style="width: 800px;" value="${boardDto.eboard_writer}"
 											readonly="readonly">
 									</div><br/>
 									<div>
-										<label>Title</label> <input type="text" name='title'
+										<label>제목</label> <input type="text" name='title'
 											style="width: 800px;" value="${boardDto.eboard_title}"
 											readonly="readonly">
 									</div><br/>
@@ -82,7 +82,7 @@
 									<!-- 기존의 textarea는 내용을 출력할 때 태그를 전부 출력하기때문에, 네이버스마트에디터를 사용해서,
 										  기존의 textarea와 비슷한 느낌의 이미지로 변경했다. -->
 									<div>
-										<label>Content</label><br/>										
+										<label>내용</label><br/>										
 										<textarea name="eboard_content" id="ir1" rows="20" style="width: 810px;">${boardDto.eboard_content}</textarea>
 											
 										<!-- NAVER SMARTEDITOR SCRIPT -->	
@@ -127,22 +127,10 @@
 									<form role="form" class="form-search" method="post"
 										accept-charset="utf-8">
 										
-										<!-- 버튼은 글 목록에서 받아온 검색종류와 검색어를 받아서 다시 Controller 로 돌아갈때 그 값을 가져가서 재검색하게 해준다. -->																
-																					
-											<button type="submit" class="btn" id="event_modifyPage">
-												수정하기 <input type="hidden" name="num"
-													value="${boardDto.eboard_num}" />
-											</button>
-											&nbsp;&nbsp;&nbsp;&nbsp;
-											<button type="submit" class="btn" id="event_mgr_listPage">
-												목록가기<input type="hidden" name="keyword" value="${cri.keyword}" />
-												<input type="hidden" name="searchType" value="${cri.searchType}" />
-											</button>
-											&nbsp;&nbsp;&nbsp;&nbsp;
-											<button type="submit" class="btn" id="event_remove">
-												삭제하기 <input type="hidden" name="num"
-													value="${boardDto.eboard_num}" />
-											</button>
+										<!-- 버튼은 글 목록에서 받아온 검색종류와 검색어를 받아서 다시 Controller 로 돌아갈때 그 값을 가져가서 재검색하게 해준다. -->	
+											<button type="submit" class="btn" id="event_listPage">
+												목록가기
+											</button>											
 									</form>
 								</div>
 								<br /> <br /> <br />
@@ -152,19 +140,29 @@
 									 로그인이 되어있을 시 가입때 입력한 id가 출력되고, 댓글은 내용(content)만 입력하면되게 처리한다.
 								-->
 								<div style="margin-left: 80px;">
+									<c:choose>
+										<c:when test="${sessionScope.MEM_KEY eq null}">
+											댓글을 입력하려면 로그인이 필요합니다. <br />
+											<br />
+											<br />
+										</c:when>
+										
+										<c:otherwise>
+											<form class="form-search" method="post" action="event_reply" accept-charset="utf-8">
+												<input type='hidden' name='ereply_eboardnum' value="${boardDto.eboard_num}"> 
+												<input type='hidden' name='ereply_memnum' value="${sessionScope.MEM_KEY.mem_num}"> 
+												<input type="text" placeholder="${sessionScope.MEM_KEY.mem_id}" 
+													name="ereply_memid" readonly="readonly" required="required" 
+													value="${sessionScope.MEM_KEY.mem_id}" style="width: 800px;" /><br />
+												<textarea rows="3" name="ereply_content"
+													style="width: 745px;" placeholder="댓글을 입력하세요"
+													required="required"></textarea>
+												<input type="submit" value="작성" class="btn" id="event_replybtn"
+													style="width: 50px; height: 70px" />
+												</form>
+										</c:otherwise>
+									</c:choose>
 									
-									<form class="form-search" method="post" action="event_reply" accept-charset="utf-8">
-										<input type='hidden' name='ereply_eboardnum' value="${boardDto.eboard_num}"> 
-										<input type='hidden' name='ereply_memnum' value="${sessionScope.MNG_KEY.mng_num}"> 
-										<input type="text" placeholder="${sessionScope.MNG_KEY.mng_id}" 
-											name="ereply_memid" readonly="readonly" required="required" 
-											value="${sessionScope.MNG_KEY.mng_id}" style="width: 800px;" /><br />
-										<textarea rows="3" name="ereply_content"
-											style="width: 745px;" placeholder="댓글을 입력하세요"
-											required="required"></textarea>
-										<input type="submit" value="작성" class="btn" id="event_replybtn"
-											style="width: 50px; height: 70px" />
-									</form>
 
 									<!--									
 										댓글을 작성할 때 마다, 글번호가 댓글이 달린 글번호에 저장이되고, 세션의 멤버번호가 댓글멤버넘버로 저장이된다.
@@ -214,13 +212,13 @@
 												formObj.submit();
 											});
 
-							$("#event_mgr_listPage")
+							$("#event_listPage")
 									.on(
 											"click",
 											function() {
 												formObj
 														.attr("action",
-																"/board/event_board/event_mgr_listPage");
+																"/board/event_board/event_listPage");
 												formObj.attr("method", "post");
 												formObj.attr("accept-charset", "utf-8");
 												formObj.submit();

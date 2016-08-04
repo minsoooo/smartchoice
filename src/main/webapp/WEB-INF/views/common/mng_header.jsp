@@ -35,6 +35,16 @@
 			alert("접근 권한이 없습니다.관리자에게 문의하세요.")
 		}
 	}	
+	
+	function fnEvent(){
+		var mng_level = $("#mng_level").attr("value")
+		if(mng_level >= 2){
+			location.href ="/board/event_board/event_mgr_listPage";
+		}else{
+			alert("접근 권한이 없습니다.관리자에게 문의하세요.")
+		}
+	}
+	
 	function fnStatistic(){
 		var mng_level = $("#mng_level").attr("value")
 		if(mng_level >= 2){
@@ -163,7 +173,7 @@
 					<a href="#">분류관리</a>
 					<a href="javascript:fnChooseMember()">회원관리</a>
 					<a href="javascript:fnChooseAdmin()">직원관리</a>
-					<a href="#">이벤트등록</a>
+					<a href="javascript:fnEvent()">이벤트등록</a>
 					<a href="javascript:fnStatistic()">통계보기</a>
 				</div>
 			</div>

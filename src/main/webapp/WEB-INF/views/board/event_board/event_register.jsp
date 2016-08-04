@@ -12,7 +12,7 @@
 	src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.0/jquery.js"></script>
 <script>
 	$(document).ready(
-		function(){			
+		function(){
 			//달을 선택하면 그달의 날짜를 만든다 && 이벤트 시작일 
 			$("#start_month").change(
 				function(){
@@ -23,9 +23,7 @@
 							for(var i =1; i<=data; i++){
 								var insertTag = "<option>"+i+"</option>";
 								$(insertTag).appendTo("#start_day")
-							}
-									
-									
+							}	
 						}		
 					);
 				}		
@@ -98,24 +96,24 @@
 			<div class="span12">				
 				<div>
 					<div>
-						<h3 style="text-align: center">공지사항</h3>
+						<h3 style="text-align: center">이벤트</h3>
 					</div>
 					
 					<!-- 
 						body , 글쓰기버튼을 눌러서 들어오는 페이지로 작성자는 가입시 입력한 id를 받아오고 그외 내용을 작성해서 POST로 Controller에 전송한다.
 						기존 글과 다르게, 이벤트 시작일과 종료일이 존재하며 여기서 전송한 뒤 Controller에서 다시 작업한다.
-					 -->
+					-->
 					
 					<form role="form" method="post" id="frm">
 						<div>
 							<div style="margin-left: 80px;">
 								<div>
-									<label>작성자</label> <input type="text" style="width: 800px;"
-										value="${sessionScope.MEM_KEY.mem_id}" name="eboard_writer"
-										placeholder="${sessionScope.MEM_KEY.mem_id}"
+									<label>Writer</label> <input type="text" style="width: 800px;"
+										value="${sessionScope.MNG_KEY.mng_id}" name="eboard_writer"
+										placeholder="${sessionScope.MNG_KEY.mng_id}"
 										readonly="readonly">
 								</div>
-								<label>제목</label> <input type="text" name='eboard_title'
+								<label>Title</label> <input type="text" name='eboard_title'
 									placeholder="제목을 입력하세요." style="width: 800px;">
 								<div>
 									<select name="start_year" id ="start_year">
@@ -152,7 +150,7 @@
 								</div>	
 							</div>
 							<div style="margin-left: 80px;">
-								<label>내용</label>
+								<label>Content</label>
 								<textarea name="eboard_content" id="ir1" rows="15"
 									placeholder="내용을 입력해주세요" style="width: 800px;"></textarea>
 									
@@ -196,7 +194,7 @@
 						<div align="center">
 							<input type="button" class="btn" id="btncolor" value="전송하기" />
 							&nbsp;&nbsp;&nbsp;&nbsp; 
-							<a href="/board/event_board/event_listPage" class="btn" id="btncolor" style="width:55px;">목록가기</a>
+							<a href="/board/event_board/event_mgr_listPage" class="btn" id="btncolor" style="width:55px;">목록가기</a>
 						</div>
 					</form>
 					<!-- /body -->

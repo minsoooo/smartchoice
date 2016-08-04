@@ -7,7 +7,7 @@ public class EventBoardReplyDto {
 	private String ereply_content;
 	private Date ereply_regdate;	
 	private Integer ereply_memnum;		
-	private Integer ereply_nboardnum;
+	private Integer ereply_eboardnum;
 	private String ereply_memid;
 	
 	public Integer getEreply_num() {
@@ -34,11 +34,11 @@ public class EventBoardReplyDto {
 	public void setEreply_memnum(Integer ereply_memnum) {
 		this.ereply_memnum = ereply_memnum;
 	}
-	public Integer getEreply_nboardnum() {
-		return ereply_nboardnum;
+	public Integer getEreply_eboardnum() {
+		return ereply_eboardnum;
 	}
-	public void setEreply_nboardnum(Integer ereply_nboardnum) {
-		this.ereply_nboardnum = ereply_nboardnum;
+	public void setEreply_eboardnum(Integer ereply_eboardnum) {
+		this.ereply_eboardnum = ereply_eboardnum;
 	}
 	public String getEreply_memid() {
 		return ereply_memid;

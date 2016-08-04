@@ -19,20 +19,16 @@
 						 즉, 내가 작성한 댓글이 아니면 댓글 삭제 버튼이 아예 보이지않는다.
 					-->
 						
-					<form class="form-search" method="post" action="notice_reply_remove">
-						<input type='hidden' name='nreply_nboardnum' value="${boardDto.nboard_num}">
-						<input type="hidden" name="nreply_num" value="${replylist.nreply_num}" />
+					<form class="form-search" method="post" action="event_reply_remove">
+						<input type='hidden' name='ereply_eboardnum' value="${boardDto.eboard_num}">
+						<input type="hidden" name="ereply_num" value="${replylist.ereply_num}" />
 						<div>
-							<span class="icon-user"></span>${replylist.nreply_memid}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-							<c:set value="${replylist.nreply_memnum}" var="nreply_memnum" />
-							<c:set value="${sessionScope.MEM_KEY.mem_num}" var="session_memnum" />
-							<c:if test="${nreply_memnum == session_memnum}">
-								<input type="submit" value="삭제" class="btn" />
-							</c:if>								
-							${replylist.nreply_regdate}<br />
+							<span class="icon-user"></span>${replylist.ereply_memid}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+							<input type="submit" value="삭제" class="btn" />														
+							${replylist.ereply_regdate}<br />
 						</div>
 						<div>
-							<pre>${replylist.nreply_content}</pre>
+							<pre>${replylist.ereply_content}</pre>
 						</div>
 					</form>
 					

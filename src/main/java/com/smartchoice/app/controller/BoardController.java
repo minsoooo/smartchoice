@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.smartchoice.app.domain.EventBoardDto;
+import com.smartchoice.app.domain.EventBoardReplyDto;
 import com.smartchoice.app.domain.NoticeBoardDto;
 import com.smartchoice.app.domain.NoticeBoardReplyDto;
 import com.smartchoice.app.domain.PageMaker;
@@ -204,7 +205,7 @@ public class BoardController {
 	///////////////////////// Event Board ///////////////////////////////
 	
 	@RequestMapping("/board/event_board/event_listPage")
-	public String eventlistPage(String now_year, String now_month, EventBoardDto dto, Model model, HttpServletRequest req) throws Exception{
+	public String event_listPage(String now_year, String now_month, EventBoardDto dto, Model model, HttpServletRequest req) throws Exception{
 		JSONArray json = null;
 		
 		int cal_year = cal.getNowYear(now_year);
@@ -262,27 +263,9 @@ public class BoardController {
 		model.addAttribute("countList", count);
 		
 		return "/board/event_board/event_listPage";		
-	}	
+	}		
 	
-	@RequestMapping(value = "/board/event_board/event_register") // 이벤트게시판 글쓰기로 가기																	
-	public void eventregisterGET() {
-	}
-	
-	@RequestMapping(value = "/board/event_board/event_register", method = RequestMethod.POST) // 이벤트게시판 글쓰기를 POST로 받아서 전달한다.																							
-	public String eventregisterPOST(HttpServletRequest req, EventBoardDto board, RedirectAttributes rttr) throws Exception {
-		
-		// 게시판에서 시작일과 종료일을 select문으로 보내면 받아서 EventBoardDto에 시작일,종료일에 각각 넣는다.
-		String event_startdate = req.getParameter("start_year")+"/"+req.getParameter("start_month")+"/"+req.getParameter("start_day");
-		String event_enddate = req.getParameter("end_year")+"/"+req.getParameter("end_month")+"/"+req.getParameter("end_day");
-		
-		board.setEboard_start(event_startdate);
-		board.setEboard_end(event_enddate);
-		
-		service.event_register(board);
-		
-		rttr.addFlashAttribute("msg", "SUCCESS"); // 성공 후 메세지 출력하게 전달한다.
-		return "redirect:/board/event_board/event_listPage"; // 리다이렉트로, 여러번 새로고침 되지않게 게시글 위치로 이동한다.
-	}
+	// 이벤트 게시판 달력페이지에서 달력의 일정한 날을 클릭했을 때 보내주는 ajax POST를 받아서 db에서 전부 검색 후 일정 기간을 표시해서 다시 돌려보내주는 페이지 
 
 	@RequestMapping("/board/event_board/event_select")
 	public void getEventSelect(String year, String month, String date, HttpServletRequest req, HttpServletResponse resp) throws Exception{
@@ -338,5 +321,116 @@ public class BoardController {
 			out.close();
 		}
 		
+	}
+	
+	// 여기서부터는 이벤트 게시판에 관리자 모드로 들어갔을 때 사용할 페이지 
+	
+	@RequestMapping(value = "/board/event_board/event_register") // 이벤트게시판 글쓰기로 가기																	
+	public void event_registerGET() {
+	}
+	
+	@RequestMapping(value = "/board/event_board/event_register", method = RequestMethod.POST) // 이벤트게시판 글쓰기를 POST로 받아서 전달한다.																							
+	public String event_registerPOST(HttpServletRequest req, EventBoardDto board, RedirectAttributes rttr) throws Exception {
+		
+		// 게시판에서 시작일과 종료일을 select문으로 보내면 받아서 EventBoardDto에 시작일,종료일에 각각 넣는다.
+		String event_startdate = req.getParameter("start_year")+"/"+req.getParameter("start_month")+"/"+req.getParameter("start_day");
+		String event_enddate = req.getParameter("end_year")+"/"+req.getParameter("end_month")+"/"+req.getParameter("end_day");
+		
+		board.setEboard_start(event_startdate);
+		board.setEboard_end(event_enddate);
+		
+		service.event_register(board);
+		
+		rttr.addFlashAttribute("msg", "SUCCESS"); // 성공 후 메세지 출력하게 전달한다.
+		return "redirect:/board/event_board/event_mgr_listPage"; // 리다이렉트로, 여러번 새로고침 되지않게 게시글 위치로 이동한다.
+	}
+	
+	@RequestMapping(value = "/board/event_board/event_mgr_listPage", method = RequestMethod.GET)
+	public void event_listPage(@ModelAttribute("cri") SearchCriteria cri, Model model) throws Exception {		
+		
+		if (cri.getSearchType() == null) {
+			cri.setSearchType("event_title_listSearch");
+		}
+		if (cri.getKeyword() == null) {
+			cri.setKeyword("");
+		}
+
+		model.addAttribute("list", service.event_listSearch(cri));				
+
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+
+		pageMaker.setTotalCount(service.event_listSearchCount(cri));
+
+		model.addAttribute("pageMaker", pageMaker);
+	}
+	
+	@RequestMapping(value = "/board/event_board/event_mgr_listPage", method = RequestMethod.POST)
+	public void event_listSearchPage(@ModelAttribute("cri") SearchCriteria cri, Model model) throws Exception {		
+		
+		if (cri.getSearchType() == null) {
+			cri.setSearchType("event_title_listSearch");
+		}
+		if (cri.getKeyword() == null) {
+			cri.setKeyword("");
+		}
+
+		model.addAttribute("list", service.event_listSearch(cri));		
+		PageMaker pageMaker = new PageMaker();
+		pageMaker.setCri(cri);
+
+		pageMaker.setTotalCount(service.event_listSearchCount(cri));
+
+		model.addAttribute("pageMaker", pageMaker);
+	}
+
+	@RequestMapping("/board/event_board/event_readPage")
+	public String event_read(@RequestParam int num, @RequestParam String check,  @ModelAttribute("cri") SearchCriteria cri, Model model) throws Exception {		
+				
+		model.addAttribute("boardDto", service.event_read(num));
+		List<EventBoardReplyDto> list = service.event_read_reply(num);
+
+		model.addAttribute("list", list);
+		model.addAttribute("cri", cri);
+		
+		if(check.equals("mng")){
+			return "/board/event_board/event_readPage";
+		}
+		else{
+			return "/board/event_board/event_user_readPage";
+		}
+	}
+
+	@RequestMapping("/board/event_board/event_modifyPage") // readPage에서 수정하기 버튼을 눌렀을 때 GET방식이면 수정하는 페이지로 이동한다.															
+	public void event_modify(@RequestParam int num, Model model) throws Exception {		
+		model.addAttribute("boardDto", service.event_read(num));
+	}
+
+	@RequestMapping(value = "/board/event_board/event_modifyPage", method = RequestMethod.POST) // modify에서 폼(POST)으로 받아서 내용을 변경한다.																								
+	public String event_modify(EventBoardDto board, RedirectAttributes rttr) throws Exception {		
+		service.event_modify(board);
+		rttr.addFlashAttribute("msg", "SUCCESS");
+		return "redirect:/board/event_board/event_readPage?num=" + board.getEboard_num();
+	}
+
+	@RequestMapping("/board/event_board/event_remove") // readPage에서 삭제하기 버튼을 눌렀을 때 명령어를 받아 삭제하고 게시판 목록으로 돌아간다.															
+	public String event_remove(@RequestParam int num, RedirectAttributes rttr) throws Exception {
+		service.event_remove(num);
+		rttr.addFlashAttribute("msg", "SUCCESS");
+		return "redirect:/board/event_board/event_mgr_listPage";
+	}
+
+	@RequestMapping(value = "/board/event_board/event_reply", method = RequestMethod.POST) // 글 내부에서 쓴 댓글을 POST로 전달받는다.
+	public String event_replyPOST(EventBoardReplyDto replydto, RedirectAttributes rttr) throws Exception {	
+		System.out.println("댓글 입력하고 여기 도착했냐");
+		service.event_register_reply(replydto);
+		return "redirect:/board/event_board/event_readPage?num=" + replydto.getEreply_eboardnum();
+		// 리다이렉트로, 여러번 새로고침 되지않게 게시글 위치로 이동한다.
+	}
+	
+	@RequestMapping("/board/event_board/event_reply_remove") // 글 내부에서 댓글 삭제하기 버튼을 눌렀을 때 명령어를 받아 삭제하고 댓글달았던 글로 돌아간다.															
+	public String event_replyRemove(EventBoardReplyDto replydto, RedirectAttributes rttr) throws Exception {			
+		service.event_remove_reply(replydto);
+		return "redirect:/board/event_board/event_readPage?num=" + replydto.getEreply_eboardnum();
 	}
 }

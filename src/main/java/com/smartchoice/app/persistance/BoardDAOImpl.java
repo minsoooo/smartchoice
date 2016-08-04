@@ -76,7 +76,7 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public NoticeBoardDto event_read(Integer num) throws Exception {
+	public EventBoardDto event_read(Integer num) throws Exception {
 		return sqlSession.selectOne(NAMESPACE + ".event_read" , num);
 	}
 
@@ -92,6 +92,12 @@ public class BoardDAOImpl implements BoardDAO {
 
 	@Override
 	public void event_register_reply(EventBoardReplyDto replydto) throws Exception {
+		System.out.println("DB 넣기전에 꺼낸다.");
+		System.out.println("멤버번호 : " + replydto.getEreply_memnum());
+		System.out.println("아이디 : " + replydto.getEreply_memid());		
+		System.out.println("글번호 : " + replydto.getEreply_eboardnum());
+		System.out.println("글내용 : " + replydto.getEreply_content());
+	
 		sqlSession.insert(NAMESPACE + ".event_register_reply" , replydto);
 	}
 
@@ -112,5 +118,15 @@ public class BoardDAOImpl implements BoardDAO {
 		map.put("eboard_end", eboard_end);
 		
 		return sqlSession.selectList(NAMESPACE + ".event_listAll",map);
+	}
+
+	@Override
+	public List<EventBoardDto> event_listSearch(SearchCriteria cri) throws Exception {		
+		return sqlSession.selectList(NAMESPACE + ".event_listSearch",cri);
+	}
+
+	@Override
+	public int event_listSearchCount(SearchCriteria cri) throws Exception {		
+		return sqlSession.selectOne(NAMESPACE + ".event_listSearchCount", cri);
 	}
 }

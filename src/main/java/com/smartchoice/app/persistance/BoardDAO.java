@@ -34,7 +34,7 @@ public interface BoardDAO {
 	
 	public void event_register(EventBoardDto dto) throws Exception;
 
-	public NoticeBoardDto event_read(Integer num) throws Exception;
+	public EventBoardDto event_read(Integer num) throws Exception;
 
 	public void event_modify(EventBoardDto dto) throws Exception;
 
@@ -47,5 +47,9 @@ public interface BoardDAO {
 	public List<EventBoardReplyDto> event_read_reply(Integer num) throws Exception;
 	
 	public List<EventBoardDto> event_listAll(String eboard_start,String eboard_end)throws Exception;
+	
+	public List<EventBoardDto> event_listSearch(SearchCriteria cri)throws Exception;
+	  
+	public int event_listSearchCount(SearchCriteria cri)throws Exception;
 	
 }
