@@ -128,8 +128,8 @@ public class AccountBookController {
 				out.println("<money>" + abookDto.getAbook_money() + "</money>");
 				out.println("<bignum>" + categoryDto.getBig_num() + "</bignum>");				
 				out.println("<smallnum>" + categoryDto.getSmall_num() + "</smallnum>");
-				out.println("<bigname>" + categoryDto.getBig_name() + "</bigname>");				
-				out.println("<smallname>" + categoryDto.getSmall_name() + "</smallname>");	
+				out.println("<bigname><![CDATA[" + categoryDto.getBig_name() + "]]></bigname>");				
+				out.println("<smallname><![CDATA[" + categoryDto.getSmall_name() + "]]></smallname>");	
 				out.println("</accountbook>");
 			}
 			
@@ -399,7 +399,7 @@ public class AccountBookController {
 		
 		for(int i = 0; i < 3; i++){
 			try{
-				dcInfoDto = dcService.getCardDCInfo(card_code, small_num[i]);	
+				dcInfoDto = dcService.getCardDCInfo(card_code, small_num[i]);
 				// 등록한 카드에서 해당 소분류의 할인정보를 dto에 담음
 				int dc_value = dcInfoDto.getDc_value();
 				
@@ -422,7 +422,14 @@ public class AccountBookController {
 				dcInfoDto.setCard_name(memDto.getCard_name());
 				dcInfoList.add(dcInfoDto);	// dto를 arraylist에 추가
 			}
-			catch(Exception e){}
+			catch(Exception e){
+				dcInfoDto = new DiscountDto();
+				dcInfoDto.setComp_name(memDto.getComp_name());
+				dcInfoDto.setCard_name(memDto.getCard_name());
+				dcInfoDto.setDc_discountMoney(0);
+				dcInfoList.add(dcInfoDto);
+				break;
+			}
 		}
 	
 		try{
@@ -455,83 +462,95 @@ public class AccountBookController {
 		memDto = (MemberDto)session.getAttribute("MEM_KEY");
 		int regi_memnum = memDto.getMem_num();	
 		String card_code = memDto.getMem_cardcode();
+		List moneyList = new ArrayList();
 		
-		List moneyList = statsService.getMoneyList(regi_month, regi_memnum, max_small_num);	
-		// 해당 소분류(가장 많은 할인을 받은 소분류)에 사용한 금액을 가져옴
+		if(max_small_num == null){	// 할인받은 금액이 없는 경우, 가장 많이 사용한 소분류(Top1)의 사용금액을 가져옴
+			moneyList = statsService.getMoneyList(regi_month, regi_memnum, small_num1);
+		}
+		else{
+			moneyList = statsService.getMoneyList(regi_month, regi_memnum, max_small_num);	
+			// 해당 소분류(가장 많은 할인을 받은 소분류)에 사용한 금액을 가져옴			
+		}
 	
 		int sum = 0;
 		// 합계를 구함
 		for(int j = 0; j < moneyList.size(); j++){
 			sum += (Integer)moneyList.get(j);
 		}
-
 		
-		List<DiscountDto> infoList = dcService.getAllCardDCInfo(max_small_num);	
-		// 해당 소분류를 할인해주는 카드들의 정보를 가져옴
-		
-		DiscountDto dcInfoDto = null;
+		List<DiscountDto> dcList = null;
 
-		for(int i = 0; i < infoList.size(); i++){
-			try{
-				dcInfoDto = infoList.get(i);	
-				
-				int dc_value = dcInfoDto.getDc_value();
-				
-				// '%'으로 할인되는 경우
-				if(dcInfoDto.getDc_classify() == 0){			
-					int dc_money = sum / 100 * dc_value;
+		try{
+			List<DiscountDto> infoList = dcService.getAllCardDCInfo(max_small_num);	
+			// 해당 소분류를 할인해주는 카드들의 정보를 가져옴
+			
+			DiscountDto dcInfoDto = null;
+	
+			for(int i = 0; i < infoList.size(); i++){
+				try{
+					dcInfoDto = infoList.get(i);	
 					
-					if(dc_money > dcInfoDto.getDc_max()){	// 계산한 결과가 할인받을 수 있는 최대 금액을 넘었을 경우
-						dc_money = dcInfoDto.getDc_max();
+					int dc_value = dcInfoDto.getDc_value();
+					
+					// '%'으로 할인되는 경우
+					if(dcInfoDto.getDc_classify() == 0){			
+						int dc_money = sum / 100 * dc_value;
+						
+						if(dc_money > dcInfoDto.getDc_max()){	// 계산한 결과가 할인받을 수 있는 최대 금액을 넘었을 경우
+							dc_money = dcInfoDto.getDc_max();
+						}
+						
+						infoList.get(i).setDc_discountMoney(dc_money);	
 					}
-					
-					infoList.get(i).setDc_discountMoney(dc_money);	
+					else{	// '원'로 할인되는 경우
+						int dc_money = dc_value;
+						infoList.get(i).setDc_discountMoney(dc_money);
+					}
 				}
-				else{	// '원'로 할인되는 경우
-					int dc_money = dc_value;
-					infoList.get(i).setDc_discountMoney(dc_money);
+				catch(Exception e){}
+			}
+			
+			int max_dc_money = money;		// 현재 할인받은 금액을 초기값으로 설정
+			CardDto cardDto = null;
+			
+			for(int j = 0; j < infoList.size(); j++){
+				if(max_dc_money < infoList.get(j).getDc_discountMoney()){	// 더 많이 할인받을 수 있는 카드가 있다면
+					max_dc_money = infoList.get(j).getDc_discountMoney();
+					dcInfoDto = infoList.get(j);	// 그 카드의 정보를 dto에 담음
+				}
+				else{	
+					dcInfoDto = dcService.getCardDCInfo(card_code, max_small_num);	// 현재 카드의 정보를 dto에 담음
+					dcInfoDto.setDc_discountMoney(money);
 				}
 			}
-			catch(Exception e){}
-		}
-		
-		int max_dc_money = money;		// 현재 할인받은 금액을 초기값으로 설정
-		CardDto cardDto = null;
-		
-		for(int j = 0; j < infoList.size(); j++){
-			if(max_dc_money < infoList.get(j).getDc_discountMoney()){	// 더 많이 할인받을 수 있는 카드가 있다면
-				max_dc_money = infoList.get(j).getDc_discountMoney();
-				dcInfoDto = infoList.get(j);	// 그 카드의 정보를 dto에 담음
+			
+			List<DiscountDto> AllDcList = dcService.getAllCardDCInfo(dcInfoDto.getDc_cardcode());
+			// 추천카드의 모든 할인정보를 가져옴
+			
+			dcList = new ArrayList<DiscountDto>();	// 나의 소분류 Top3에 해당하는 할인정보만 담을 공간
+			
+			for(int k = 0; k < AllDcList.size(); k++){
+				int dc_smallnum = AllDcList.get(k).getDc_smallnum();
+				if(dc_smallnum == small_num1 || dc_smallnum == small_num2 || dc_smallnum == small_num3){
+					dcList.add(AllDcList.get(k));
+				}
 			}
-			else{	
-				dcInfoDto = dcService.getCardDCInfo(card_code, max_small_num);	// 현재 카드의 정보를 dto에 담음
-				dcInfoDto.setDc_discountMoney(money);
-			}
+			
+			cardDto = cardService.getCardName(dcInfoDto.getDc_cardcode());	// 추천카드의 정보를 가져옴(카드명, 카드이미지)
+			
+			// 뷰에서 카드이미지와 카드이름을 출력하기 위해 첫번째(get(0))에만 설정해줌
+			String card_img = cardDto.getCard_img();
+			dcList.get(0).setCard_img(card_img);
+			
+			String card_name = cardDto.getCard_name();
+			dcList.get(0).setCard_name(card_name);
+			
+			String comp_name = cardService.getCompName(dcInfoDto.getDc_cardcode());
+			dcList.get(0).setComp_name(comp_name);
 		}
-		
-		List<DiscountDto> AllDcList = dcService.getAllCardDCInfo(dcInfoDto.getDc_cardcode());
-		// 추천카드의 모든 할인정보를 가져옴
-		
-		List<DiscountDto> dcList = new ArrayList<DiscountDto>();	// 나의 소분류 Top3에 해당하는 할인정보만 담을 공간
-		
-		for(int k = 0; k < AllDcList.size(); k++){
-			int dc_smallnum = AllDcList.get(k).getDc_smallnum();
-			if(dc_smallnum == small_num1 || dc_smallnum == small_num2 || dc_smallnum == small_num3){
-				dcList.add(AllDcList.get(k));
-			}
+		catch(Exception e){
+			dcList = new ArrayList<DiscountDto>();
 		}
-		
-		cardDto = cardService.getCardName(dcInfoDto.getDc_cardcode());	// 추천카드의 정보를 가져옴(카드명, 카드이미지)
-		
-		// 뷰에서 카드이미지와 카드이름을 출력하기 위해 첫번째(get(0))에만 설정해줌
-		String card_img = cardDto.getCard_img();
-		dcList.get(0).setCard_img(card_img);
-		
-		String card_name = cardDto.getCard_name();
-		dcList.get(0).setCard_name(card_name);
-		
-		String comp_name = cardService.getCompName(dcInfoDto.getDc_cardcode());
-		dcList.get(0).setComp_name(comp_name);
 		
 		
 		try{

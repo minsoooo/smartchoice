@@ -149,14 +149,14 @@
 				<div class ="span12" style ="margin-bottom:20px; margin-left:100px">
 						<div class="span5"  id ="boardDiv" >
 							<div id = "notiTitle">
-								<font>Notice</font>
+								<font>Board</font>
 								<a href="/board/notice_board/notice_listPage"> 
 								<img id ="plus" src="/resources/images/plus.png"/>
 								</a>
 							</div>
 							<ul style="margin-top: 30px;" >
-								<li><a id="noti1" href="">공지사항1</a></li>
-								<li><a id="noti2" href="">공지사항2</a></li>
+								<li><a id="noti1" href="">최신글1</a></li>
+								<li><a id="noti2" href="">최신글2</a></li>
 							</ul>
 							<img id ="notiImg"src="/resources/images/notice.jpg">
 

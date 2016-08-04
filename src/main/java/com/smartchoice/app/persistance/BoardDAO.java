@@ -1,11 +1,17 @@
 package com.smartchoice.app.persistance;
 
 import java.util.List;
+
+import com.smartchoice.app.domain.EventBoardDto;
+import com.smartchoice.app.domain.EventBoardReplyDto;
 import com.smartchoice.app.domain.NoticeBoardDto;
 import com.smartchoice.app.domain.NoticeBoardReplyDto;
 import com.smartchoice.app.domain.SearchCriteria;
 
 public interface BoardDAO {
+	
+	// NoticeBoard_DAO
+	
 	public void register(NoticeBoardDto dto) throws Exception;
 
 	public NoticeBoardDto read(Integer num) throws Exception;
@@ -23,5 +29,27 @@ public interface BoardDAO {
 	public List<NoticeBoardDto> listSearch(SearchCriteria cri) throws Exception;
 	
 	public int listSearchCount(SearchCriteria cri) throws Exception;
+	
+	// EventBoard_DAO
+	
+	public void event_register(EventBoardDto dto) throws Exception;
+
+	public EventBoardDto event_read(Integer num) throws Exception;
+
+	public void event_modify(EventBoardDto dto) throws Exception;
+
+	public void event_remove(Integer num) throws Exception;	
+		
+	public void event_register_reply(EventBoardReplyDto replydto) throws Exception;
+	
+	public void event_remove_reply(EventBoardReplyDto replydto) throws Exception;
+	
+	public List<EventBoardReplyDto> event_read_reply(Integer num) throws Exception;
+	
+	public List<EventBoardDto> event_listAll(String eboard_start,String eboard_end)throws Exception;
+	
+	public List<EventBoardDto> event_listSearch(SearchCriteria cri)throws Exception;
+	  
+	public int event_listSearchCount(SearchCriteria cri)throws Exception;
 	
 }

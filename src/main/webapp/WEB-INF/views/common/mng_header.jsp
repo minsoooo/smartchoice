@@ -35,10 +35,29 @@
 			alert("접근 권한이 없습니다.관리자에게 문의하세요.")
 		}
 	}	
+	
+	function fnEvent(){
+		var mng_level = $("#mng_level").attr("value")
+		if(mng_level >= 2){
+			location.href ="/board/event_board/event_mgr_listPage";
+		}else{
+			alert("접근 권한이 없습니다.관리자에게 문의하세요.")
+		}
+	}
+	
 	function fnStatistic(){
 		var mng_level = $("#mng_level").attr("value")
 		if(mng_level >= 2){
 			location.href ="/manager/manager_stats";
+		}else{
+			alert("접근 권한이 없습니다.관리자에게 문의하세요.")
+		}
+	}
+	//카테고리 관리 페이지 이동 추가 by.santori
+	function fnChooseCategory(){
+		var mng_level = $("#mng_level").attr("value")
+		if(mng_level >= 2){
+			location.href ="/manager/manager_category";
 		}else{
 			alert("접근 권한이 없습니다.관리자에게 문의하세요.")
 		}
@@ -75,12 +94,10 @@
 	background-color:#4e4a41;
 	height:50px;
 }
-
 #header2{
 	background-color:#5c554b;
 	height:70px;
 }
-
 #btnSignIn{
 	margin-right:20px;
 	border: 0;
@@ -89,21 +106,17 @@
 #btnSignOut{
 	margin-left:20px;
 }
-
 #header1Div{
 	margin-top:8px;
 }
-
 #header1 a{
 	color:#d9d5cc;
 }
-
 #header1 a:hover, #header1 a:focus, #header1 a:active, 
 #header2 a:hover, #header2 a:focus, #header2 a:active{
 	color:#fff;
 	text-decoration:none;
 }
-
 #header2 a{
 	color:#d9d5cc;
 	font-size:15px;
@@ -111,11 +124,9 @@
 	margin-right:20px;
 	font-family: 'Noto Sans KR', sans-serif;
 }
-
 #header2 .span8{
 	margin-top:23px;
 }
-
 #btnSignIn, #btnSignOut{
 	display: inline-block;
 	padding: 6px 12px;
@@ -139,12 +150,10 @@
 	border: 1px solid transparent;
 	border-radius: 4px
 }
-
 #btnSignIn:hover, #btnSignIn:focus, #btnSignOut:hover, #btnSignOut:focus{
 	background-color:#675c4c;
 	color:#fff;
 }
-
 </style>
 <body>
 	<span id ="mng_level" value ="${sessionScope.MNG_KEY.mng_level }"></span>
@@ -179,7 +188,7 @@
 					<a href="javascript:fnChooseCategory()">분류관리</a>
 					<a href="javascript:fnChooseMember()">회원관리</a>
 					<a href="javascript:fnChooseAdmin()">직원관리</a>
-					<a href="#">이벤트등록</a>
+					<a href="javascript:fnEvent()">이벤트등록</a>
 					<a href="javascript:fnStatistic()">통계보기</a>
 				</div>
 			</div>

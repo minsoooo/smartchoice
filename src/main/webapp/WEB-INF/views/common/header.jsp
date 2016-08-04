@@ -190,7 +190,7 @@
 					<a href="javascript:fnAccount()">지출관리</a>			
 					<a href="/searchStore/showMap">매장찾기</a>
 					<a href="javascript:fnEventBoard()">이벤트</a>
-					<a href="/board/notice_board/notice_listPage">공지사항</a>
+					<a href="/board/notice_board/notice_listPage">자유게시판</a>
 				</div>
 			</div>
 		</div>
