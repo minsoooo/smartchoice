@@ -33,7 +33,7 @@
 
 #foot1 a{
 	color:#706b67;
-	font-size:10px;
+	font-size:11px;
 	margin-right:50px;
 }
 
@@ -49,6 +49,13 @@
 </style>
 <body>
 	<div id="footer">
+		<div class="container">
+			<div class="row">
+				<div class="span4" style="position:absolute;">
+					<a href ="/"><img src="/resources/images/logo_3.png" style="width:160px;"/></a>
+				</div>
+			</div>
+		</div>
 		<div class="container">
 			<div class="row">
 				<div class="span1"></div>

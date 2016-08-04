@@ -2,7 +2,7 @@
  * 	카드추천 PlanController
 		
 	작성일 : 2016-07-18
-	수정일 : 2016-08-03
+	수정일 : 2016-08-04
 	작성자 : 김상덕
 	cardPlan Snapshot 2.0 by.santori
  */
@@ -60,8 +60,6 @@ import com.smartchoice.app.util.ValueComparator;
 
 
 import net.sf.json.JSONArray;
-
-
 
 
 @Controller
@@ -144,8 +142,8 @@ public class PlanController {
 		Map totalmap = new HashMap();
 		Map smallCardlist = new HashMap();
 		
-		int plan_usemonthmoney = Integer.parseInt((String)accountList.get(0).get("plan_usemonthmoney")); //월 예상 사용금액
-		int plan_useEtcMoney = Integer.parseInt((String)accountList.get(0).get("plan_useEtcMoney")); //월 예상 사용금액
+		int plan_usemonthmoney = Integer.parseInt(accountList.get(0).get("plan_usemonthmoney").toString()); //월 예상 사용금액
+		int plan_useEtcMoney = Integer.parseInt(accountList.get(0).get("plan_useEtcMoney").toString()); //월 예상 사용금액
 		int cardtypeflag;
 		String plan_name;
 		int plan_num;
@@ -158,8 +156,8 @@ public class PlanController {
 		}
 		
 		for(int i=0 ; i<accountList.size() ; i++){ //종목별로 돌린다
+			logger.info(i+"번째 종목************************");
 			
-			System.out.println(i+"번째 종목************************");/////////////////////////////TEST
 			plan_name = (String) accountList.get(i).get("plan_name");
 			plan_num = Integer.parseInt((String)accountList.get(i).get("plan_num"));
 			plan_money = Integer.parseInt((String)accountList.get(i).get("plan_money"));
@@ -171,7 +169,7 @@ public class PlanController {
 			for(int j=0 ; j<discountList.size(); j++){ // 종목으로 선택된 카드별로 돌린다
 				cardResultDto resultDto = null;
 				cardResultDto resultDtoSub = null;
-				//System.out.println(plan_name+"부분---------------------------");/////////////////////////////TEST
+				logger.info(plan_name+"부분---------------------------");
 				dDto = discountList.get(j);
 				if(plan_money > dDto.getDc_min()){	//사용금액이 최소사용금액보다 큰경우 
 					if(dDto.getDc_classify() == 0){ //% 할인 경우
@@ -237,7 +235,6 @@ public class PlanController {
 					}
 				}
 			}
-			
 		}
 		
 		Map<String,Object> sortedMap = new TreeMap(new ValueComparator(totalmap)); //map value 기준 정렬
@@ -316,7 +313,6 @@ public class PlanController {
 			SortplansmallCardlist.add(sortDto[i]);
 		}
 		//정렬 끝
-		
 		model.addAttribute("SortplansmallCardlist", SortplansmallCardlist);
 		
 	}

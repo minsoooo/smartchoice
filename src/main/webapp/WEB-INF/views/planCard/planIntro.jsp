@@ -5,7 +5,7 @@
 		2. 관심사로 추천
 			회원의 관심사
 	작성일 : 2016-07-18
-	수정일 : 2016-08-03
+	수정일 : 2016-08-04
 	작성자 : 김상덕
 	cardPlan Snapshot 2.0 by.santori
  -->
@@ -17,15 +17,28 @@
 <!DOCTYPE html>
 <html>
 <head>
+<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
 <title>plan Intro</title>
+<script>
+$(document).ready(
+		function(){
+		$("#cuns").click(function(){
+			if($("#cuns :selected").text() == "직접입력"){
+				$("#selected").html("<input type='number' class='input-append' name='cuns' value='0' style='width:150px;'/>");
+			}
+			else{$("#selected").empty()}
+		});
+	}		
+);
+</script>
 <style>
 	@import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
 	[class*="col-"]{
   		padding: 8px;
- 	 	border: 1px solid #4e4a41;
+ 	 	border: 2px solid #8ba752;
   		align: center;
   		margin:10px;
-	}
+  	}
 	.warp{position:relative}
 	.inner{position:absolute; bottom:1px;left:1px;}
 	
@@ -61,26 +74,26 @@
 </head>
 <body style="background-color:#f5f4f0; font-family: 'Noto Sans KR', sans-serif;"  >
 
-<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
+
 <form action="/planCard/planPattern.plan" method="post">
 
 
 <div class="container" id="content">
 	<div class="row">
 		<div class="span12">
-
+			<div class="span3"></div>
 			<!-- ST content  -->
-			<div class="span5 offset2 col-">
-				<div class="span5">
-					<h3 class="text-left text-info" style="color:#5c554b;">카드종류</h3>
+			<div class="span4 offset2 col-" style="margin: 110px auto;">
+				<div class="span4">
+					<h3 class="text-left text-info" style="color:#4e4a41; ">카드종류</h3>
 					<select name="card_classify" class="form-control">
 						<option value="신용">신용 카드</option>
 						<option value="체크">체크 카드</option>
 					</select>
 				</div>
 
-				<div class="warp span5">
-					<h3 class="text-left text-info" style="color:#5c554b;">월 카드 총 소비액</h3>
+				<div class="warp span4">
+					<h3 class="text-left text-info" style="color:#4e4a41;">월 카드 총 소비액</h3>
 					<div class="inner" id="selected"></div>
 					<select name="cuns" id="cuns" class="form-control">
 						<option value="300000">30만원</option>
@@ -88,19 +101,21 @@
 						<option value="700000">70만원</option>
 						<option value="1000000">100만원</option>
 						<option value="1500000">150만원</option>
-						<option>직접입력</option>
+						<option id="optWrite">직접입력</option>
 					</select>
 				</div>
 
-				<div class="span5">
+				<div class="span5" style="height:50px; padding-left:50px;  padding-top:10px;">
 					<div class="span2">
 						<input type="submit" id="patternBtn" class="btn btn-info btn-block"
 							value="소비패턴등록" />
 					</div>
+					<!-- 
 					<div class="span2">
 						<input type="button" id="categoryBtn" class="btn btn-info btn-block"
 							value="관심분야로 찾기" /><br />
 					</div>
+					 -->
 				</div>
 			</div>
 			<!-- END content -->

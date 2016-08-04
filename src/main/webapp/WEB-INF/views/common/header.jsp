@@ -99,7 +99,7 @@
 
 #header2 a{
 	color:#d9d5cc;
-	font-size:20px;
+	font-size:19px;
 	font-weight:bold;
 	margin-right:40px;
 	font-family: 'Noto Sans KR', sans-serif;
@@ -146,7 +146,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="span4" style="position:absolute;">
-				<a href ="/"><img src="/resources/images/logo.jpg"/></a>
+				<a href ="/"><img src="/resources/images/logo_1.png" style="width:160px;"/></a>
 			</div>
 		</div>
 	</div>

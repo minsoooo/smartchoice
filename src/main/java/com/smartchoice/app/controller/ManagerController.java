@@ -63,6 +63,12 @@ public class ManagerController {
 	@Inject
 	private AccountBookService service_account;
 	
+	@Inject
+	private BigCategoryService bigCategoryService;//관리자 카테고리 관리 페이지 by.santori
+	
+	@Inject
+	private CategoryService categoryService;//관리자 카테고리 관리 페이지 by.santori
+	
 	//관리자 아이디 중복체크 AJAX코드 
 	@RequestMapping("/manager_idCheck")
 	public void managerCheckId(String mng_id, HttpServletResponse resp){
@@ -634,5 +640,48 @@ public class ManagerController {
 	@RequestMapping("/manager_dataList")
 	public void managerDataListGET() throws Exception{
 		//return "/manager/manager_main";
+	}
+	
+	//관리자 카테고리 관리 페이지 by.santori
+	@RequestMapping("/manager_category")
+	public void managerCategoryGET(Model model) throws Exception{
+		model.addAttribute("bigDtoList" ,bigCategoryService.getBigCategory());
+	}
+	
+	@RequestMapping(value="/manager_categoryControl", method=RequestMethod.POST)
+	public String managerCategoryControlPost(HttpServletRequest req) throws Exception{
+		
+		String controlFlag = req.getParameter("controlFlag");
+		String SmallName = req.getParameter("SmallName");
+		String SmallNum = req.getParameter("SmallNum");
+		String BigName = req.getParameter("BigName");
+		String BigNum = req.getParameter("BigNum");
+		String CateInUpText = req.getParameter("CateInUpText");
+		
+		System.out.println("/controlFlag:" +controlFlag);
+		System.out.println("/CateInUpText:" +CateInUpText);
+		System.out.println("/BigNum:" +BigNum);
+		System.out.println("/BigName:" +BigName); 
+		System.out.println("/SmallNum:" +SmallNum);
+		System.out.println("/SmallName:" +SmallName );
+		
+		if(controlFlag.equals("1")){
+			//1 소분류 추가 (추가할 이름, 추가할big_num)
+			categoryService.insertSmallCategory(BigNum, CateInUpText);
+		}
+		else if(controlFlag.equals("2")){
+			//2 대분류 추가 (추가할 이름)
+			categoryService.insertBigCategory(CateInUpText);
+		}
+		else if(controlFlag.equals("3")){
+			//3 소분류 수정 (추가할 이름, 수정할 small_num)
+			categoryService.updateSmallCategory(CateInUpText, SmallNum);
+		}
+		else if(controlFlag.equals("4")){
+			//4 대분류 수정 (추가할 이름, 수정할 small_num)
+			categoryService.updateBigCategory(CateInUpText, BigNum);
+		}
+		return "redirect:/manager/manager_category";
+		
 	}
 }
