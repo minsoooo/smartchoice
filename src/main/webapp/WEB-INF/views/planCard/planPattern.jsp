@@ -1,9 +1,8 @@
-
 <!-- 
 	카드추천 소비 패턴리스트 페이지  
 		소비패턴을 통한, 회원의 관심사를 통한 카드추천 선택
 	작성일 : 2016-07-18
-	수정일 : 2016-08-03
+	수정일 : 2016-08-04
 	작성자 : 김상덕
 	cardPlan Snapshot 2.0 by.santori
  -->
@@ -90,8 +89,6 @@ $.bestPlanMoney=function(){
 		dataType:"json",
 		contentType: "application/json",
 		success:function(data){
-			//console.log(data[0]);
-			//alert(data[0]);
 			$("#resultSaveMoneyTable").css("display","block");
 			$("#resultSaveMoney").text(data[0]);
 		}
@@ -168,10 +165,7 @@ function tdout(small_num){
 	var table_top = "#table_top"+small_num;
 	$(table_top).empty();
 }
-function inputText(small_num){
-	//  if (e.which == 13 || e.keyCode == 13) { // enter 키를 눌렀다면~
-	alert("1");	
-}
+
 function viewTextfield(small_num, small_name){
 	var table_top = "#table_top"+small_num;
 	//var table_top_textfiled = "#table_top_textfiled"+small_num;
@@ -180,16 +174,20 @@ function viewTextfield(small_num, small_name){
 	$(insertTextfiled).appendTo(table_top);
 	$(table_top_textfiled).focus();
 	
-	$('#table_top_textfiled').on('keydown', function(e) { 
-        if (e.which == 13 || e.keyCode == 13) { // enter 키를 눌렀다면~
-  			tdclick($(this).val(), small_name, small_num);
-        	//alert("1");
-        	//$("#usemoneyMessage").empty();
-            //$("#usemoney").find("child:tbody").append("<tr>"+$(this).val()+"</tr>");
-            //alert("값 확인:"+$(this).val());
- 		}	 
-	}); 
+	$(function() {
+		$('form').bind("keypress", function (e) {
+			// textarea 제외
+			if (event.target.nodeName != 'TEXTAREA') {
+				//enter키만 먹음
+				if (e.which == 13 || e.keyCode == 13) {
+					tdclick($("#table_top_textfiled").val(), small_name, small_num);
+					return e.keyCode != 13;
+				}
+			}
+		});
+	});
 }
+/*
 function fnResult(){
 	var demo=$("#usemoney").find("tr");
 	var pppp=[];
@@ -205,46 +203,12 @@ function fnResult(){
 	           $("#usemoney tr:eq("+i+")").find("td:nth-child(3)").text()]
 	           ]);
 	}
-	//location.href="/planCard/planResultView?useList="+pppp;
 	location.href="/planCard/planResultView";
-	
 }
+*/
 $(document).ready(
 	function(){
-		//$("#btnPatternResult").click(
-		//	function(){
-				/***********************************************************************
-				var accountList = new Array();
-				//패턴을 등록한 경우
-				if($("#usemoneyMessage").text() == ""){
-					$("#usemoney tr").each(	// 목록의 개수만큼 실행
-						function(){
-							var obj = new Object();			// key, value 형태로 저장
-							
-							obj.plan_name = $(this).children("td:eq(0)").attr("name");
-							obj.plan_num = $(this).children("td:eq(1)").attr("name");
-							obj.plan_money = $(this).children("td:eq(2)").attr("name");
-							obj.plan_cardtypeflag = $("#cardtypeflag").val();
-							obj.plan_usemonthmoney = $("#usemonthmoney").val();
-							accountList.push(obj);		// 날짜와 지출목록의 정보를 Array에 추가
-						}		
-					);
-					$.ajax({		// 해당 날짜의 지출목록을 보냄
-						url:"/planCard/planResult",
-						type:"POST",
-						data:JSON.stringify(accountList),	// json string형식
-						dataType:"json",
-						contentType: "application/json",
-					});	
-				}
-				//패턴을 등록하지 않은 경우
-				else{
-					alert("패턴을 입력해 주세요");
-				}
-			}
-			***********************************************************************/
-		//);
-		
+			
 		$("span").click(
 			function(){
 				$("span").css("background-color", "").css("color", "");
@@ -284,17 +248,17 @@ $(document).ready(
 															+"<label style='float:right; padding-right:20px;'>원</label>"
 														+"</td>"
 													+"</tr>"
-													+"<tr style='border-top:1px solid #4e4a41'>"
+													+"<tr style='border-top:1px solid #4e4a41;cursor:pointer;'>"
 														+"<td id='td"+small_num+"_1'" + " onclick=tdclick("+10000+",'"+small_name+"','"+small_num+"')" + " onmouseover='tdover("+10000+","+small_num+")' onmouseout='tdout("+small_num+")'>만원</td>"
 														+"<td id='td"+small_num+"_2'" + " onclick=tdclick("+20000+",'"+small_name+"','"+small_num+"')" + " onmouseover='tdover("+20000+","+small_num+")' onmouseout='tdout("+small_num+")'>2만원</td>"
 														+"<td id='td"+small_num+"_3'" + " onclick=tdclick("+30000+",'"+small_name+"','"+small_num+"')" + " onmouseover='tdover("+30000+","+small_num+")' onmouseout='tdout("+small_num+")'>3만원</td>"
 													+"</tr>"
-													+"<tr>"
+													+"<tr style='cursor:pointer;'>"
 														+"<td id='td"+small_num+"_4'" + " onclick=tdclick("+50000+",'"+small_name+"','"+small_num+"')" + " onmouseover='tdover("+50000+","+small_num+")' onmouseout='tdout("+small_num+")'>5만원</td>"
 														+"<td id='td"+small_num+"_5'" + " onclick=tdclick("+100000+",'"+small_name+"','"+small_num+"')" + " onmouseover='tdover("+100000+","+small_num+")' onmouseout='tdout("+small_num+")'>10만원</td>"
 														+"<td id='td"+small_num+"_6'" + " onclick=tdclick("+150000+",'"+small_name+"','"+small_num+"')" + " onmouseover='tdover("+150000+","+small_num+")' onmouseout='tdout("+small_num+")'>15만원</td>"
 													+"</tr>"
-													+"<tr  style='border-bottom:1px solid #4e4a41'>"
+													+"<tr  style='border-bottom:1px solid #4e4a41;cursor:pointer;'>"
 														+"<td id='td"+small_num+"_7'" + " onclick=tdclick("+200000+",'"+small_name+"','"+small_num+"')" + " onmouseover='tdover("+200000+","+small_num+")' onmouseout='tdout("+small_num+")'>20만원</td>"
 														+"<td id='td"+small_num+"_8'" + " onclick=tdclick("+300000+",'"+small_name+"','"+small_num+"')" + " onmouseover='tdover("+300000+","+small_num+")' onmouseout='tdout("+small_num+")'>30만원</td>"
 														+"<td onclick=viewTextfield("+small_num+",'"+small_name+"')>직접입력</td>"
@@ -395,8 +359,6 @@ div div label{
 				</div>
 				<div id="smallList">
 					대분류를 선택해 주세요.
-					<br/>
-					여기에 이용방법 IMG 추가 예정
 				</div>
 
 			</div>
@@ -421,7 +383,7 @@ div div label{
 				<table style="margin-left:10px;">
 					<tr><td id="usemoneyMessage">아직 입력한 소비패턴이 없습니다.</td></tr>
 				</table>
-				<table id="usemoney" style="margin-left:10px;">
+				<table id="usemoney" style="margin-left:10px;cursor:pointer;">
 				</table>
 				<table id="resultSaveMoneyTable" style="width:100%; border-top:1px solid #4e4a41; display:none;">
 					<tr>
@@ -429,8 +391,8 @@ div div label{
 						<td id="resultSaveMoney" style="padding-right:30px;width:70px; text-align:right"></td>
 					</tr>
 				</table>
-				<input type="button" value="추천카드 결과보기" class="btn" id="btnPatternResult" onclick="fnResult()"/>
-				<!--  <input type="submit" value="추천카드 결과보기" class="btn" id="btnPatternResult" />-->
+				<!--<input type="button" value="추천카드 결과보기" class="btn" id="btnPatternResult" onclick="fnResult()"/>-->
+				  <input type="submit" value="추천카드 결과보기" class="btn" id="btnPatternResult" />
 				
 			</div>
 			<!-- END content -->

@@ -53,16 +53,33 @@
 			alert("접근 권한이 없습니다.관리자에게 문의하세요.")
 		}
 	}
+	//카테고리 관리 페이지 이동 추가 by.santori
+	function fnChooseCategory(){
+		var mng_level = $("#mng_level").attr("value")
+		if(mng_level >= 2){
+			location.href ="/manager/manager_category";
+		}else{
+			alert("접근 권한이 없습니다.관리자에게 문의하세요.")
+		}
+	}
 </script>
 </head>
 <style>
 @import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
+
+#mng_title{
+	font-size:15px;
+	color:#d9d5cc;
+	font-weight:bold;
+	font-family: 'Noto Sans KR', sans-serif; 
+}
 #mem_id {
 	font-size:15px;
 	color: #669aba;
 	font-weight:bold;
 	margin-left: 40px;
 	margin-right:20px;
+	font-family: 'Noto Sans KR', sans-serif;
 	
 }
 #header1{
@@ -136,7 +153,7 @@
 	<div class="container">
 		<div class="row">
 			<div class="span4" style="position:absolute;">
-				<a href ="/"><img src="/resources/images/logo.jpg"/></a>
+				<a href ="/"><img src="/resources/images/logo_1.png" style="width:160px;"/></a>
 			</div>
 		</div>
 	</div>
@@ -144,7 +161,8 @@
 	<div  id="header1">
 		<div class="container">
 			<div class="row">
-						<div class="span5 offset7" id="header1Div">
+						<div class="span7 offset5" id="header1Div">
+							<font id = "mng_title">$mart Choice for Manager </font>
 							<font id ="mem_id">${sessionScope.MNG_KEY.mng_name } 관리자 님 안녕하세요</font>
 							<input type="button" id="btnSignOut" class="btn" value="Sign Out" 
 							onclick="javascript:fnLogout()"/>
@@ -159,10 +177,10 @@
 				<div class="span8 offset4">
 					<a href="#">카드등록</a>
 					<a href="#">혜택수정</a>
-					<a href="#">분류관리</a>
+					<a href="javascript:fnChooseCategory()">분류관리</a>
 					<a href="javascript:fnChooseMember()">회원관리</a>
 					<a href="javascript:fnChooseAdmin()">직원관리</a>
-					<a href="javascript:fnEvent()">이벤트등록</a>
+					<a href="#">이벤트등록</a>
 					<a href="javascript:fnStatistic()">통계보기</a>
 				</div>
 			</div>

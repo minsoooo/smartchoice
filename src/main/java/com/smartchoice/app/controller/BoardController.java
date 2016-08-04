@@ -65,7 +65,6 @@ public class BoardController {
 		if (cri.getKeyword() == null) {
 			cri.setKeyword("");
 		}
-
 		model.addAttribute("list", service.listSearch(cri));				
 
 		PageMaker pageMaker = new PageMaker();

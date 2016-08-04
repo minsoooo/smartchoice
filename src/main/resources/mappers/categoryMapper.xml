@@ -16,4 +16,24 @@
 	<select id="getCategoryName" resultType="CategoryDto">
 		select * from v_details_category where small_num=#{small_num}
 	</select>
+	
+	<!-- 대분류 추가 160804_by.santori -->
+	<insert id="insertBigCategory">
+		insert into bigcategory(big_name) values(#{big_name});
+	</insert>
+	
+	<!-- 대분류 수정 160804_by.santori -->
+	<update id="updateBigCategory">
+		update bigcategory set big_name=#{big_name} where big_num=#{big_num}
+	</update>
+	
+	<!-- 소분류 추가 160804_by.santori -->
+	<insert id="insertSmallCategory">
+		insert into smallcategory(small_bignum, small_name) values(#{small_bignum}, #{small_name});
+	</insert>
+	
+	<!-- 소분류 수정 160804_by.santori -->
+	<update id="updateSmallCategory">
+		update smallcategory set small_name=#{small_name} where small_num=#{small_num}
+	</update>
 </mapper>
