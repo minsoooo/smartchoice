@@ -13,10 +13,15 @@
 		NOTICEBOARD(nboard_title,nboard_content,nboard_writer)
 		values(#{nboard_title},#{nboard_content},#{nboard_writer})
 	</insert>
+	
 	<select id="notice_read" resultType="NoticeBoardDto">
 		select * from NOTICEBOARD
 		where nboard_num=#{num}
 	</select>
+	
+	<update id="notice_viewcnt">
+		update NOTICEBOARD set nboard_viewcnt = nboard_viewcnt+1 where nboard_num=#{num};
+	</update>	
 
 	<update id="notice_modify">
 		update NOTICEBOARD set nboard_title=#{nboard_title},
@@ -63,7 +68,7 @@
 
 	<select id="notice_listSearchCount" resultType="int">
 		<![CDATA[  
-		  select count(nboard_viewcnt) 
+		  select count(nboard_num) 
 		  from NOTICEBOARD 
 		  where nboard_num > 0 
 		]]>
@@ -98,6 +103,10 @@
 		select * from EVENTBOARD
 		where eboard_num=#{num}
 	</select>
+	
+	<update id="event_viewcnt">
+		update EVENTBOARD set eboard_viewcnt = eboard_viewcnt+1 where eboard_num=#{num};
+	</update>
 
 	<update id="event_modify">
 		update EVENTBOARD set eboard_title=#{eboard_title},
@@ -167,7 +176,7 @@
 
 	<select id="event_listSearchCount" resultType="int">
 		<![CDATA[  
-		  select count(eboard_viewcnt) 
+		  select count(eboard_num) 
 		  from EVENTBOARD 
 		  where eboard_num > 0 
 		]]>

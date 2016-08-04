@@ -12,7 +12,11 @@
 	margin-top: 50px;
 	margin-bottom: 50px;
 }
-#notice_modifyPage,#notice_cancel{
+#font_main,#font_num,#font_writer,#font_title,#font_content{		
+	font-weight:bold;	
+	color:#8ba752;	
+}
+#btncolor,#event_modifyPage{
    display: inline-block;
    padding: 6px 12px;
    margin-bottom: 0;
@@ -37,7 +41,7 @@
    width:80px;
    border: 0;
    outline: 0;
-}   
+}     
 </style>
 <body style="background-color: #f5f4f0">
 
@@ -51,7 +55,7 @@
 						<div class="span12">							
 							<div>
 								<div>
-									<h3 style="text-align: center">이벤트</h3>
+									<h3  id="font_main" style="text-align: center">Event Board Modify</h3>
 								</div>
 								
 								<!-- body DB 자료를 받아서 내용을 수정하고 다시 POST방식으로 controller에 전송한다. -->
@@ -63,22 +67,22 @@
 
 									<div style="margin-left: 80px;">
 										<div>
-											<label>글번호</label> <input type="text" name='eboard_num'
+											<label id="font_num" >Number</label> <input type="text" name='eboard_num'
 												value="${boardDto.eboard_num}" style="width: 800px;"
 												readonly="readonly">
 										</div>
 
 										<div>
-											<label>작성자</label> <input type="text" name="eboard_writer"
+											<label id="font_writer" >Writer</label> <input type="text" name="eboard_writer"
 												value="${boardDto.eboard_writer}" style="width: 800px;"
 												readonly="readonly">
 										</div>
 										<div>
-											<label>제목</label> <input type="text" name='eboard_title'
+											<label id="font_title" >Title</label> <input type="text" name='eboard_title'
 												value="${boardDto.eboard_title}" style="width: 800px;">
 										</div>
 										<div>
-											<label>내용</label>
+											<label id="font_content" >Content</label>
 											<textarea name="eboard_content" id="ir1" rows="15"
 												style="width: 800px;">${boardDto.eboard_content}</textarea>
 												
@@ -112,10 +116,9 @@
 									</div>
 									<!-- /body -->
 									
-									<div align="center">
-										<br /> <input type="submit" id="event_modifyPage"
-											value="수정하기" />&nbsp;&nbsp; <input type="submit" id="event_cancel"
-											value="취소하기" />
+									<div align="center"><br />
+										<input type="submit" id="event_modifyPage" value="수정하기" />&nbsp;&nbsp; 
+										<a href="/board/event_board/event_mgr_listPage" id="btncolor" class="btn" style="width:55px;">취소하기</a>
 									</div>
 									
 								</form>
@@ -135,7 +138,7 @@
 																oEditors.getById["ir1"].exec("UPDATE_CONTENTS_FIELD",[]);
 																	$formObj.submit();
 															})
-													});
+														});
 								</script>
 							</div>							
 						</div>

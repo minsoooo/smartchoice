@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>이벤트</title>
+<title>이벤트 게시판</title>
 <script type="text/javascript"
 	src="/resources/se/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript"
@@ -17,7 +17,7 @@
 	margin-top: 50px;
 	margin-bottom: 50px;
 }
-#event_mgr_listPage,#event_modifyPage,#event_remove,#event_replybtn{
+#event_listPage,#event_replybtn{
    display: inline-block;
    padding: 6px 12px;
    margin-bottom: 0;
@@ -42,7 +42,11 @@
    width:80px;
    border: 0;
    outline: 0;
-}   
+} 
+#font_main,#font_writer,#font_title,#font_content{		
+	font-weight:bold;	
+	color:#8ba752;	
+}  
 </style>
 <body style="background-color: #f5f4f0">
 
@@ -56,7 +60,7 @@
 						<div class="span12">						
 							<div>
 								<div>
-									<h3 style="text-align: center">이벤트</h3>
+									<h3  id="font_main" style="text-align: center">Event Board Read</h3>
 								</div>
 								
 								<!-- body , cotroller에서 작성한 글 번호에 따른 글 내용을 전부 받아와서 출력한다. -->
@@ -69,12 +73,12 @@
 
 								<div style="margin-left: 80px;">
 									<div>
-										<label>작성자</label> <input type="text" name="writer"
+										<label id="font_writer">작성자</label> <input type="text" name="writer"
 											style="width: 800px;" value="${boardDto.eboard_writer}"
 											readonly="readonly">
 									</div><br/>
 									<div>
-										<label>제목</label> <input type="text" name='title'
+										<label id="font_content">제목</label> <input type="text" name='title'
 											style="width: 800px;" value="${boardDto.eboard_title}"
 											readonly="readonly">
 									</div><br/>
@@ -82,7 +86,7 @@
 									<!-- 기존의 textarea는 내용을 출력할 때 태그를 전부 출력하기때문에, 네이버스마트에디터를 사용해서,
 										  기존의 textarea와 비슷한 느낌의 이미지로 변경했다. -->
 									<div>
-										<label>내용</label><br/>										
+										<label id="font_content">내용</label>										
 										<textarea name="eboard_content" id="ir1" rows="20" style="width: 810px;">${boardDto.eboard_content}</textarea>
 											
 										<!-- NAVER SMARTEDITOR SCRIPT -->	
@@ -140,6 +144,7 @@
 									 로그인이 되어있을 시 가입때 입력한 id가 출력되고, 댓글은 내용(content)만 입력하면되게 처리한다.
 								-->
 								<div style="margin-left: 80px;">
+								
 									<c:choose>
 										<c:when test="${sessionScope.MEM_KEY eq null}">
 											댓글을 입력하려면 로그인이 필요합니다. <br />
@@ -159,10 +164,9 @@
 													required="required"></textarea>
 												<input type="submit" value="작성" class="btn" id="event_replybtn"
 													style="width: 50px; height: 70px" />
-												</form>
+											</form>
 										</c:otherwise>
-									</c:choose>
-									
+									</c:choose>									
 
 									<!--									
 										댓글을 작성할 때 마다, 글번호가 댓글이 달린 글번호에 저장이되고, 세션의 멤버번호가 댓글멤버넘버로 저장이된다.
@@ -174,6 +178,10 @@
 									<!-- 댓글 출력 페이지 include -->
 									<jsp:include page="event_reply.jsp"></jsp:include>
 								</div>
+								<!--									
+									댓글을 작성할 때 마다, 글번호가 댓글이 달린 글번호에 저장이되고, 세션의 멤버번호가 댓글멤버넘버로 저장이된다.
+									댓글에 사용되는 아이디는, 세션아이디가 저장된다.
+								-->	
 							</div>							
 						</div>					
 					</div>					

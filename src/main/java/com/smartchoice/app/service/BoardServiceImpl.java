@@ -30,7 +30,12 @@ public class BoardServiceImpl implements BoardService {
 	@Override	// 글번호를 전송받아서 DAO로 넘긴다
 	public NoticeBoardDto read(Integer num) throws Exception {			
 		return dao.read(num);
-	}
+	}	
+	
+	@Override
+	public void viewcnt(Integer num) throws Exception {
+		dao.viewcnt(num);
+	}	
 
 	@Override	// 글번호를 전송받아서 DAO로 넘긴다
 	public void modify(NoticeBoardDto dto) throws Exception {		
@@ -79,6 +84,11 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public EventBoardDto event_read(Integer num) throws Exception {
 		return dao.event_read(num);
+	}	
+
+	@Override
+	public void event_viewcnt(Integer num) throws Exception {
+		dao.event_viewcnt(num);		
 	}
 
 	@Override

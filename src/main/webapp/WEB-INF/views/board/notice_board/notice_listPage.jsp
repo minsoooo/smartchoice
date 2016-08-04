@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>공지사항</title>
+<title>자유 게시판</title>
 </head>
 <style>
 #content {
@@ -37,6 +37,12 @@
    width:80px;
    border: 0;
    outline: 0;
+}
+#font_main,#font_writer,#font_title,#font_num,#font_viewcnt,#font_regdate{		
+	font-weight:bold;	
+	color:#8ba752;	
+}
+ 
 </style>
 <body style="background-color: #f5f4f0">
 
@@ -47,7 +53,7 @@
 			<div class="span12">				
 				<div>
 					<div>
-						<h3 style="text-align: center">공지사항</h3>
+						<h3 id="font_main" style="text-align: center">Free Board List</h3>
 					</div>
 				</div>
 				<div>
@@ -55,11 +61,11 @@
 					<div>
 						<table class="table table-bordered">
 							<tr>
-								<th style="width: 60px; text-align: center">글번호</th>
-								<th style="width: 300px; text-align: center">제목</th>
-								<th style="width: 150px; text-align: center">작성자</th>
-								<th style="width: 100px; text-align: center">작성일</th>
-								<th style="width: 60px; text-align: center">조회수</th>
+								<th id="font_num" style="width: 60px; text-align: center">Number</th>
+								<th id="font_title" style="width: 300px; text-align: center">Title</th>
+								<th id="font_writer" style="width: 150px; text-align: center">Writer</th>
+								<th id="font_regdate" style="width: 100px; text-align: center">Regdate</th>
+								<th id="font_viewcnt" style="width: 60px; text-align: center">Count</th>
 							</tr>
 							
 							<!-- 컨트롤러에서 자료를 받아서 출력한다. -->
@@ -72,9 +78,9 @@
 										<a href='/board/notice_board/notice_readPage${pageMaker.makeQuery(pageMaker.cri.page)}
 										&num=${boardDto.nboard_num}&keyword=${cri.keyword}&searchType=${cri.searchType}'><label>${boardDto.nboard_title}</label></a></td>									
 									<td style="text-align: center">${boardDto.nboard_writer}</td>
-									<td style="text-align: center"><fmt:formatDate
-											pattern="yyyy-MM-dd HH:mm" value="${boardDto.nboard_regdate}" /></td>
-									<td style="text-align: center"><span class="badge bg-red">${boardDto.nboard_viewcnt}</span></td>
+									<td style="text-align: center">
+									<fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${boardDto.nboard_regdate}" /></td>
+									<td style="text-align: center"><span class="badge bg-red" style="background-color:#669aba;">${boardDto.nboard_viewcnt}</span></td>
 								</tr>
 							</c:forEach>
 						</table>
@@ -102,6 +108,9 @@
 							</c:if>
 							<c:if test="${sessionScope.MEM_KEY ne null }">
 								<a href="/board/notice_board/notice_listPage" class="btn" id="btncolor">글목록</a>&nbsp;&nbsp;
+								<a href="/board/notice_board/notice_register" class="btn" id="btncolor">글쓰기</a>								
+							</c:if>
+							<c:if test="${sessionScope.MNG_KEY ne null}">								
 								<a href="/board/notice_board/notice_register" class="btn" id="btncolor">글쓰기</a>								
 							</c:if>
 						</div>

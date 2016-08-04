@@ -31,8 +31,13 @@ public class BoardDAOImpl implements BoardDAO {
 	@Override
 	public NoticeBoardDto read(Integer num) throws Exception {		
 		return sqlSession.selectOne(NAMESPACE + ".notice_read" , num);
-	}
+	}	
 
+	@Override
+	public void viewcnt(Integer num) throws Exception {
+		sqlSession.selectOne(NAMESPACE + ".notice_viewcnt" , num);
+	}
+	
 	@Override
 	public void modify(NoticeBoardDto dto) throws Exception {	
 		sqlSession.update(NAMESPACE + ".notice_modify" , dto);
@@ -79,7 +84,12 @@ public class BoardDAOImpl implements BoardDAO {
 	public EventBoardDto event_read(Integer num) throws Exception {
 		return sqlSession.selectOne(NAMESPACE + ".event_read" , num);
 	}
-
+	
+	@Override
+	public void event_viewcnt(Integer num) throws Exception {
+		sqlSession.selectOne(NAMESPACE + ".event_viewcnt" , num);
+	}
+	
 	@Override
 	public void event_modify(EventBoardDto dto) throws Exception {
 		sqlSession.update(NAMESPACE + ".event_modify" , dto);
@@ -91,13 +101,7 @@ public class BoardDAOImpl implements BoardDAO {
 	}
 
 	@Override
-	public void event_register_reply(EventBoardReplyDto replydto) throws Exception {
-		System.out.println("DB 넣기전에 꺼낸다.");
-		System.out.println("멤버번호 : " + replydto.getEreply_memnum());
-		System.out.println("아이디 : " + replydto.getEreply_memid());		
-		System.out.println("글번호 : " + replydto.getEreply_eboardnum());
-		System.out.println("글내용 : " + replydto.getEreply_content());
-	
+	public void event_register_reply(EventBoardReplyDto replydto) throws Exception {			
 		sqlSession.insert(NAMESPACE + ".event_register_reply" , replydto);
 	}
 

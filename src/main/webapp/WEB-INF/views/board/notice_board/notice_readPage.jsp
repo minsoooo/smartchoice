@@ -5,12 +5,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>공지사항</title>
+<title>자유 게시판 글</title>
+</head>
 <script type="text/javascript"
 	src="/resources/se/js/HuskyEZCreator.js" charset="utf-8"></script>
 <script type="text/javascript"
 	src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.9.0/jquery.js"></script>
-</head>
 <script src="/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 <style>
 #content {
@@ -42,6 +42,10 @@
    width:80px;
    border: 0;
    outline: 0;
+}
+#font_main,#font_writer,#font_title,#font_content{		
+	font-weight:bold;	
+	color:#8ba752;	
 }   
 </style>
 <body style="background-color: #f5f4f0">
@@ -56,7 +60,7 @@
 						<div class="span12">						
 							<div>
 								<div>
-									<h3 style="text-align: center">공지사항</h3>
+									<h3 id="font_main" style="text-align: center">Free Board Read</h3>
 								</div>
 								
 								<!-- body , cotroller에서 작성한 글 번호에 따른 글 내용을 전부 받아와서 출력한다. -->
@@ -69,12 +73,12 @@
 
 								<div style="margin-left: 80px;">
 									<div>
-										<label>작성자</label> <input type="text" name="writer"
+										<label id="font_writer">Writer</label> <input type="text" name="writer"
 											style="width: 800px;" value="${boardDto.nboard_writer}"
 											readonly="readonly">
 									</div><br/>
 									<div>
-										<label>제목</label> <input type="text" name='title'
+										<label id="font_title">Title</label> <input type="text" name='title'
 											style="width: 800px;" value="${boardDto.nboard_title}"
 											readonly="readonly">
 									</div><br/>
@@ -82,7 +86,7 @@
 									<!-- 기존의 textarea는 내용을 출력할 때 태그를 전부 출력하기때문에, 네이버스마트에디터를 사용해서,
 										  기존의 textarea와 비슷한 느낌의 이미지로 변경했다. -->
 									<div>
-										<label>내용</label><br/>										
+										<label id="font_content">Content</label>										
 										<textarea name="nboard_content" id="ir1" rows="20" style="width: 810px;">${boardDto.nboard_content}</textarea>
 											
 										<!-- NAVER SMARTEDITOR SCRIPT -->	
@@ -128,15 +132,16 @@
 										accept-charset="utf-8">
 										
 										<!-- 버튼은 글 목록에서 받아온 검색종류와 검색어를 받아서 다시 Controller 로 돌아갈때 그 값을 가져가서 재검색하게 해준다. -->																
-
-										<c:if test="${sessionScope.MEM_KEY eq null }">
+										<!-- 회원가입을 하지않아 멤버가 아니면 목록가기만 보이고, 본인이 쓴 글이 아니면 목록가기만 보인다 -->
+										<!-- 본인이 작성한 글일때, 수정하기와 목록가기 삭제하기 버튼이 나타나고 관리자일경우에도 수정하기 삭제하기는 나타난다. -->
+									
+										<c:if test="${sessionScope.MNG_KEY ne null || sessionScope.MEM_KEY eq null}">
 											<button type="submit" class="btn" id="notice_listPage">
 												목록가기 <input type="hidden" name="keyword" value="${cri.keyword}" />
 												<input type="hidden" name="searchType" value="${cri.searchType}" />
 											</button>																					
-										</c:if>
-										<c:if
-											test="${boardDto.nboard_writer == sessionScope.MEM_KEY.mem_id}">
+										</c:if>										
+										<c:if test="${boardDto.nboard_writer == sessionScope.MEM_KEY.mem_id}">
 											<button type="submit" class="btn" id="notice_modifyPage">
 												수정하기 <input type="hidden" name="num"
 													value="${boardDto.nboard_num}" />
@@ -152,6 +157,17 @@
 													value="${boardDto.nboard_num}" />
 											</button>											
 										</c:if>
+										<c:if test="${boardDto.nboard_writer == sessionScope.MNG_KEY.mng_id}">&nbsp;&nbsp;&nbsp;&nbsp;
+											<button type="submit" class="btn" id="notice_modifyPage">
+												수정하기 <input type="hidden" name="num"
+													value="${boardDto.nboard_num}" />
+											</button>																						
+											&nbsp;&nbsp;&nbsp;&nbsp;
+											<button type="submit" class="btn" id="notice_remove">
+												삭제하기 <input type="hidden" name="num"
+													value="${boardDto.nboard_num}" />
+											</button>											
+										</c:if>										
 									</form>
 								</div>
 								<br /> <br /> <br />
@@ -167,7 +183,7 @@
 											댓글을 입력하려면 로그인이 필요합니다. <br />
 											<br />
 											<br />
-										</c:when>
+										</c:when>										
 										
 										<c:otherwise>
 											<form class="form-search" method="post" action="notice_reply"

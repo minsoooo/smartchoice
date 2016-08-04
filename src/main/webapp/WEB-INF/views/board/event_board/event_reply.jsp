@@ -6,6 +6,34 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 </head>
+<style>
+#event_replybtn{
+   display: inline-block;
+   padding: 6px 12px;
+   margin-bottom: 0;
+   font-size: 14px;
+   font-weight: 400;
+   line-height: 1.42857143;
+   text-align: center;
+   white-space: nowrap;
+   vertical-align: middle;
+   -ms-touch-action: manipulation;
+   touch-action: manipulation;
+   cursor: pointer;
+   -webkit-user-select: none;
+   -moz-user-select: none;
+   -ms-user-select: none;
+   user-select: none;
+   background-image: none;
+   background-color:#8ba752;
+   color:#fff; 
+   border: 1px solid transparent;
+   border-radius: 4px;
+   width:80px;
+   border: 0;
+   outline: 0;
+}  
+</style>
 <body>
 	<div class="container">
 		<div class="row">
@@ -18,14 +46,18 @@
 						 여기서 삭제버튼은, 저장된 댓글멤버번호와 세션멤버번호가 일치할때만 삭제버튼이 보이게된다.
 						 즉, 내가 작성한 댓글이 아니면 댓글 삭제 버튼이 아예 보이지않는다.
 					-->
-						
+					
 					<form class="form-search" method="post" action="event_reply_remove">
 						<input type='hidden' name='ereply_eboardnum' value="${boardDto.eboard_num}">
 						<input type="hidden" name="ereply_num" value="${replylist.ereply_num}" />
 						<div>
-							<span class="icon-user"></span>${replylist.ereply_memid}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-							<input type="submit" value="삭제" class="btn" />														
-							${replylist.ereply_regdate}<br />
+							<span class="icon-user"></span>${replylist.ereply_memid}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<c:set value="${sessionScope.MEM_KEY.mem_num}" var="session_memnum" />
+							<c:if test="${replylist.ereply_memnum == session_memnum || sessionScope.MNG_KEY ne null}">
+								<input type="submit" value="삭제" class="btn" id="event_replybtn" />								
+							</c:if>														
+							<fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${replylist.ereply_regdate}" />								
+							<br />
 						</div>
 						<div>
 							<pre>${replylist.ereply_content}</pre>

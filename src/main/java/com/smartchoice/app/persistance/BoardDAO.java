@@ -15,6 +15,8 @@ public interface BoardDAO {
 	public void register(NoticeBoardDto dto) throws Exception;
 
 	public NoticeBoardDto read(Integer num) throws Exception;
+	
+	public void viewcnt(Integer num) throws Exception;
 
 	public void modify(NoticeBoardDto dto) throws Exception;
 
@@ -35,6 +37,8 @@ public interface BoardDAO {
 	public void event_register(EventBoardDto dto) throws Exception;
 
 	public EventBoardDto event_read(Integer num) throws Exception;
+	
+	public void event_viewcnt(Integer num) throws Exception;
 
 	public void event_modify(EventBoardDto dto) throws Exception;
 

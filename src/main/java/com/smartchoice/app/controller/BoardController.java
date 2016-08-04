@@ -96,7 +96,8 @@ public class BoardController {
 	}
 
 	@RequestMapping("/board/notice_board/notice_readPage")
-	public void read(@RequestParam int num, @ModelAttribute("cri") SearchCriteria cri, Model model) throws Exception {		
+	public void read(@RequestParam int num, @ModelAttribute("cri") SearchCriteria cri, Model model) throws Exception {
+		service.viewcnt(num);
 		model.addAttribute("boardDto", service.read(num));
 		List<NoticeBoardReplyDto> list = service.read_reply(num);
 
@@ -216,10 +217,7 @@ public class BoardController {
 		
 		String eboard_start = cal_year + "/" + cal_month + "/" + 1;
 		String eboard_end = cal_year + "/" + cal_month + "/" + cal_lastdays;
-		
-		System.out.println("DB에 넣을 시작일  : " + eboard_start);
-		System.out.println("DB에 넣을 종료일  : " + eboard_end);			
-			
+				
 		// DB를 호출해서 DB상에 있는 모든 게시판 글을 가져온다.
 		
 		List list = (List)service.event_listAll(eboard_start,eboard_end);
@@ -235,9 +233,7 @@ public class BoardController {
 		
 		List<Integer> count = new ArrayList();
 		count.add(0);
-					
-		System.out.println("가져온 게시글의 갯수는 : " + list.size());
-		
+			
 		for(int i=1; i<cal_lastdays+1; i++){
 			count.add(0);
 			for(int j=0; j<list.size(); j++){
@@ -297,11 +293,9 @@ public class BoardController {
 			split_endDate = edto.getEboard_end().split("/");
 			
 			trans_startDate = Integer.parseInt(split_startDate[2]);
-			trans_endDate = Integer.parseInt(split_endDate[2]);
-			System.out.println(trans_startDate + ", " + trans_endDate);
+			trans_endDate = Integer.parseInt(split_endDate[2]);			
 			
-			int num = Integer.parseInt(date);
-			
+			int num = Integer.parseInt(date);			
 			
 			if(trans_startDate <= num && num <= trans_endDate){
 				resultList.add(edto);
@@ -386,51 +380,62 @@ public class BoardController {
 
 	@RequestMapping("/board/event_board/event_readPage")
 	public String event_read(@RequestParam int num, @RequestParam String check,  @ModelAttribute("cri") SearchCriteria cri, Model model) throws Exception {		
-				
+		
+		// read 페이지를 읽게되면 viewcnt(조회수)가 1씩 증가한다. 
+		// String check는, 입력시에 mng(관리자)가 들어오면 관리자용 이벤트 게시판으로 보내주고 그게 아니면 달력을 보여주는 이벤트 게시판 페이지로 보내준다. 
+		
+		service.event_viewcnt(num);		
 		model.addAttribute("boardDto", service.event_read(num));
 		List<EventBoardReplyDto> list = service.event_read_reply(num);
 
 		model.addAttribute("list", list);
 		model.addAttribute("cri", cri);
 		
-		if(check.equals("mng")){
+		if(check.equals("mng")){			
 			return "/board/event_board/event_readPage";
 		}
-		else{
+		else{			
 			return "/board/event_board/event_user_readPage";
 		}
 	}
-
-	@RequestMapping("/board/event_board/event_modifyPage") // readPage에서 수정하기 버튼을 눌렀을 때 GET방식이면 수정하는 페이지로 이동한다.															
+	
+	
+	 // readPage에서 수정하기 버튼을 눌렀을 때 GET방식이면 수정하는 페이지로 이동한다. 
+	@RequestMapping("/board/event_board/event_modifyPage")														
 	public void event_modify(@RequestParam int num, Model model) throws Exception {		
 		model.addAttribute("boardDto", service.event_read(num));
-	}
-
-	@RequestMapping(value = "/board/event_board/event_modifyPage", method = RequestMethod.POST) // modify에서 폼(POST)으로 받아서 내용을 변경한다.																								
+	}	
+	
+	// 수정하기 버튼을 눌러서 이벤트 수정을 하게됐을때, 자유게시판과 다르게 이벤트 게시판은 돌아갈 페이지 (read)의 check값이 필요하니까 mng 값을 넣어서 보내준다.	
+	@RequestMapping(value = "/board/event_board/event_modifyPage", method = RequestMethod.POST) 																								
 	public String event_modify(EventBoardDto board, RedirectAttributes rttr) throws Exception {		
 		service.event_modify(board);
 		rttr.addFlashAttribute("msg", "SUCCESS");
-		return "redirect:/board/event_board/event_readPage?num=" + board.getEboard_num();
+		return "redirect:/board/event_board/event_readPage?check=mng&num=" + board.getEboard_num();
 	}
-
-	@RequestMapping("/board/event_board/event_remove") // readPage에서 삭제하기 버튼을 눌렀을 때 명령어를 받아 삭제하고 게시판 목록으로 돌아간다.															
+	
+	
+	// readPage에서 삭제하기 버튼을 눌렀을 때 명령어를 받아 삭제하고 게시판 목록으로 돌아간다. 삭제하기 버튼은 관리자페이지만 존재하기때문에 바로 리스트로 돌아간다.	
+	@RequestMapping("/board/event_board/event_remove") 													
 	public String event_remove(@RequestParam int num, RedirectAttributes rttr) throws Exception {
 		service.event_remove(num);
 		rttr.addFlashAttribute("msg", "SUCCESS");
 		return "redirect:/board/event_board/event_mgr_listPage";
 	}
-
-	@RequestMapping(value = "/board/event_board/event_reply", method = RequestMethod.POST) // 글 내부에서 쓴 댓글을 POST로 전달받는다.
-	public String event_replyPOST(EventBoardReplyDto replydto, RedirectAttributes rttr) throws Exception {	
-		System.out.println("댓글 입력하고 여기 도착했냐");
+	
+	
+	// 글 내부에서 쓴 댓글을 전달받아서 DB에 저장하고, 다시 원래 글로 돌아가야하는데 이벤트 페이지는 check가 필요하기때문에 user 값을 보내준다.	
+	// 리다이렉트로, 여러번 새로고침되어 중복댓글이 되지않게 게시글 위치로 이동한다.
+	@RequestMapping(value = "/board/event_board/event_reply", method = RequestMethod.POST) 
+	public String event_replyPOST(EventBoardReplyDto replydto, RedirectAttributes rttr) throws Exception {			
 		service.event_register_reply(replydto);
-		return "redirect:/board/event_board/event_readPage?num=" + replydto.getEreply_eboardnum();
-		// 리다이렉트로, 여러번 새로고침 되지않게 게시글 위치로 이동한다.
+		return "redirect:/board/event_board/event_readPage?check=user&num=" + replydto.getEreply_eboardnum();		
 	}
 	
-	@RequestMapping("/board/event_board/event_reply_remove") // 글 내부에서 댓글 삭제하기 버튼을 눌렀을 때 명령어를 받아 삭제하고 댓글달았던 글로 돌아간다.															
+	// 글 내부에서 댓글 삭제하기 버튼을 눌렀을 때 명령어를 받아 삭제하고 댓글달았던 글로 돌아간다. 댓글은 어차피 관리자 및 본인만 삭제 가능하기때문이다.	
+	@RequestMapping("/board/event_board/event_reply_remove")													
 	public String event_replyRemove(EventBoardReplyDto replydto, RedirectAttributes rttr) throws Exception {			
 		service.event_remove_reply(replydto);
-		return "redirect:/board/event_board/event_readPage?num=" + replydto.getEreply_eboardnum();
+		return "redirect:/board/event_board/event_readPage?check=user&num=" + replydto.getEreply_eboardnum();
 	}
 }

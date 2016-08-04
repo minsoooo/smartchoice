@@ -3,7 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-<title>Insert title here</title>
+<title>자유 게시판 글 수정하기</title>
 </head>
 <script src="/resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 <script type="text/javascript" src="/resources/se/js/HuskyEZCreator.js"
@@ -38,6 +38,11 @@
    width:80px;
    border: 0;
    outline: 0;
+} 
+
+#font_main,#font_num,#font_writer,#font_title,#font_content{		
+	font-weight:bold;	
+	color:#8ba752;	
 }   
 </style>
 <body style="background-color: #f5f4f0">
@@ -52,7 +57,7 @@
 						<div class="span12">							
 							<div>
 								<div>
-									<h3 style="text-align: center">공지사항</h3>
+									<h3 id="font_main" style="text-align: center">Free Board Modify</h3>
 								</div>
 								
 								<!-- body DB 자료를 받아서 내용을 수정하고 다시 POST방식으로 controller에 전송한다. -->
@@ -64,22 +69,22 @@
 
 									<div style="margin-left: 80px;">
 										<div>
-											<label>글번호</label> <input type="text" name='nboard_num'
+											<label id="font_num">Number</label> <input type="text" name='nboard_num'
 												value="${boardDto.nboard_num}" style="width: 800px;"
 												readonly="readonly">
 										</div>
 
 										<div>
-											<label>작성자</label> <input type="text" name="nboard_writer"
+											<label id="font_writer">Writer</label> <input type="text" name="nboard_writer"
 												value="${boardDto.nboard_writer}" style="width: 800px;"
 												readonly="readonly">
 										</div>
 										<div>
-											<label>제목</label> <input type="text" name='nboard_title'
+											<label id="font_title">Title</label> <input type="text" name='nboard_title'
 												value="${boardDto.nboard_title}" style="width: 800px;">
 										</div>
 										<div>
-											<label>내용</label>
+											<label id="font_content">Content</label>
 											<textarea name="nboard_content" id="ir1" rows="15"
 												style="width: 800px;">${boardDto.nboard_content}</textarea>
 												

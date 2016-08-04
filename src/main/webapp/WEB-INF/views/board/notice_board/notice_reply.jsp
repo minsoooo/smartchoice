@@ -6,6 +6,34 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 </head>
+<style>
+#event_replybtn {
+   display: inline-block;
+   padding: 6px 12px;
+   margin-bottom: 0;
+   font-size: 14px;
+   font-weight: 400;
+   line-height: 1.42857143;
+   text-align: center;
+   white-space: nowrap;
+   vertical-align: middle;
+   -ms-touch-action: manipulation;
+   touch-action: manipulation;
+   cursor: pointer;
+   -webkit-user-select: none;
+   -moz-user-select: none;
+   -ms-user-select: none;
+   user-select: none;
+   background-image: none;
+   background-color:#8ba752;
+   color:#fff; 
+   border: 1px solid transparent;
+   border-radius: 4px;
+   width:80px;
+   border: 0;
+   outline: 0;
+}
+</style>
 <body>
 	<div class="container">
 		<div class="row">
@@ -27,9 +55,10 @@
 							<c:set value="${replylist.nreply_memnum}" var="nreply_memnum" />
 							<c:set value="${sessionScope.MEM_KEY.mem_num}" var="session_memnum" />
 							<c:if test="${nreply_memnum == session_memnum}">
-								<input type="submit" value="삭제" class="btn" />
-							</c:if>								
-							${replylist.nreply_regdate}<br />
+								<input type="submit" value="삭제" class="btn" id="notice_replybtn" />
+							</c:if>
+							<fmt:formatDate pattern="yyyy-MM-dd HH:mm" value="${replylist.nreply_regdate}" />								
+							<br />
 						</div>
 						<div>
 							<pre>${replylist.nreply_content}</pre>

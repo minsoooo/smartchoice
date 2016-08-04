@@ -81,7 +81,12 @@
 }  
 #year, #month, #day{
 	width:99px;
-} 
+}
+#font_main,#font_writer,#font_title,#font_content{		
+	font-weight:bold;	
+	color:#8ba752;	
+}
+   
 </style>
 <body style="background-color: #f5f4f0">
 <%
@@ -96,7 +101,7 @@
 			<div class="span12">				
 				<div>
 					<div>
-						<h3 style="text-align: center">이벤트</h3>
+						<h3 id="font_main" style="text-align: center">Event Board Write</h3>
 					</div>
 					
 					<!-- 
@@ -108,12 +113,12 @@
 						<div>
 							<div style="margin-left: 80px;">
 								<div>
-									<label>Writer</label> <input type="text" style="width: 800px;"
-										value="${sessionScope.MNG_KEY.mng_id}" name="eboard_writer"
-										placeholder="${sessionScope.MNG_KEY.mng_id}"
+									<label id="font_writer" >Writer</label> <input type="text" style="width: 800px;"
+										value="SmartChoice" name="eboard_writer"
+										placeholder="SmartChoice"
 										readonly="readonly">
 								</div>
-								<label>Title</label> <input type="text" name='eboard_title'
+								<label id="font_title" >Title</label> <input type="text" name='eboard_title'
 									placeholder="제목을 입력하세요." style="width: 800px;">
 								<div>
 									<select name="start_year" id ="start_year">
@@ -150,7 +155,7 @@
 								</div>	
 							</div>
 							<div style="margin-left: 80px;">
-								<label>Content</label>
+								<label id="font_content" >Content</label>
 								<textarea name="eboard_content" id="ir1" rows="15"
 									placeholder="내용을 입력해주세요" style="width: 800px;"></textarea>
 									
@@ -183,16 +188,14 @@
 												oEditors.getById["ir1"].exec("UPDATE_CONTENTS_FIELD", []);
 												$("#frm").submit();
 											})
-									});
-									
-									
+									});									
 								</script>								
 								<!-- /NAVER SMARTEDITOR SCRIPT -->	
 							</div>
 						</div><br/>
 
 						<div align="center">
-							<input type="button" class="btn" id="btncolor" value="전송하기" />
+							<input type="button" class="btn" id="btncolor" value="작성완료" />
 							&nbsp;&nbsp;&nbsp;&nbsp; 
 							<a href="/board/event_board/event_mgr_listPage" class="btn" id="btncolor" style="width:55px;">목록가기</a>
 						</div>

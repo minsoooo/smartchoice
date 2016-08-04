@@ -17,7 +17,7 @@
 	margin-top: 50px;
 	margin-bottom: 50px;
 }
-#event_mgr_listPage,#event_modifyPage,#event_remove,#event_replybtn{
+#event_listPage,#event_mgr_listPage,#event_modifyPage,#event_remove,#event_replybtn{
    display: inline-block;
    padding: 6px 12px;
    margin-bottom: 0;
@@ -42,7 +42,12 @@
    width:80px;
    border: 0;
    outline: 0;
-}   
+}  
+#font_main,#font_writer,#font_title,#font_content{		
+	font-weight:bold;	
+	color:#8ba752;	
+}
+   
 </style>
 <body style="background-color: #f5f4f0">
 
@@ -56,7 +61,7 @@
 						<div class="span12">						
 							<div>
 								<div>
-									<h3 style="text-align: center">이벤트</h3>
+									<h3 id="font_main" style="text-align: center">Event Board Read</h3>
 								</div>
 								
 								<!-- body , cotroller에서 작성한 글 번호에 따른 글 내용을 전부 받아와서 출력한다. -->
@@ -69,12 +74,12 @@
 
 								<div style="margin-left: 80px;">
 									<div>
-										<label>Writer</label> <input type="text" name="writer"
+										<label id="font_writer" >Writer</label> <input type="text" name="writer"
 											style="width: 800px;" value="${boardDto.eboard_writer}"
 											readonly="readonly">
 									</div><br/>
 									<div>
-										<label>Title</label> <input type="text" name='title'
+										<label id="font_title" >Title</label> <input type="text" name='title'
 											style="width: 800px;" value="${boardDto.eboard_title}"
 											readonly="readonly">
 									</div><br/>
@@ -82,7 +87,7 @@
 									<!-- 기존의 textarea는 내용을 출력할 때 태그를 전부 출력하기때문에, 네이버스마트에디터를 사용해서,
 										  기존의 textarea와 비슷한 느낌의 이미지로 변경했다. -->
 									<div>
-										<label>Content</label><br/>										
+										<label id="font_content" >Content</label>									
 										<textarea name="eboard_content" id="ir1" rows="20" style="width: 810px;">${boardDto.eboard_content}</textarea>
 											
 										<!-- NAVER SMARTEDITOR SCRIPT -->	
@@ -122,58 +127,39 @@
 
 								<!-- submit  -->
 								<div align="center">
-
-									<!-- 관리자모드이기때문에 아무런 제약없이 버튼을 다 노출한다. -->
 									<form role="form" class="form-search" method="post"
-										accept-charset="utf-8">
-										
+										accept-charset="utf-8">										
 										<!-- 버튼은 글 목록에서 받아온 검색종류와 검색어를 받아서 다시 Controller 로 돌아갈때 그 값을 가져가서 재검색하게 해준다. -->																
-																					
-											<button type="submit" class="btn" id="event_modifyPage">
-												수정하기 <input type="hidden" name="num"
-													value="${boardDto.eboard_num}" />
-											</button>
-											&nbsp;&nbsp;&nbsp;&nbsp;
-											<button type="submit" class="btn" id="event_mgr_listPage">
-												목록가기<input type="hidden" name="keyword" value="${cri.keyword}" />
+										<!-- 일반 사용자라면 목록가기 버튼만 보인다 -->
+										<!-- 본관리자일경우에는 목록가기 수정하기 삭제하기가 나타난다. -->										
+										<c:if test="${sessionScope.MEM_KEY ne null }">
+											<button type="submit" class="btn" id="event_listPage">
+												목록가기 <input type="hidden" name="keyword" value="${cri.keyword}" />
 												<input type="hidden" name="searchType" value="${cri.searchType}" />
-											</button>
-											&nbsp;&nbsp;&nbsp;&nbsp;
-											<button type="submit" class="btn" id="event_remove">
-												삭제하기 <input type="hidden" name="num"
-													value="${boardDto.eboard_num}" />
-											</button>
+											</button>																					
+										</c:if>
+										<c:if test="${sessionScope.MNG_KEY ne null }">											
+												<button type="submit" class="btn" id="event_modifyPage">
+													수정하기 <input type="hidden" name="num"
+														value="${boardDto.eboard_num}" />
+												</button>
+												<button type="submit" class="btn" id="event_mgr_listPage">
+													목록가기 <input type="hidden" name="keyword" value="${cri.keyword}" />
+													<input type="hidden" name="searchType" value="${cri.searchType}" />
+												</button>
+												<button type="submit" class="btn" id="event_remove">
+													삭제하기 <input type="hidden" name="num"
+														value="${boardDto.eboard_num}" />
+												</button>											
+											
+										</c:if>
 									</form>
 								</div>
 								<br /> <br /> <br />
 								<!-- /submit -->
-
-								<!-- 댓글 입력 페이지, 댓글을 입력받아서 POST로 전송하면 Controller에서 받아서 입력한다. 									 
-									 로그인이 되어있을 시 가입때 입력한 id가 출력되고, 댓글은 내용(content)만 입력하면되게 처리한다.
-								-->
-								<div style="margin-left: 80px;">
-									
-									<form class="form-search" method="post" action="event_reply" accept-charset="utf-8">
-										<input type='hidden' name='ereply_eboardnum' value="${boardDto.eboard_num}"> 
-										<input type='hidden' name='ereply_memnum' value="${sessionScope.MNG_KEY.mng_num}"> 
-										<input type="text" placeholder="${sessionScope.MNG_KEY.mng_id}" 
-											name="ereply_memid" readonly="readonly" required="required" 
-											value="${sessionScope.MNG_KEY.mng_id}" style="width: 800px;" /><br />
-										<textarea rows="3" name="ereply_content"
-											style="width: 745px;" placeholder="댓글을 입력하세요"
-											required="required"></textarea>
-										<input type="submit" value="작성" class="btn" id="event_replybtn"
-											style="width: 50px; height: 70px" />
-									</form>
-
-									<!--									
-										댓글을 작성할 때 마다, 글번호가 댓글이 달린 글번호에 저장이되고, 세션의 멤버번호가 댓글멤버넘버로 저장이된다.
-										댓글에 사용되는 아이디는, 세션아이디가 저장된다.
-									-->
-
-
-									<!-- /댓글 입력 페이지 -->
-									<!-- 댓글 출력 페이지 include -->
+								
+								<!-- 댓글 출력 페이지 include -->
+								<div style="margin-left: 80px;">									
 									<jsp:include page="event_reply.jsp"></jsp:include>
 								</div>
 							</div>							
@@ -213,6 +199,17 @@
 												formObj.attr("method", "get");
 												formObj.submit();
 											});
+							
+							$("#event_listPage")
+							.on(
+									"click",
+									function() {
+										formObj
+												.attr("action",
+														"/board/event_board/event_listPage");
+										formObj.attr("method", "get");
+										formObj.submit();
+									});
 
 							$("#event_mgr_listPage")
 									.on(
@@ -225,7 +222,7 @@
 												formObj.attr("accept-charset", "utf-8");
 												formObj.submit();
 											});
-						});
+							});
 	</script>
 </body>
 </html>

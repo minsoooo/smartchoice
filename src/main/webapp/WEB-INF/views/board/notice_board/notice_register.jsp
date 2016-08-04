@@ -1,8 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"
 	pageEncoding="utf-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
+<title>자유 게시판 글쓰기</title>
 </head>
 <script type="text/javascript"
 	src="/resources/se/js/HuskyEZCreator.js" charset="utf-8"></script>
@@ -38,7 +40,11 @@
    width:80px;
    border: 0;
    outline: 0;
-}   
+}  
+#font_main,#font_writer,#font_title,#font_content{		
+	font-weight:bold;	
+	color:#8ba752;	
+} 
 </style>
 <body style="background-color: #f5f4f0">
 
@@ -49,7 +55,7 @@
 			<div class="span12">				
 				<div>
 					<div>
-						<h3 style="text-align: center">공지사항</h3>
+						<h3 id="font_main" style="text-align: center">Free Board Register</h3>
 					</div>
 					
 					<!-- body , 글쓰기버튼을 눌러서 들어오는 페이지로 작성자는 가입시 입력한 id를 받아오고 그외 내용을 작성해서 POST로 Controller에 전송한다. -->
@@ -58,16 +64,25 @@
 						<div>
 							<div style="margin-left: 80px;">
 								<div>
-									<label>Writer</label> <input type="text" style="width: 800px;"
+									<label id="font_writer" >Writer</label> 
+									<c:if test="${sessionScope.MEM_KEY ne null }">
+										<input type="text" style="width: 800px;" 
 										value="${sessionScope.MEM_KEY.mem_id}" name="nboard_writer"
-										placeholder="${sessionScope.MEM_KEY.mem_id}"
-										readonly="readonly">
+											placeholder="${sessionScope.MEM_KEY.mem_id}"
+											readonly="readonly">
+									</c:if>	
+									<c:if test="${sessionScope.MNG_KEY ne null }">
+										<input type="text" style="width: 800px;" 
+										value="${sessionScope.MNG_KEY.mng_id}" name="nboard_writer"
+											placeholder="SmartChoice"
+											readonly="readonly">
+									</c:if>
 								</div>
-								<label>Title</label> <input type="text" name='nboard_title'
+								<label id="font_title" >Title</label> <input type="text" name='nboard_title'
 									placeholder="제목을 입력하세요." style="width: 800px;">
 							</div>
 							<div style="margin-left: 80px;">
-								<label>Content</label>
+								<label id="font_content" >Content</label>
 								<textarea name="nboard_content" id="ir1" rows="15"
 									placeholder="내용을 입력해주세요" style="width: 800px;"></textarea>
 									
@@ -110,7 +125,7 @@
 						</div><br/>
 
 						<div align="center">
-							<input type="button" class="btn" id="btncolor" value="전송하기" />
+							<input type="button" class="btn" id="btncolor" value="작성완료" />
 							&nbsp;&nbsp;&nbsp;&nbsp; 
 							<a href="/board/notice_board/notice_listPage" class="btn" id="btncolor" style="width:55px;">목록가기</a>
 						</div>
