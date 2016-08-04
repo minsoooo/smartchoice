@@ -22,7 +22,7 @@
 <script src="/resources/plugins/jQuery/jquery.form.min.js"></script>
 <script src="/resources/plugins/js/array.js"></script>
 <script>
-$(function(){
+$(function($){
 	//대분류 버튼
 	$("#big_category").bind("change", big_cate_Change);
 	big_cate_Change();
@@ -45,15 +45,16 @@ $(function(){
 	r_discount2_Click();
 
 	//이미지 미리보기 사이즈
-	$("#imgSpace").css("width","340px").css("height","190px");
-	$("#imgPre").css("width","340px").css("height","190px");
+	$("#imgSpace").css("width","300px").css("height","175px");
+	$("#imgPre").css("width","300px").css("height","175px");
 	
 	//사진 업로드 전 미리보기
 	var opt = {
 	        img: $('#imgPre'),
-	        w: 340,
-	        h: 190
+	        w: 300,
+	        h: 175
 	    };
+	 
 	$('#input_file').setPreview(opt);
 });
 
@@ -84,6 +85,7 @@ $.fn.setPreview = function(opt){
 
 			var inputFile = defaultOpt.inputFile.get(0);
 			var img = defaultOpt.img.get(0);
+			
 			// FileReader
 			if (window.FileReader) {
 				// image 파일만
@@ -98,16 +100,17 @@ $.fn.setPreview = function(opt){
 						//console.log(e.target.result);
 						img.src = e.target.result;
 						card_img = e.target.result;
-							
 						img.style.width = defaultOpt.w + 'px';
 						img.style.height = defaultOpt.h + 'px';
 						img.style.display = '';
 					}
+					/*
 					reader.onloadend=function()
 					{
-						//console.log(card_img);
+						
 	
 					}
+					*/
 					reader.readAsDataURL(inputFile.files[0]);
 				} catch (e) {
 					//alert(e);
@@ -129,7 +132,6 @@ $.fn.setPreview = function(opt){
 				// Safari5, ...
 			}
 		};
-
 		// onchange
 		$(this).change(function() {
 			previewImage();
@@ -163,6 +165,7 @@ $.fn.setPreview = function(opt){
 		//전월실적
 		card_lastrecord = $('#card_record').val();
 		max_num = $("#table_card_code").text();
+		alert(max_num);
 		
 		//카드코드 조합 : 카드사 +카드넘버
 		card_code = card_compnum + "_" + max_num;
@@ -343,7 +346,8 @@ $.fn.setPreview = function(opt){
 
 		var dto = 
 				{
-					"card_typeflag":card_typeflag, 
+					"card_typeflag":card_typeflag,
+					"card_useflag":card_useflag,
 					"card_compnum":card_compnum, 
 					"card_name":card_name,
 					"card_lastrecord":card_lastrecord,
@@ -389,43 +393,113 @@ $.fn.setPreview = function(opt){
 	}
 </script>
 <style>
-	/*FileInput css 스타일 수정하기 */
-					.filebox label {
-					  display: inline-block;
-					  padding: .5em .75em;
-					  color: #F6F6F6;
-					  font-size: inherit;
-					  font-weight : bold;
-					  line-height: normal;
-					  vertical-align: middle;
-					  background-color: #008299;
-					  cursor: pointer;
-					  border: 1px solid #ebebeb;
-					  border-bottom-color: #e2e2e2;
-					  border-radius: .25em;
-					  margin-left: 20px;
-					}
-			
-					.filebox input[type="file"] {  /* 파일 필드 숨기기 */
-					  position: absolute;
-					  width: 1px;
-					  height: 1px;
-					  padding: 0;
-					  margin: -1px;
-					  overflow: hidden;
-					  clip:rect(0,0,0,0);
-					  border: 0;
-					}
+/*FileInput css 스타일 수정하기 */
+.filebox label {
+  display: inline-block;
+  padding: .5em .75em;
+  color: #ffffff;
+  font-size: inherit;
+  font-weight : bold;
+  line-height: normal;
+  vertical-align: middle;
+  background-color: #8ba752;
+  cursor: pointer;
+  border: 1px solid #ebebeb;
+  border-bottom-color: #e2e2e2;
+  border-radius: .25em;
+  margin-left: 20px;
+}
+
+.filebox input[type="file"] {  /* 파일 필드 숨기기 */
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip:rect(0,0,0,0);
+  border: 0;
+}
+#titleFont{
+	color :#97b162;
+	font-size: 30px;
+	font-weight:bold;
+}
+#titleHr{
+	border: 1px solid #d4d1ca;
+}
+
+ #titleDiv{
+	margin-left:10px;
+ 	margin-top:50px;
+ }
+ .btn-style {
+	width : 80px;
+	display: inline-block;
+	padding: 6px 12px;
+	margin-top: 5px;
+	margin-bottom: 0;
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 1.42857143;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	-ms-touch-action: manipulation;
+	touch-action: manipulation;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-image: none;
+	background-color:#8ba752;
+	color:#ffffff; 
+	border: 1px solid transparent;
+	border-radius: 4px;
+	border: 0;
+	outline: 0;
+}
+ .btn-style2 {
+	width : 200px;
+	display: inline-block;
+	padding: 6px 12px;
+	margin-top: 5px;
+	margin-bottom: 0;
+	font-size: 14px;
+	font-weight: bold;
+	line-height: 1.42857143;
+	text-align: center;
+	white-space: nowrap;
+	vertical-align: middle;
+	-ms-touch-action: manipulation;
+	touch-action: manipulation;
+	cursor: pointer;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	background-image: none;
+	background-color:#8ba752;
+	color:#ffffff; 
+	border: 1px solid transparent;
+	border-radius: 4px;
+	border: 0;
+	outline: 0;
+}
 </style>
 </head>
-<body>
-<jsp:include page="/WEB-INF/views/common/header.jsp"></jsp:include>
+<body style ="background-color: #f5f4f0">
+<jsp:include page="/WEB-INF/views/common/mng_header.jsp"></jsp:include>
 <div class="container">
-	<div class="span12">
-		<h1>신규카드정보등록<small>$mart Choice</small></h1>
+	<div class="span12" id ="titleDiv">
+		<ul>
+			<li>
+				<font id ="titleFont">신규카드정보등록</font>
+			</li>
+		</ul>
+		<hr id ="titleHr"/>
 	</div>
-	<br/>
-	<hr style="border:#cfcfcf 1px solid"/>	
 	<div class="container">	
 		<div class="row">
 			<div class="span6">
@@ -458,8 +532,8 @@ $.fn.setPreview = function(opt){
 						
 						<br/><br/>
 						<div>
-							<button class="btn btn-success btn-large pull-left" type="button" id="card_reg_step1">기본정보적용</button>	
-							<button class="btn btn-danger btn-large pull-left" type="button" id="card_clear_step1">초기화</button>
+							<input class="btn-style" type="button" id="card_reg_step1" value="적  용"/>
+							<input class="btn-style" type="button" id="card_clear_step1" value="초기화"/>
 						</div>
 					</div>
 					<div class="span6">
@@ -471,18 +545,19 @@ $.fn.setPreview = function(opt){
 								<tr><th>카드명</th><td id="table_card_name">카드명을 입력해주세요.</td></tr>
 								<tr><th>전월실적(원)</th><td id="table_card_record">전월실적을 입력해주세요.</td></tr>
 								<tr><th>연회비(원)</th><td id="table_card_annualfee">연회비를 입력해주세요.</td></tr>
-								<tr><th>카드코드</th><td id="table_card_code">생성될 카드의 고유번호 : 카드사_${code+1}</td></tr>							
+								<tr><th>카드고유번호</th><td id="table_card_code">${code+1}</td></tr>							
 							</tbody>
 						</table>
 						<form id="card_image" name="card_image" method="post" action="/manager/manager_cardRegisterDto2" enctype="multipart/form-data">
 						<input type="hidden" id="hidden_card_code" name="hidden_card_code" value=""/>
 						<h4 style="margin-left:30px;">카드이미지 미리보기</h4>
 						<table style="margin-left:30px;">
-							<tr><td id="imgSpace"><img id ="imgPre" src ="/resources/images/creditcard.jpg"/></td></tr>
+							<tr><td id="imgSpace"><img id ="imgPre" src ="/resources/images/card/creditcard.jpg"/></td></tr>
 							<tr>
 							<td>
 								<div class="filebox">
-									<label for="input_file">카드이미지 등록</label><input type="file" id="input_file" name="input_file"><br/>
+									<label for="input_file">카드이미지 등록</label>
+									<input class="btn-style" type="file" id="input_file" name ="input_file"> 
 								</div>
 							</td>
 							</tr>
@@ -526,8 +601,8 @@ $.fn.setPreview = function(opt){
 						</div>
 						<br/>
 						<div>
-							<button class="btn btn-success btn-large pull-left" type="button" id="card_reg_step2">할인정보적용</button>	
-							<button class="btn btn-danger btn-large pull-left" type="button" id="card_clear_step2">초기화</button>
+							<input class="btn-style" type="button" id="card_reg_step2" value="적  용"/>
+							<input class="btn-style" type="button" id="card_clear_step2" value="초기화">
 						</div>
 					</div>
 					<div class="span6">
@@ -562,12 +637,10 @@ $.fn.setPreview = function(opt){
 			<div class="span12">
 				<div class="row">
 				<br/><br/>
-					<div class="span1"></div>
-					<div class="span11" align="center"><h4 style="color:dark-gray">등록할 카드의 정보를 확인하고 아래 확인 버튼을 눌러주세요.</h4></div>
+					<div class="span12" align="center"><h4 style="color:dark-gray">등록할 카드의 정보를 확인하고 아래 완료버튼을 눌러주세요.</h4></div>
 					<div class="span4"></div>
 					<div class="span6" align="center">
-						<div class="span2"><button class="btn-block btn-primary btn-large" type="button" onclick="input_db()">확인</button></div>	
-						<div class="span2"><button class="btn-block btn-danger btn-large" type="button" value="적용" id="btn1">취소</button></div>
+						<div class="span2"><button class="btn-style2 btn-large" type="button" onclick="input_db()">카드등록완료</button></div>	
 					</div>
 					<div class="span2"></div>
 				</div>
@@ -577,6 +650,5 @@ $.fn.setPreview = function(opt){
 	</div>
 </div>
 <script src="/resources/bootstrap/js/bootstrap.min.js"></script>
-<jsp:include page="/WEB-INF/views/common/footer.jsp"></jsp:include>
 </body>
 </html>

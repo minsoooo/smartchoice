@@ -129,8 +129,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="span8 offset4">
-					<a href="#">카드등록</a>
-					<a href="#">혜택수정</a>
+					<a href="/manager/manager_cardManage">카드관리</a>
 					<a href="#">분류관리</a>
 					<a href="#">회원관리</a>
 					<a href="/manager/manager_chooseAdmin">직원관리</a>
@@ -140,6 +139,5 @@
 			</div>
 		</div>
 	</div>
-	
 </body>
 </html>

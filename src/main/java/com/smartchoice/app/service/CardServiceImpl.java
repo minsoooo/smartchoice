@@ -1,6 +1,8 @@
 package com.smartchoice.app.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.inject.Inject;
 
@@ -42,13 +44,13 @@ public class CardServiceImpl implements CardService {
 
 	@Override
 	public void updateCard(CardDto dto) {
-		// TODO Auto-generated method stub
+		dao.updateCard(dto);
 
 	}
 
 	@Override
-	public void deleteCard(int card_useflag) {
-		// TODO Auto-generated method stub
+	public void deleteCard(String card_code) {
+		dao.deleteCard(card_code);
 
 	}	
 	@Override
@@ -59,8 +61,7 @@ public class CardServiceImpl implements CardService {
 
 	@Override
 	public List<CardDto> CardList() {
-		// TODO Auto-generated method stub
-		return null;
+		return dao.CardList();
 	}
 	@Override
 	public List<CardDto> getCardComp() {
@@ -81,6 +82,25 @@ public class CardServiceImpl implements CardService {
 	public void updateCardImage(CardDto dto) {
 		System.out.println("서비스임플:"+dto);
 		dao.updateCardImage(dto);
+		
+	}
+	@Override
+	public CardDto getCard_info(String card_code) {
+		return dao.getCard_info(card_code);
+	}
+	@Override
+	public List<CardDiscountDto> getDisCard_info(String card_code) {
+		return dao.getDisCard_info(card_code);
+	}
+	@Override
+	public void deleteDisCard(List<CardDiscountDto> disDto) {
+		
+		dao.deleteDisCard(disDto);
+		
+	}
+	@Override
+	public void updateDisCard(List<CardDiscountDto> disDto) {
+		dao.updateDisCard(disDto);
 		
 	}
 

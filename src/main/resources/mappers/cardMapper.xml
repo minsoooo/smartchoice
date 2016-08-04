@@ -49,5 +49,32 @@
 		update card set card_img=#{card_img} where card_code=#{card_code}
 	</update>
 
+	<select id="CardList" resultType="CardDto" parameterType="CardDto">
+		select * from v_details_card
+	</select>
 
+	<update id="deleteCard">
+		update card set card_useflag=0 where card_code=#{card_code}
+	</update>
+	
+	<select id="getCard_info" resultType="CardDto">
+		select * from card where card_code=#{card_code}
+	</select>
+	
+	<update id="updateCard" parameterType="CardDto">
+		update card set card_name=#{card_name}, card_annualfee=#{card_annualfee}, card_lastrecord=#{card_lastrecord}, 
+					card_typeflag=#{card_typeflag}, card_compnum=#{card_compnum}
+					where card_code=#{card_code}
+	</update>
+	<select id="getDisCard_info" resultType="CardDiscountDto">
+		select * from v_details_discount where dc_cardcode=#{card_code}
+	</select>
+	<delete id="deleteDisCard">
+		delete from discount where dc_num=#{dc_num} and dc_cardcode=#{dc_cardcode}
+	</delete>
+
+	<update id="updateDisCard">
+		update discount set dc_smallnum=#{dc_smallnum}, dc_min=#{dc_min}, 
+		dc_max=#{dc_max}, dc_value=#{dc_value}, dc_classify=#{dc_classify}, dc_etc=#{dc_etc} where dc_cardcode=#{dc_cardcode} and dc_num=#{dc_num}
+	</update>
 </mapper>
